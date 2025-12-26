@@ -40,7 +40,7 @@ COPY --chown=www-data:www-data . /var/www/html
 
 # Install dependencies
 RUN composer install --no-interaction --optimize-autoloader \
-    && npm install \
+    && npm install --legacy-peer-deps \
     && npm run build
 
 # Set proper permissions
