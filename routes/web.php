@@ -22,6 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // E-Commerce Routes
+    Route::get('/products', [\App\Http\Controllers\Web\ProductController::class, 'index'])->name('products.index');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
