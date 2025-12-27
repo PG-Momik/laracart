@@ -1,0 +1,91 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+env:
+  DEPLOY_PATH: /var/www/laracart
+  DOMAIN: laracart.momikshrestha.com.np
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: Add EC2 to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to EC2
+        run: |
+          ssh ubuntu@${{ secrets.EC2_HOST }} << 'ENDSSH'
+            set -e
+            
+            echo "🚀 Starting deployment..."
+            
+            # Navigate to app directory
+            cd ${{ env.DEPLOY_PATH }}
+            
+            # Pull latest code
+            echo "📥 Pulling latest code..."
+            git pull origin main || git pull origin master
+            
+            # Install PHP dependencies
+            echo "📦 Installing Composer dependencies..."
+            composer install --no-dev --optimize-autoloader --no-interaction
+            
+            # Install Node dependencies and build
+            echo "🎨 Building frontend assets..."
+            npm ci
+            npm run build
+            
+            # Run migrations
+            echo "🔄 Running migrations..."
+            php artisan migrate --force
+            
+            # Clear and optimize
+            echo "⚡ Optimizing application..."
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+            php artisan optimize
+            
+            # Set permissions
+            echo "🔐 Setting permissions..."
+            sudo chown -R www-data:www-data ${{ env.DEPLOY_PATH }}
+            sudo chmod -R 755 ${{ env.DEPLOY_PATH }}
+            sudo chmod -R 775 ${{ env.DEPLOY_PATH }}/storage
+            sudo chmod -R 775 ${{ env.DEPLOY_PATH }}/bootstrap/cache
+            
+            # Restart services
+            echo "🔄 Restarting services..."
+            sudo systemctl reload php8.2-fpm
+            sudo systemctl reload nginx
+            sudo supervisorctl restart laracart-worker:*
+            
+            echo "✅ Deployment complete!"
+          ENDSSH
+
+      - name: Verify deployment
+        run: |
+          echo "🔍 Verifying deployment..."
+          curl -f https://${{ env.DOMAIN }} || exit 1
+          echo "✅ Site is live!"
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Deployment failed!"
+          echo "Check the logs above for details."
