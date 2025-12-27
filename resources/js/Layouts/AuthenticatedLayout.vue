@@ -22,6 +22,7 @@ import {
     DialogDescription,
     DialogFooter
 } from '@/Components/ui/dialog';
+import { 
     ShoppingBag, 
     User, 
     LogOut, 
@@ -33,8 +34,11 @@ import {
     X,
     Activity,
     Shield,
-    ShieldCheck
+    ShieldCheck,
+    Sun,
+    Moon
 } from 'lucide-vue-next';
+import { useTheme } from '@/Composables/useTheme';
 
 const showingNavigationDropdown = ref(false);
 const successModalOpen = ref(false);
@@ -99,6 +103,13 @@ const togglePersona = () => {
     });
 };
 
+const { isDark, initTheme, toggleTheme } = useTheme();
+
+onMounted(() => {
+    fetchCart();
+    initTheme();
+});
+
 </script>
 
 <template>
@@ -149,12 +160,22 @@ const togglePersona = () => {
                     <!-- Right Section: Cart & User -->
                     <div class="flex items-center gap-2">
                         <!-- Persona Switcher -->
-                        <div class="hidden lg:flex items-center mr-2">
+                        <div class="hidden lg:flex items-center gap-2 mr-2">
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                @click="toggleTheme"
+                                class="rounded-lg text-muted-foreground hover:text-foreground"
+                            >
+                                <Sun v-if="isDark" class="size-5" />
+                                <Moon v-else class="size-5" />
+                            </Button>
+
                             <Button 
                                 variant="outline" 
                                 size="sm" 
                                 @click="togglePersona"
-                                :class="[isAdmin ? 'border-primary/50 bg-primary/5 text-primary' : 'text-muted-foreground']"
+                                :class="[isAdmin ? 'border-primary/50 bg-primary/20 text-primary' : 'text-muted-foreground']"
                                 class="rounded-full font-black text-[10px] uppercase tracking-wider gap-2 h-8 px-4 border-dashed"
                             >
                                 <component :is="isAdmin ? ShieldCheck : Shield" class="size-3" />
@@ -189,10 +210,10 @@ const togglePersona = () => {
                                         </Avatar>
                                     </Button>
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent align="right" class="w-56 rounded-xl shadow-premium mt-2 border-border p-1 bg-popover">
+                                <DropdownMenuContent align="right" class="w-56 rounded-xl shadow-premium mt-2 border-border p-1">
                                     <DropdownMenuLabel class="px-2 py-1.5 text-xs font-black uppercase tracking-widest text-muted-foreground">Account</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem class="rounded-lg my-0.5 flex items-center gap-2 font-bold cursor-pointer" @click="router.visit(route('profile.edit'))">
+                                    <DropdownMenuItem class="rounded-lg my-0.5 flex items-center gap-2 font-bold cursor-pointer text-popover-foreground" @click="router.visit(route('profile.edit'))">
                                         <User class="size-4" /> Profile
                                     </DropdownMenuItem>
                                     <DropdownMenuSeparator />
@@ -276,8 +297,8 @@ const togglePersona = () => {
                 <div class="absolute -top-12 -right-12 size-48 bg-primary/10 rounded-full blur-3xl" />
                 
                 <div class="flex flex-col items-center text-center">
-                    <div class="size-20 bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center mb-6 animate-bounce">
-                        <CheckCircle2 class="size-10 text-green-600 dark:text-green-500" />
+                    <div class="size-20 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 animate-bounce">
+                        <CheckCircle2 class="size-10 text-primary" />
                     </div>
                     <DialogHeader>
                         <DialogTitle class="text-3xl font-black text-foreground tracking-tight leading-none mb-2">Order Confirmed!</DialogTitle>

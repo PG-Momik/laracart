@@ -288,7 +288,7 @@ watch(() => props.products.data, (newData) => {
                         >
                             <Card 
                                 v-if="showRecommendations && (recommendations.length > 0 || loadingRecommendations)"
-                                class="absolute z-[999] mt-2 w-full shadow-premium rounded-xl overflow-hidden border-border bg-popover"
+                                class="absolute z-[999] mt-2 w-full shadow-premium rounded-xl overflow-hidden border-border bg-popover text-popover-foreground"
                             >
                                 <div class="max-h-96 overflow-y-auto p-2 space-y-1">
                                     <div
@@ -298,7 +298,7 @@ watch(() => props.products.data, (newData) => {
                                         class="flex items-center gap-4 p-3 hover:bg-muted/50 cursor-pointer rounded-lg transition-colors group/item"
                                     >
                                         <div class="size-12 rounded-lg overflow-hidden bg-muted flex-shrink-0 border border-muted-foreground/10">
-                                            <img :src="item.image_url" loading="eager" decoding="async" class="w-full h-full object-contain p-1 mix-blend-multiply" />
+                                            <img :src="item.image_url" loading="eager" decoding="async" class="w-full h-full object-contain p-1" />
                                         </div>
                                         <div class="flex-grow min-w-0">
                                             <p class="text-sm font-bold text-foreground truncate group-hover/item:text-primary transition-colors">{{ item.name }}</p>

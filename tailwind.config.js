@@ -3,6 +3,7 @@ import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+    darkMode: ["class"],
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
@@ -13,38 +14,38 @@ export default {
     theme: {
         extend: {
             colors: {
-                border: 'hsl(214.3 31.8% 91.4%)',
-                input: 'hsl(214.3 31.8% 91.4%)',
-                ring: 'hsl(222.2 84% 4.9%)',
-                background: 'hsl(0 0% 100%)',
-                foreground: 'hsl(222.2 84% 4.9%)',
+                border: "hsl(var(--border))",
+                input: "hsl(var(--input))",
+                ring: "hsl(var(--ring))",
+                background: "hsl(var(--background))",
+                foreground: "hsl(var(--foreground))",
                 primary: {
-                    DEFAULT: '#0f172a', // Slate 900
-                    foreground: '#ffffff',
+                    DEFAULT: "hsl(var(--primary))",
+                    foreground: "hsl(var(--primary-foreground))",
                 },
                 secondary: {
-                    DEFAULT: 'hsl(210 40% 96.1%)',
-                    foreground: 'hsl(222.2 47.4% 11.2%)',
+                    DEFAULT: "hsl(var(--secondary))",
+                    foreground: "hsl(var(--secondary-foreground))",
                 },
                 destructive: {
-                    DEFAULT: 'hsl(0 84.2% 60.2%)',
-                    foreground: 'hsl(210 40% 98%)',
+                    DEFAULT: "hsl(var(--destructive))",
+                    foreground: "hsl(var(--destructive-foreground))",
                 },
                 muted: {
-                    DEFAULT: 'hsl(210 40% 96.1%)',
-                    foreground: 'hsl(215.4 16.3% 46.9%)',
+                    DEFAULT: "hsl(var(--muted))",
+                    foreground: "hsl(var(--muted-foreground))",
                 },
                 accent: {
-                    DEFAULT: 'hsl(210 40% 96.1%)',
-                    foreground: 'hsl(222.2 47.4% 11.2%)',
+                    DEFAULT: "hsl(var(--accent))",
+                    foreground: "hsl(var(--accent-foreground))",
                 },
                 popover: {
-                    DEFAULT: 'hsl(0 0% 100%)',
-                    foreground: 'hsl(222.2 84% 4.9%)',
+                    DEFAULT: "hsl(var(--popover))",
+                    foreground: "hsl(var(--popover-foreground))",
                 },
                 card: {
-                    DEFAULT: 'hsl(0 0% 100%)',
-                    foreground: 'hsl(222.2 84% 4.9%)',
+                    DEFAULT: "hsl(var(--card))",
+                    foreground: "hsl(var(--card-foreground))",
                 },
             },
             borderRadius: {
@@ -56,8 +57,20 @@ export default {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
             boxShadow: {
-                'soft': '0 2px 15px -3px rgba(0,0,0,0.07), 0 10px 20px -2px rgba(0,0,0,0.04)',
-                'premium': '0 20px 50px -12px rgba(15, 23, 42, 0.12)',
+                'soft': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)',
+                'premium': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05)',
+                'elevated': '0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05)',
+                'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
+                'inner-soft': 'inset 0 1px 2px 0 rgba(0, 0, 0, 0.03)',
+            },
+            spacing: {
+                '18': '4.5rem',
+                '88': '22rem',
+                '128': '32rem',
+            },
+            transitionTimingFunction: {
+                'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',
+                'bounce-soft': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
             }
         },
     },
