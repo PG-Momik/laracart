@@ -11,22 +11,22 @@ Route::middleware(['web', 'auth'])->group(function () {
     });
 
     // Cart Routes - Higher limit for frequent operations
-    Route::middleware('throttle:120,1')->group(function () {
-        Route::apiResource('cart', CartController::class)
-            ->names('api.cart')
-            ->only(['index', 'store', 'update', 'destroy']);
-    });
+    // Route::middleware('throttle:120,1')->group(function () {
+    Route::apiResource('cart', CartController::class)
+        ->names('api.cart')
+        ->only(['index', 'store', 'update', 'destroy']);
+    // });
 
     // Checkout - Lower limit for sensitive operations
-    Route::middleware('throttle:10,1')->group(function () {
-        Route::post('/checkout', [\App\Http\Controllers\CheckoutController::class, 'store'])
-            ->name('api.checkout.store');
-    });
+    // Route::middleware('throttle:10,1')->group(function () {
+    Route::post('/checkout', [\App\Http\Controllers\CheckoutController::class, 'store'])
+        ->name('api.checkout.store');
+    // });
 
     // Order Routes - Moderate limit for viewing operations
-    Route::middleware('throttle:60,1')->group(function () {
-        Route::apiResource('orders', OrderController::class)
-            ->names('api.orders')
-            ->only(['index', 'show']);
-    });
+    // Route::middleware('throttle:60,1')->group(function () {
+    Route::apiResource('orders', OrderController::class)
+        ->names('api.orders')
+        ->only(['index', 'show']);
+    //});
 });
