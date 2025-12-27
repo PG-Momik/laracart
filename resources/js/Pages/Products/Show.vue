@@ -112,7 +112,7 @@ const handleDelete = () => {
                             <img 
                                 :src="productData.image_url" 
                                 :alt="productData.name" 
-                                class="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-110 mix-blend-multiply dark:mix-blend-normal drop-shadow-2xl" 
+                                class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal drop-shadow-2xl" 
                             />
                             
                             <!-- Status Badges -->
@@ -205,7 +205,7 @@ const handleDelete = () => {
                     <div class="pt-6 space-y-4">
                         <Button 
                             size="lg" 
-                            class="w-full h-16 rounded-2xl font-black text-lg shadow-2xl shadow-primary/30 transition-all duration-300 hover:scale-[1.02] active:scale-95 group"
+                            class="w-full h-16 rounded-lg font-black text-lg shadow-2xl shadow-primary/30 transition-all duration-300 active:scale-95 group bg-primary text-primary-foreground hover:bg-primary/90"
                             @click="handleAddToCart"
                             :disabled="adding || productData.stock_quantity === 0"
                         >

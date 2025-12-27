@@ -236,7 +236,8 @@ watch(() => props.products.data, (newData) => {
                             variant="outline" 
                             size="icon" 
                             @click="layout = 'grid'"
-                            :class="layout === 'grid' ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-transparent text-muted-foreground'"
+                            class="rounded-lg"
+                            :class="layout === 'grid' ? 'bg-primary text-primary-foreground hover:bg-primary/90 border-primary' : 'bg-transparent text-muted-foreground hover:bg-muted'"
                         >
                             <LayoutGrid class="size-4" />
                         </Button>
@@ -244,7 +245,8 @@ watch(() => props.products.data, (newData) => {
                             variant="outline" 
                             size="icon" 
                             @click="layout = 'list'"
-                            :class="layout === 'list' ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-transparent text-muted-foreground'"
+                            class="rounded-lg"
+                            :class="layout === 'list' ? 'bg-primary text-primary-foreground hover:bg-primary/90 border-primary' : 'bg-transparent text-muted-foreground hover:bg-muted'"
                         >
                             <List class="size-4" />
                         </Button>
@@ -284,7 +286,7 @@ watch(() => props.products.data, (newData) => {
                         >
                             <Card 
                                 v-if="showRecommendations && (recommendations.length > 0 || loadingRecommendations)"
-                                class="absolute z-[200] mt-2 w-full shadow-2xl rounded-2xl overflow-hidden border-muted-foreground/10 bg-card"
+                                class="absolute z-[300] mt-2 w-full shadow-2xl rounded-2xl overflow-hidden border-muted-foreground/10 bg-card"
                             >
                                 <div class="max-h-96 overflow-y-auto p-2 space-y-1">
                                     <div

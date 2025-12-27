@@ -44,12 +44,7 @@ const getStatusVariant = (status) => {
             />
 
             
-            <!-- Quick Badges -->
-            <div class="absolute top-3 left-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <Badge variant="secondary" class="bg-white/80 dark:bg-black/80 backdrop-blur text-[10px] font-bold py-0 h-5 px-1.5 uppercase tracking-tighter shadow-sm border-none">
-                    {{ product.category }}
-                </Badge>
-            </div>
+
 
             <div class="absolute top-3 right-3">
                 <Badge 
@@ -108,8 +103,7 @@ const getStatusVariant = (status) => {
             <Button 
                 @click="handleAddToCart"
                 :disabled="adding || product.stock_quantity === 0"
-                class="w-full rounded-xl font-bold transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 active:scale-95 group/btn"
-                :variant="product.stock_quantity === 0 ? 'secondary' : 'default'"
+                class="w-full rounded-lg font-bold transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 active:scale-95 group/btn bg-primary text-primary-foreground hover:bg-primary/90"
             >
                 <Loader2 v-if="adding" class="mr-2 size-4 animate-spin" />
                 <ShoppingCart v-else class="mr-2 size-4 transition-transform group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />

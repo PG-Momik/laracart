@@ -23,7 +23,9 @@ class OrderResource extends JsonResource
                 'value' => $this->status->value,
                 'color' => $this->status->color(),
             ],
-            'items' => OrderItemResource::collection($this->whenLoaded('items')),
+            'items' => $this->whenLoaded('items', function () {
+                return OrderItemResource::collection($this->items)->resolve();
+            }),
             'items_preview' => $this->whenLoaded('items', function () {
                 return $this->items->take(4)->map(fn($item) => [
                     'image_url' => $item->product->image_url,
