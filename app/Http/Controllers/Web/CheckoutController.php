@@ -93,7 +93,10 @@ class CheckoutController extends Controller
                 return $order;
             });
 
-            return redirect()->route('orders.show', $order->id)->with('success', 'Order placed successfully!');
+            // Dispatch payment processing job to 'high' queue
+            \App\Jobs\ProcessOrderPayment::dispatch($order);
+
+            return redirect()->route('orders.show', $order->id)->with('success', 'Order placed successfully! Payment is being processed.');
         } catch (\Exception $e) {
             Log::error('Order creation failed: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Failed to place order.');

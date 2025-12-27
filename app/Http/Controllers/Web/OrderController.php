@@ -14,7 +14,7 @@ use Inertia\Response;
 class OrderController extends Controller
 {
     /**
-     * Display the order history page.
+     * Display the My Orders page.
      */
     public function index(): Response
     {

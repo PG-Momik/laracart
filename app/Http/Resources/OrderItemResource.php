@@ -18,7 +18,11 @@ class OrderItemResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'product' => new ProductResource($this->whenLoaded('product')),
+            'product' => [
+                'name' => $this->product->name,
+                'image_url' => $this->product->image_url,
+                'category' => $this->product->category,
+            ],
             'quantity' => $this->quantity,
             'price_at_purchase' => (float) $this->price_at_purchase,
             'formatted_price' => '$' . number_format((float) $this->price_at_purchase, 2),

@@ -45,13 +45,13 @@ const getStatusClasses = (color) => {
 </script>
 
 <template>
-    <Head title="Order History" />
+    <Head title="My Orders" />
 
     <AuthenticatedLayout>
         <template #header>
             <div class="flex items-center justify-between">
                 <div>
-                    <h2 class="text-3xl font-black text-foreground leading-tight tracking-tight">Order History</h2>
+                    <h2 class="text-3xl font-black text-foreground leading-tight tracking-tight">My Orders</h2>
                     <p class="text-sm font-medium text-muted-foreground mt-1">Track and manage your orders</p>
                 </div>
                 <div class="size-14 bg-card rounded-xl shadow-soft border border-muted-foreground/10 flex items-center justify-center">
@@ -109,7 +109,7 @@ const getStatusClasses = (color) => {
                                 <div class="flex -space-x-4">
                                     <div v-for="(item, idx) in order.items_preview" :key="idx" class="relative group/avatar">
                                         <Avatar class="size-14 border-4 border-card rounded-xl group-hover:translate-y-[-4px] transition-transform duration-300 shadow-soft">
-                                            <AvatarImage :src="item.image_url" class="object-contain p-2 mix-blend-multiply dark:mix-blend-normal bg-muted/10" />
+                                            <AvatarImage :src="item.image_url" class="object-contain p-2 bg-muted/50" />
                                             <AvatarFallback>{{ item.name.substring(0,2) }}</AvatarFallback>
                                         </Avatar>
                                     </div>
@@ -151,7 +151,7 @@ const getStatusClasses = (color) => {
                     <ShoppingBag class="size-12 text-muted-foreground/40 stroke-[1.5]" />
                 </div>
                 <h3 class="text-3xl font-black text-foreground tracking-tighter mb-4">No orders found</h3>
-                <p class="text-muted-foreground max-w-sm mx-auto mb-10 font-medium">Your order history is currently empty. Start shopping by exploring our selection.</p>
+                <p class="text-muted-foreground max-w-sm mx-auto mb-10 font-medium">Your My Orders is currently empty. Start shopping by exploring our selection.</p>
                 <Link :href="route('products.index')">
                     <Button size="lg" class="h-16 px-12 rounded-xl font-black text-lg bg-primary shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all group">
                         Enter Marketplace

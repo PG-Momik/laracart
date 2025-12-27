@@ -98,8 +98,17 @@ const getStatusClasses = (color) => {
                         <div class="space-y-8">
                             <div v-for="item in orderData.items" :key="item.id" class="flex gap-8 items-center bg-muted/10 p-4 rounded-2xl border border-muted-foreground/5 hover:bg-muted/20 transition-all group">
                                 <div class="relative flex-shrink-0">
-                                    <div class="size-24 sm:size-28 rounded-xl border border-muted-foreground/10 bg-card flex items-center justify-center p-4 shadow-soft overflow-hidden group-hover:scale-105 transition-transform duration-500">
-                                        <img :src="item.product.image_url" :alt="item.product.name" class="size-full object-contain mix-blend-multiply dark:mix-blend-normal" />
+                                    <div class="size-24 sm:size-28 rounded-2xl border border-muted-foreground/10 bg-white flex items-center justify-center p-4 shadow-soft overflow-hidden group-hover:scale-105 transition-transform duration-500">
+                                        <img 
+                                            v-if="item.product?.image_url" 
+                                            :src="item.product.image_url" 
+                                            :alt="item.product.name" 
+                                            class="size-full object-contain" 
+                                        />
+                                        <div v-else class="flex flex-col items-center justify-center text-muted-foreground/20">
+                                            <Package class="size-8" />
+                                            <span class="text-[8px] font-black mt-1">NO IMAGE</span>
+                                        </div>
                                     </div>
                                     <Badge class="absolute -top-3 -right-3 size-8 rounded-lg bg-primary shadow-lg border-4 border-card font-black text-xs flex items-center justify-center">
                                         {{ item.quantity }}
@@ -123,10 +132,10 @@ const getStatusClasses = (color) => {
 
                     <!-- Financial Summary -->
                     <div class="mt-16 pt-12 border-t border-muted-foreground/10 flex justify-end">
-                        <Card class="w-full sm:max-w-md border-none bg-muted/30 p-8 rounded-[2.5rem]">
+                        <Card class="w-full sm:max-w-md border-none bg-muted/30 p-8 rounded-2xl">
                             <div class="space-y-4">
                                 <div class="flex justify-between items-center text-xs font-black text-muted-foreground uppercase tracking-widest">
-                                    <span>Portfolio Value</span>
+                                    <span>Value</span>
                                     <span class="text-foreground font-black">{{ orderData.formatted_total }}</span>
                                 </div>
                                 <div class="flex justify-between items-center text-xs font-black text-muted-foreground uppercase tracking-widest">
@@ -140,7 +149,7 @@ const getStatusClasses = (color) => {
                                 <Separator class="bg-muted-foreground/10 my-4" />
                                 <div class="flex justify-between items-end pt-2">
                                     <div class="space-y-1">
-                                        <h5 class="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Total Investment</h5>
+                                        <h5 class="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Total</h5>
                                         <p class="text-4xl font-black text-primary tracking-tighter">{{ orderData.formatted_total }}</p>
                                     </div>
                                     <div class="pb-1">
@@ -173,7 +182,7 @@ const getStatusClasses = (color) => {
 
             <!-- Support & Policy -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                 <div class="bg-card/40 p-6 rounded-[2rem] border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
+                 <div class="bg-card/40 p-6 rounded-2xl border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
                     <div class="size-12 bg-primary/5 rounded-xl flex items-center justify-center flex-shrink-0 group">
                         <HelpCircle class="size-5 text-primary group-hover:scale-110 transition-transform" />
                     </div>
@@ -182,7 +191,7 @@ const getStatusClasses = (color) => {
                         <p class="text-[10px] text-muted-foreground font-black leading-relaxed uppercase tracking-tight">Access 24/7 dedicated assistance for your purchase queries.</p>
                     </div>
                  </div>
-                 <div class="bg-card/40 p-6 rounded-[2rem] border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
+                 <div class="bg-card/40 p-6 rounded-2xl border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
                     <div class="size-12 bg-primary/5 rounded-xl flex items-center justify-center flex-shrink-0 group">
                         <ShieldCheck class="size-5 text-primary group-hover:scale-110 transition-transform" />
                     </div>
@@ -191,7 +200,7 @@ const getStatusClasses = (color) => {
                         <p class="text-[10px] text-muted-foreground font-black leading-relaxed uppercase tracking-tight">End-to-end encryption ensures your financial metadata stays private.</p>
                     </div>
                  </div>
-                 <div class="bg-card/40 p-6 rounded-[2rem] border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
+                 <div class="bg-card/40 p-6 rounded-2xl border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
                     <div class="size-12 bg-primary/5 rounded-xl flex items-center justify-center flex-shrink-0 group">
                         <Mail class="size-5 text-primary group-hover:scale-110 transition-transform" />
                     </div>

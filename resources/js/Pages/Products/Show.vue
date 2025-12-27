@@ -112,7 +112,7 @@ const handleDelete = () => {
                             <img 
                                 :src="productData.image_url" 
                                 :alt="productData.name" 
-                                class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal drop-shadow-2xl" 
+                                class="w-full h-full object-contain drop-shadow-2xl" 
                             />
                             
                             <!-- Status Badges -->
@@ -178,9 +178,16 @@ const handleDelete = () => {
                                 <h3 class="text-xs font-black text-foreground uppercase tracking-widest">Inventory Status</h3>
                                 <p class="text-sm font-bold text-muted-foreground mt-1">{{ productData.stock_quantity }} of {{ productData.total_stock }} units remaining</p>
                             </div>
-                            <span class="text-xl font-black text-primary">{{ Math.round(stockPercentage) }}%</span>
                         </div>
-                        <Progress :value="stockPercentage" class="h-3 bg-muted rounded-full overflow-hidden" />
+                        <Progress 
+                            :model-value="stockPercentage" 
+                            class="h-3 bg-muted rounded-full overflow-hidden" 
+                            :class="{
+                                '[&>div]:bg-red-500': stockPercentage < 20,
+                                '[&>div]:bg-orange-500': stockPercentage >= 20 && stockPercentage < 50,
+                                '[&>div]:bg-green-500': stockPercentage >= 50
+                            }"
+                        />
                     </div>
 
                     <!-- Tags & Category -->
@@ -205,7 +212,8 @@ const handleDelete = () => {
                     <div class="pt-6 space-y-4">
                         <Button 
                             size="lg" 
-                            class="w-full h-16 rounded-lg font-black text-lg shadow-2xl shadow-primary/30 transition-all duration-300 active:scale-95 group bg-primary text-primary-foreground hover:bg-primary/90"
+                            class="w-full h-16 rounded-lg font-black text-lg shadow-2xl shadow-primary/30 transition-all duration-300 active:scale-95 group"
+                            :variant="productData.stock_quantity === 0 ? 'secondary' : 'default'"
                             @click="handleAddToCart"
                             :disabled="adding || productData.stock_quantity === 0"
                         >

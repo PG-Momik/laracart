@@ -73,7 +73,7 @@ const handleRemove = (itemId) => {
                                                 />
                                                 <button 
                                                     @click="handleRemove(item.id)"
-                                                    class="absolute top-2 left-2 size-8 bg-destructive/10 text-destructive rounded-lg opacity-0 scale-75 blur-sm group-hover:opacity-100 group-hover:scale-100 group-hover:blur-0 transition-all duration-300 hover:bg-destructive hover:text-white flex items-center justify-center shadow-lg"
+                                                    class="absolute top-2 left-2 size-10 bg-white shadow-premium text-destructive rounded-full opacity-0 scale-75 blur-sm group-hover:opacity-100 group-hover:scale-100 group-hover:blur-0 transition-all duration-500 hover:bg-destructive hover:text-white flex items-center justify-center z-10 border border-border"
                                                 >
                                                     <Trash2 class="size-4" />
                                                 </button>
@@ -226,7 +226,7 @@ const handleRemove = (itemId) => {
                     <div class="absolute inset-0 bg-primary/10 rounded-full animate-ping delay-300"></div>
                 </div>
                 <h2 class="text-4xl font-black text-foreground tracking-tighter mb-4">Your bag is empty</h2>
-                <p class="text-muted-foreground max-w-sm mb-12 font-medium">It feels a bit lonely here. Let's find some premium products to fill it up!</p>
+                <p class="text-muted-foreground max-w-sm mb-12 font-medium">It feels a bit lonely here. Let's find some products to fill it up!</p>
                 
                 <Link :href="route('products.index')">
                     <Button size="lg" class="h-14 px-12 rounded-xl font-black text-lg shadow-2xl shadow-primary/20 group">

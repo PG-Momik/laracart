@@ -4,6 +4,7 @@ import { useCart } from '@/Composables/useCart';
 import { Card, CardContent, CardFooter } from '@/Components/ui/card';
 import { Button } from '@/Components/ui/button';
 import { Badge } from '@/Components/ui/badge';
+import { Progress } from '@/Components/ui/progress';
 import { ShoppingCart, Loader2, Star } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -40,7 +41,7 @@ const getStatusVariant = (status) => {
                 :alt="product.name"
                 loading="eager"
                 decoding="async"
-                class="h-full w-full object-contain p-6 mix-blend-multiply dark:mix-blend-normal" 
+                class="h-full w-full object-contain p-6" 
             />
 
             
@@ -89,13 +90,12 @@ const getStatusVariant = (status) => {
                 </span>
             </div>
 
-            <!-- Stock Progress Placeholder Style -->
             <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 mt-2">
                 <span class="flex items-center gap-1">
                     <Star class="size-3 fill-yellow-400 text-yellow-400" />
                     <span class="text-foreground">4.8</span>
                 </span>
-                <span>{{ product.stock_quantity }} Unit left</span>
+                <span>{{ product.stock_quantity }} units left</span>
             </div>
         </CardContent>
 
@@ -103,7 +103,8 @@ const getStatusVariant = (status) => {
             <Button 
                 @click="handleAddToCart"
                 :disabled="adding || product.stock_quantity === 0"
-                class="w-full rounded-lg font-bold transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 active:scale-95 group/btn bg-primary text-primary-foreground hover:bg-primary/90"
+                :variant="product.stock_quantity === 0 ? 'secondary' : 'default'"
+                class="w-full rounded-lg font-bold transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 active:scale-95 group/btn"
             >
                 <Loader2 v-if="adding" class="mr-2 size-4 animate-spin" />
                 <ShoppingCart v-else class="mr-2 size-4 transition-transform group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />

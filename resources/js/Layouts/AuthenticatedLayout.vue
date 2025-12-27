@@ -138,7 +138,7 @@ const initials = computed(() => {
                         <Link :href="route('cart.index')" class="relative">
                             <Button variant="ghost" size="icon" class="rounded-full text-muted-foreground hover:text-foreground">
                                 <ShoppingBag class="size-5" />
-                                <span v-if="cart.count > 0" class="absolute -top-1 -right-1 size-5 bg-primary text-[10px] font-black text-primary-foreground rounded-full flex items-center justify-center border-2 border-background animate-in zoom-in-50 duration-300">
+                                <span :key="cart.count" v-if="cart.count > 0" class="absolute -top-1 -right-1 size-5 bg-primary text-[10px] font-black text-primary-foreground rounded-full flex items-center justify-center border-2 border-background animate-in zoom-in-50 duration-300">
                                     {{ cart.count }}
                                 </span>
                             </Button>
@@ -161,7 +161,7 @@ const initials = computed(() => {
                                         </Avatar>
                                     </Button>
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent align="right" class="w-56 rounded-lg shadow-2xl mt-2 border-muted-foreground/10 p-1">
+                                <DropdownMenuContent align="right" class="w-56 rounded-xl shadow-premium mt-2 border-border p-1 bg-popover">
                                     <DropdownMenuLabel class="px-2 py-1.5 text-xs font-black uppercase tracking-widest text-muted-foreground">Account</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem class="rounded-lg my-0.5 flex items-center gap-2 font-bold cursor-pointer" @click="router.visit(route('profile.edit'))">

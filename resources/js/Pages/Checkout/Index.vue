@@ -64,10 +64,13 @@ const formatPrice = (price) => {
 <template>
     <Head title="Secure Checkout" />
 
-    <!-- Premium Notice Banner -->
-    <div class="bg-primary/10 border-b border-primary/20 text-primary px-4 py-2 text-center text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-md sticky top-0 z-50">
-        <span class="bg-primary text-white px-2 py-0.5 rounded-sm mr-2 text-[8px]">Notice</span> 
-        Demo Environment: Payment gateways are simulated for demonstration.
+    <!-- Premium Notice Banner with Candy Roll Animation -->
+    <div class="candy-roll-banner h-12 flex items-center justify-center relative overflow-hidden sticky top-0 z-50 shadow-lg bg-red">
+        <div class="absolute inset-0 opacity-20"></div>
+        <div class="relative flex items-center gap-3 px-4">
+            <span class="bg-primary text-white px-2.5 py-1 rounded-md text-[10px] font-black uppercase tracking-wider animate-pulse shadow-lg">NOTICE</span> 
+            <strong>Cant integrate paypal or stripe due to geo restrictions (Nepal).</strong>
+        </div>
     </div>
 
     <div class="min-h-screen bg-background flex flex-col lg:grid lg:grid-cols-12 relative overflow-hidden">
@@ -81,7 +84,7 @@ const formatPrice = (price) => {
             leave-from-class="opacity-100 backdrop-blur-xl"
             leave-to-class="opacity-0 backdrop-blur-0"
         >
-            <div v-if="processing" class="fixed inset-0 z-[100] bg-background/80 backdrop-blur-xl flex flex-col items-center justify-center p-8 text-center">
+            <div v-if="processing" class="fixed inset-0 z-[100] bg-background/95 backdrop-blur-2xl flex flex-col items-center justify-center p-8 text-center">
                 <div class="mb-12 relative">
                     <div class="size-24 rounded-2xl bg-primary/5 flex items-center justify-center relative overflow-hidden">
                         <Loader2 class="size-12 text-primary animate-spin-slow stroke-[1.5]" />
@@ -126,7 +129,7 @@ const formatPrice = (price) => {
                     <div v-for="item in cart.items" :key="item.id" class="flex items-center gap-4 group">
                         <div class="relative flex-shrink-0">
                             <div class="size-20 bg-card rounded-xl border border-muted-foreground/10 flex items-center justify-center p-3 shadow-soft group-hover:scale-105 transition-transform">
-                                <img :src="item.product?.image_url" :alt="item.product?.name" class="size-full object-contain mix-blend-multiply dark:mix-blend-normal" />
+                                <img :src="item.product?.image_url" :alt="item.product?.name" class="size-full object-contain" />
                             </div>
                             <span class="absolute -top-2 -right-2 size-6 bg-primary text-white text-[10px] font-black rounded-lg flex items-center justify-center border-2 border-muted/50 shadow-lg">
                                 {{ item.quantity }}
@@ -312,6 +315,10 @@ const formatPrice = (price) => {
 </template>
 
 <style scoped>
+.candy-roll-banner {
+    background: #d21d0cc0;
+}
+
 .animate-spin-slow {
     animation: spin 3s linear infinite;
 }

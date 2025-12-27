@@ -58,15 +58,20 @@ class CartController extends Controller
             $product->stock_quantity -= $quantity;
             $product->save();
 
-            $cartItem = CartItem::updateOrCreate(
-                [
+            $cartItem = CartItem::where('user_id', $userId)
+                ->where('product_id', $productId)
+                ->first();
+
+            if ($cartItem) {
+                $cartItem->increment('quantity', $quantity);
+                $cartItem->refresh();
+            } else {
+                $cartItem = CartItem::create([
                     'user_id' => $userId,
                     'product_id' => $productId,
-                ],
-                [
-                    'quantity' => DB::raw("quantity + $quantity"),
-                ]
-            );
+                    'quantity' => $quantity,
+                ]);
+            }
 
             return $cartItem;
         });

@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import ProductCard from '@/Components/ProductCard.vue';
+import ProductCardInlineActions from '@/Components/ProductCardInlineActions.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch, onMounted, onUnmounted, computed } from 'vue';
 // Simple native debounce implementation
@@ -20,6 +21,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/Components/ui/button';
 import { Card } from '@/Components/ui/card';
 import { Badge } from '@/Components/ui/badge';
+import { Progress } from '@/Components/ui/progress';
 import { 
     Search, 
     LayoutGrid, 
@@ -228,7 +230,7 @@ watch(() => props.products.data, (newData) => {
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <h2 class="font-black text-3xl text-foreground leading-tight tracking-tight">Marketplace</h2>
-                        <p class="text-sm text-muted-foreground mt-1 font-medium">Discover our curated collection of premium products</p>
+                        <p class="text-sm text-muted-foreground mt-1 font-medium">Discover our curated collection of products</p>
                     </div>
                     
                     <div class="flex items-center gap-2 group">
@@ -261,7 +263,7 @@ watch(() => props.products.data, (newData) => {
                             <Input 
                                 v-model="search"
                                 @focus="showRecommendations = search.length > 0"
-                                placeholder="Search premium products..." 
+                                placeholder="Search products..." 
                                 class="pl-10 h-12 bg-card border-muted-foreground/10 focus-visible:ring-primary shadow-sm rounded-lg text-base"
                             />
                             <Button 
@@ -286,7 +288,7 @@ watch(() => props.products.data, (newData) => {
                         >
                             <Card 
                                 v-if="showRecommendations && (recommendations.length > 0 || loadingRecommendations)"
-                                class="absolute z-[999] mt-2 w-full shadow-2xl rounded-xl overflow-hidden border-muted-foreground/10 bg-white dark:bg-zinc-950 opacity-100"
+                                class="absolute z-[999] mt-2 w-full shadow-premium rounded-xl overflow-hidden border-border bg-popover"
                             >
                                 <div class="max-h-96 overflow-y-auto p-2 space-y-1">
                                     <div
@@ -328,7 +330,7 @@ watch(() => props.products.data, (newData) => {
                                     <Filter class="size-4 mr-2 text-muted-foreground" />
                                     <SelectValue placeholder="All Categories" />
                                 </SelectTrigger>
-                                <SelectContent class="rounded-lg shadow-2xl border-muted-foreground/10 bg-white dark:bg-zinc-950 opacity-100">
+                                <SelectContent class="rounded-xl shadow-premium border-border bg-popover">
                                     <SelectItem v-for="opt in categoriesOptions" :key="opt.value" :value="opt.value" class="rounded-lg my-1">
                                         {{ opt.label }}
                                     </SelectItem>
@@ -386,12 +388,7 @@ watch(() => props.products.data, (newData) => {
                         <Card v-for="product in allProducts" :key="product.id" class="group p-5 border-none shadow-soft hover:shadow-hover transition-all duration-500 rounded-xl bg-card overflow-hidden">
                             <div class="flex flex-col sm:flex-row gap-8 items-center sm:items-stretch">
                                 <div class="w-full sm:w-48 h-48 flex-shrink-0 bg-muted/30 rounded-lg overflow-hidden group-hover:scale-[1.02] transition-transform duration-500 relative">
-                                    <img :src="product.image_url" :alt="product.name" loading="eager" decoding="async" class="w-full h-full object-contain p-4 mix-blend-multiply dark:mix-blend-normal" />
-                                    <div class="absolute top-2 right-2">
-                                        <Badge variant="secondary" class="bg-white/90 dark:bg-black/90 backdrop-blur font-bold text-[10px] uppercase">
-                                            {{ product.category }}
-                                        </Badge>
-                                    </div>
+                                    <img :src="product.image_url" :alt="product.name" loading="eager" decoding="async" class="w-full h-full object-contain p-4" />
                                 </div>
                                 
                                 <div class="flex-grow flex flex-col pt-2">
@@ -415,27 +412,29 @@ watch(() => props.products.data, (newData) => {
                                         {{ product.description }}
                                     </p>
                                     
-                                    <div class="mt-auto pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-muted-foreground/5">
-                                        <div class="flex items-center gap-6">
-                                            <div class="flex items-center gap-2">
-                                                <div class="size-2 rounded-full shadow-lg" :class="product.stock_quantity > 0 ? 'bg-green-500 shadow-green-500/50' : 'bg-red-500 shadow-red-500/50 blink'"></div>
-                                                <span class="text-xs font-bold text-muted-foreground uppercase tracking-widest">
-                                                    {{ product.stock_status.label }} ({{ product.stock_quantity }}/{{ product.total_stock }})
-                                                </span>
+                                    <div class="mt-auto pt-6 border-t border-muted-foreground/5">
+                                        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-4">
+                                            <div class="flex items-center gap-6">
+                                                <div class="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+                                                    <span>{{ product.stock_status.label }}</span>
+                                                    <span>&bull;</span>
+                                                    <span>{{ product.stock_quantity }} units available</span>
+                                                </div>
+                                                <div class="flex items-center gap-1">
+                                                    <Star class="size-3 fill-yellow-400 text-yellow-400" />
+                                                    <span class="text-xs font-black text-foreground">4.8</span>
+                                                </div>
                                             </div>
-                                            <div class="flex items-center gap-1">
-                                                <Star class="size-3 fill-yellow-400 text-yellow-400" />
-                                                <span class="text-xs font-black text-foreground">4.8</span>
+                                            
+                                            <div class="flex items-center gap-3">
+                                                <Link :href="route('products.show', product.id)">
+                                                    <Button variant="ghost" class="rounded-lg font-bold hover:bg-primary/5 hover:text-primary group/btn">
+                                                        Full Details
+                                                        <ArrowRight class="size-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                                                    </Button>
+                                                </Link>
+                                                <ProductCardInlineActions :product="product" />
                                             </div>
-                                        </div>
-                                        
-                                        <div class="flex items-center gap-3">
-                                            <Link :href="route('products.show', product.id)">
-                                                <Button variant="ghost" class="rounded-lg font-bold hover:bg-primary/5 hover:text-primary group/btn">
-                                                    Full Details
-                                                    <ArrowRight class="size-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                                                </Button>
-                                            </Link>
                                         </div>
                                     </div>
                                 </div>
