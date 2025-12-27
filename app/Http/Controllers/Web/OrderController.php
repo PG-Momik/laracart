@@ -39,7 +39,7 @@ class OrderController extends Controller
             ->firstOrFail();
 
         return Inertia::render('Orders/Show', [
-            'order' => new OrderResource($order),
+            'order' => ['data' => (new OrderResource($order))->resolve()],
         ]);
     }
 }

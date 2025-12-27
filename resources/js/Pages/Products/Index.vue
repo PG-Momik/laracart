@@ -284,7 +284,7 @@ watch(() => props.products.data, (newData) => {
                         >
                             <Card 
                                 v-if="showRecommendations && (recommendations.length > 0 || loadingRecommendations)"
-                                class="absolute z-50 mt-2 w-full shadow-2xl rounded-2xl overflow-hidden border-muted-foreground/10 backdrop-blur-xl bg-card/95"
+                                class="absolute z-[200] mt-2 w-full shadow-2xl rounded-2xl overflow-hidden border-muted-foreground/10 bg-card"
                             >
                                 <div class="max-h-96 overflow-y-auto p-2 space-y-1">
                                     <div
