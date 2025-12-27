@@ -39,9 +39,6 @@ class FetchDummyProducts extends Command
         $batchSize = 30;
         $totalFetched = 0;
 
-        $bar = $this->output->createProgressBar($limit);
-        $bar->start();
-
         try {
             while ($totalFetched < $limit) {
                 $countToFetch = min($batchSize, $limit - $totalFetched);
@@ -70,6 +67,7 @@ class FetchDummyProducts extends Command
                 foreach ($products as $dummyProduct) {
                     $totalStock = rand(15, 20);
 
+                    // no problem even if not optimal for now
                     Product::updateOrCreate(
                         ['name' => Arr::get($dummyProduct, 'title')],
                         [
@@ -85,7 +83,6 @@ class FetchDummyProducts extends Command
                     );
 
                     $totalFetched++;
-                    $bar->advance();
                 }
 
                 if ($totalFetched < $limit) {
@@ -94,7 +91,6 @@ class FetchDummyProducts extends Command
                 }
             }
 
-            $bar->finish();
             $this->newLine();
             $this->info("Successfully synced {$totalFetched} products.");
             Log::info("FetchDummyProducts: Successfully synced {$totalFetched} products.");

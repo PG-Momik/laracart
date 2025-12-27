@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CartItemResource;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -28,7 +29,7 @@ class CartController extends Controller
         });
 
         return Inertia::render('Cart/Index', [
-            'cartItems' => $cartItems,
+            'cartItems' => CartItemResource::collection($cartItems)->resolve(),
             'cartTotal' => $total,
         ]);
     }

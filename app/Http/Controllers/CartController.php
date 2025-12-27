@@ -6,9 +6,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCartItemRequest;
 use App\Http\Requests\UpdateCartItemRequest;
+use App\Http\Resources\CartItemResource;
 use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +33,7 @@ class CartController extends Controller
         });
 
         return response()->json([
-            'data' => $cartItems,
+            'data' => CartItemResource::collection($cartItems),
             'meta' => ['total' => $total]
         ]);
     }
@@ -51,7 +53,7 @@ class CartController extends Controller
             abort(422, 'Insufficient stock');
         }
 
-        return DB::transaction(function () use ($userId, $productId, $product, $quantity) {
+        $cartItem = DB::transaction(function () use ($userId, $productId, $product, $quantity) {
             // Decrease stock immediately
             $product->stock_quantity -= $quantity;
             $product->save();
@@ -66,10 +68,12 @@ class CartController extends Controller
                 ]
             );
 
-            return response()->json([
-                'data' => $cartItem->load('product')
-            ]);
+            return $cartItem;
         });
+
+        return response()->json([
+            'data' => new CartItemResource($cartItem->load('product'))
+        ]);
     }
 
     /**
@@ -84,7 +88,7 @@ class CartController extends Controller
             ->where('user_id', $userId)
             ->firstOrFail();
 
-        return DB::transaction(function () use ($cartItem, $quantity) {
+        DB::transaction(function () use ($cartItem, $quantity) {
             $diff = $quantity - $cartItem->quantity;
 
             if ($diff > 0) {
@@ -101,9 +105,9 @@ class CartController extends Controller
             $cartItem->product->save();
             $cartItem->quantity = $quantity;
             $cartItem->save();
-
-            return response()->json(['message' => 'Cart updated successfully']);
         });
+
+        return response()->json(['message' => 'Cart updated successfully']);
     }
 
     /**

@@ -3,7 +3,15 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import ProductCard from '@/Components/ProductCard.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch, onMounted, onUnmounted, computed } from 'vue';
-import { debounce } from 'lodash';
+// Simple native debounce implementation
+const debounce = (fn, delay) => {
+    let timeoutId;
+    return (...args) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => fn(...args), delay);
+    };
+};
+
 import axios from 'axios';
 
 // Shadcn UI

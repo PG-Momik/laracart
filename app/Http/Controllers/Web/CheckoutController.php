@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CartItemResource;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -40,7 +41,7 @@ class CheckoutController extends Controller
 
         return Inertia::render('Checkout/Index', [
             'cart' => [
-                'items' => $cartItems,
+                'items' => CartItemResource::collection($cartItems)->resolve(),
                 'total' => $total,
                 'user' => $user,
             ]
@@ -76,6 +77,7 @@ class CheckoutController extends Controller
                 ]);
 
                 // Create Order Items
+                // TODO: Optimize this.
                 foreach ($cartItems as $item) {
                     OrderItem::create([
                         'order_id' => $order->id,

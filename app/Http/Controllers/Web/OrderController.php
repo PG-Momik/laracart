@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -17,12 +18,13 @@ class OrderController extends Controller
      */
     public function index(): Response
     {
-        $orders = Order::where('user_id', Auth::id())
+        $orders = Order::with(['items.product'])
+            ->where('user_id', Auth::id())
             ->orderByDesc('created_at')
-            ->get();
+            ->paginate(10);
 
         return Inertia::render('Orders/Index', [
-            'orders' => $orders,
+            'orders' => OrderResource::collection($orders),
         ]);
     }
 
@@ -37,7 +39,7 @@ class OrderController extends Controller
             ->firstOrFail();
 
         return Inertia::render('Orders/Show', [
-            'order' => $order,
+            'order' => new OrderResource($order),
         ]);
     }
 }

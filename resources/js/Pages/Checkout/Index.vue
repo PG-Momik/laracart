@@ -67,7 +67,7 @@ const formatPrice = (price) => {
     <!-- Premium Notice Banner -->
     <div class="bg-primary/10 border-b border-primary/20 text-primary px-4 py-2 text-center text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-md sticky top-0 z-50">
         <span class="bg-primary text-white px-2 py-0.5 rounded-sm mr-2 text-[8px]">Notice</span> 
-        Demo Environment: Payment gateways are simulated for architectural demonstration.
+        Demo Environment: Payment gateways are simulated for demonstration.
     </div>
 
     <div class="min-h-screen bg-background flex flex-col lg:grid lg:grid-cols-12 relative overflow-hidden">
@@ -89,11 +89,11 @@ const formatPrice = (price) => {
                     </div>
                 </div>
                 <h2 class="text-3xl font-black text-foreground tracking-tighter mb-4">
-                    {{ paymentMethod === 'stripe' ? 'Authorizing Card...' : 'Connecting PayPal...' }}
+                    {{ paymentMethod === 'stripe' ? 'Processing Payment...' : 'Connecting PayPal...' }}
                 </h2>
                 <div class="max-w-xs space-y-4">
                     <p class="text-muted-foreground font-medium leading-relaxed">
-                        Please keep this window open while we securely verify your payment details with our global network.
+                        Please keep this window open while we securely verify your payment details.
                     </p>
                     <div class="flex items-center justify-center gap-2 px-4 py-2 bg-muted/50 rounded-full border border-muted-foreground/10">
                         <Lock class="size-3.5 text-primary" />
@@ -109,7 +109,7 @@ const formatPrice = (price) => {
                 <Link :href="route('cart.index')">
                     <Button variant="ghost" class="text-muted-foreground hover:text-primary transition-colors gap-2 -ml-4 px-4 font-bold uppercase tracking-widest text-[10px]">
                         <ChevronLeft class="size-4" />
-                        Return to Bag
+                        Return to Cart
                     </Button>
                 </Link>
 
@@ -150,7 +150,7 @@ const formatPrice = (price) => {
                     </div>
                     <div class="flex justify-between items-center text-sm font-bold">
                         <span class="text-muted-foreground uppercase tracking-widest">Delivery Fee</span>
-                        <Badge class="bg-green-500/10 text-green-600 hover:bg-green-500/20 border-green-500/20 font-black text-[10px]">COMPLIMENTARY</Badge>
+                        <Badge class="bg-green-500/10 text-green-600 hover:bg-green-500/20 border-green-500/20 font-black text-[10px]">FREE</Badge>
                     </div>
                     <Separator class="bg-muted-foreground/10" />
                     <div class="flex justify-between items-center pt-2">
@@ -220,13 +220,13 @@ const formatPrice = (price) => {
                     <div v-if="paymentMethod === 'stripe'" key="stripe" class="space-y-8">
                         <form @submit.prevent="handleSubmit" class="space-y-6">
                             <div class="space-y-2.5">
-                                <Label class="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Contact Metadata</Label>
+                                <Label class="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Contact Information</Label>
                                 <Input v-model="email" type="email" placeholder="email@example.com" class="h-14 rounded-2xl border-muted-foreground/10 bg-muted/20 focus-visible:ring-primary px-5 font-bold" />
                             </div>
 
                             <div class="space-y-2.5">
                                 <div class="flex justify-between items-center ml-1">
-                                    <Label class="text-xs font-black uppercase tracking-widest text-muted-foreground">Encryption Matrix Details</Label>
+                                    <Label class="text-xs font-black uppercase tracking-widest text-muted-foreground">Payment Details</Label>
                                     <div class="flex gap-1">
                                         <div class="w-6 h-4 bg-primary/20 rounded shadow-sm"></div>
                                         <div class="w-6 h-4 bg-primary/10 rounded shadow-sm"></div>
@@ -242,11 +242,11 @@ const formatPrice = (price) => {
                                         <input type="text" disabled value="123" class="w-1/2 px-5 bg-transparent text-base font-bold pointer-events-none text-center" />
                                     </div>
                                 </div>
-                                <p class="text-[10px] text-muted-foreground font-medium italic ml-1">* Using simulated secure card 4242</p>
+                                <p class="text-[10px] text-muted-foreground font-medium italic ml-1">* Using simulated card 4242</p>
                             </div>
 
                             <div class="space-y-2.5">
-                                <Label class="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Authorized Holder</Label>
+                                <Label class="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Cardholder Name</Label>
                                 <Input v-model="cardName" type="text" placeholder="CARDHOLDER NAME" class="h-14 rounded-2xl border-muted-foreground/10 bg-muted/20 focus-visible:ring-primary px-5 font-bold uppercase" />
                             </div>
 
@@ -300,10 +300,10 @@ const formatPrice = (price) => {
                 <div class="pt-8 text-center space-y-4">
                     <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-500/5 text-green-600 rounded-full border border-green-500/10">
                         <ShieldCheck class="size-3" />
-                        <span class="text-[9px] font-black uppercase tracking-[0.1em]">Verified PCI-DSS Compliant</span>
+                        <span class="text-[9px] font-black uppercase tracking-[0.1em]">Secure Checkout</span>
                     </div>
                     <p class="text-[10px] text-muted-foreground font-medium leading-relaxed max-w-sm mx-auto">
-                        Your transaction is processed using end-to-end encryption. Laravel Cart utilizes advanced fraud detection algorithms for every purchase.
+                        Your transaction is processed using secure encryption. Laravel Cart utilizes advanced security checks for every purchase.
                     </p>
                 </div>
             </div>

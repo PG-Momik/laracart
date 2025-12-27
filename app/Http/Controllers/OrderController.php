@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -13,29 +15,26 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(): AnonymousResourceCollection
     {
-        $orders = Order::where('user_id', Auth::id())
+        $orders = Order::with(['items.product'])
+            ->where('user_id', Auth::id())
             ->orderByDesc('created_at')
             ->get();
 
-        return response()->json([
-            'data' => $orders,
-        ]);
+        return OrderResource::collection($orders);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(int $id): JsonResponse
+    public function show(int $id): OrderResource
     {
-        $order = Order::with('items.product')
+        $order = Order::with(['items.product'])
             ->where('id', $id)
             ->where('user_id', Auth::id())
             ->firstOrFail();
 
-        return response()->json([
-            'data' => $order,
-        ]);
+        return new OrderResource($order);
     }
 }
