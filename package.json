@@ -29,5 +29,9 @@
         "vue": "^3.4.0",
         "vue-sonner": "^2.0.9",
         "vue-tsc": "^2.0.24"
+    },
+    "dependencies": {
+        "@types/lodash": "^4.17.21",
+        "lodash": "^4.17.21"
     }
 }

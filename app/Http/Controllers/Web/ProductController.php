@@ -7,31 +7,89 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Http\Resources\ProductResource;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the product listing page.
      */
-    public function index(Request $request): Response
+    public function index(Request $request): Response|\Illuminate\Http\JsonResponse|AnonymousResourceCollection
     {
-        Log::info('Product listing accessed');
+        $filters = $request->only(['search', 'category', 'tags', 'min_price', 'max_price', 'in_stock', 'sort_by', 'sort_order', 'layout', 'page', 'per_page']);
 
-        $filters = $request->all();
-        $search = Arr::get($filters, 'search');
+        $query = Product::query();
 
-        $products = Product::query()
-            ->when($search, function ($query, $search) {
-                $query->where('name', 'like', "%{$search}%");
-            })
-            ->get();
+        // Search
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'ilike', "%{$search}%")
+                    ->orWhere('description', 'ilike', "%{$search}%");
+            });
+        }
+
+        // Category
+        if ($request->filled('category') && $request->input('category') !== 'all') {
+            $query->where('category', $request->input('category'));
+        }
+
+        // Tags
+        if ($request->filled('tags')) {
+            $tags = is_array($request->input('tags')) ? $request->input('tags') : explode(',', $request->input('tags'));
+            foreach ($tags as $tag) {
+                $query->whereJsonContains('tags', $tag);
+            }
+        }
+
+        // Price Range
+        if ($request->filled('min_price')) {
+            $query->where('price', '>=', $request->input('min_price'));
+        }
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', $request->input('max_price'));
+        }
+
+        // In Stock
+        if ($request->boolean('in_stock')) {
+            $query->where('stock_quantity', '>', 0);
+        }
+
+        // Sorting
+        $sortBy = $request->input('sort_by', 'created_at');
+        $sortOrder = $request->input('sort_order', 'desc');
+        $query->orderBy($sortBy, $sortOrder);
+
+        // Pagination
+        $perPage = $request->input('per_page', 12);
+        $products = $query->paginate($perPage)->withQueryString();
+
+        if ($request->has('json') || $request->wantsJson() || ($request->ajax() && !$request->header('X-Inertia'))) {
+            return ProductResource::collection($products);
+        }
+
+        // Fetch unique categories
+        $categories = Product::distinct()->pluck('category')->filter()->values();
 
         return Inertia::render('Products/Index', [
-            'products' => $products,
+            'products' => ProductResource::collection($products),
+            'categories' => $categories,
+            'filters' => $filters,
+        ]);
+    }
+
+    /**
+     * Display the product details page.
+     */
+    public function show(int $id): Response
+    {
+        $product = Product::findOrFail($id);
+
+        return Inertia::render('Products/Show', [
+            'product' => new ProductResource($product),
         ]);
     }
 }

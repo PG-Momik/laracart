@@ -19,6 +19,18 @@ enum StockStatus: string
         };
     }
 
+    /**
+     * Get the color class for UI display
+     */
+    public function color(): string
+    {
+        return match ($this) {
+            self::IN_STOCK => 'green',
+            self::LOW_STOCK => 'yellow',
+            self::OUT_OF_STOCK => 'red',
+        };
+    }
+
     public static function fromQuantity(int $quantity, int $threshold = 10): self
     {
         if ($quantity <= 0) {

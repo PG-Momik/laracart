@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // E-Commerce Routes
-    Route::get('/products', [\App\Http\Controllers\Web\ProductController::class, 'index'])->name('products.index');
+    Route::resource('products', \App\Http\Controllers\Web\ProductController::class)->only(['index', 'show']);
     Route::get('/cart', [\App\Http\Controllers\Web\CartController::class, 'index'])->name('cart.index');
     Route::get('/checkout', [\App\Http\Controllers\Web\CheckoutController::class, 'index'])->name('checkout.index');
 
