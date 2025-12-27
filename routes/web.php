@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
 
     // E-Commerce Routes
     Route::get('/products', [\App\Http\Controllers\Web\ProductController::class, 'index'])->name('products.index');
+    Route::get('/cart', [\App\Http\Controllers\Web\CartController::class, 'index'])->name('cart.index');
 });
 
 require __DIR__ . '/auth.php';
