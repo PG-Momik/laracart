@@ -10,5 +10,8 @@ Route::middleware(['web', 'auth'])->group(function () {
     });
 
     // Cart Routes
-    Route::apiResource('cart', CartController::class)->only(['index', 'store', 'update', 'destroy']);
+    Route::apiResource('cart', CartController::class)->names('api.cart')->only(['index', 'store', 'update', 'destroy']);
+
+    // Order Routes
+    Route::post('/checkout', [\App\Http\Controllers\CheckoutController::class, 'store'])->name('api.checkout.store');
 });
