@@ -294,7 +294,7 @@ watch(() => props.products.data, (newData) => {
                                         class="flex items-center gap-4 p-3 hover:bg-muted/50 cursor-pointer rounded-xl transition-colors group/item"
                                     >
                                         <div class="size-12 rounded-lg overflow-hidden bg-muted flex-shrink-0 border border-muted-foreground/10">
-                                            <img :src="item.image_url" class="w-full h-full object-contain p-1 mix-blend-multiply" />
+                                            <img :src="item.image_url" loading="eager" decoding="async" class="w-full h-full object-contain p-1 mix-blend-multiply" />
                                         </div>
                                         <div class="flex-grow min-w-0">
                                             <p class="text-sm font-bold text-foreground truncate group-hover/item:text-primary transition-colors">{{ item.name }}</p>
@@ -326,7 +326,7 @@ watch(() => props.products.data, (newData) => {
                                     <Filter class="size-4 mr-2 text-muted-foreground" />
                                     <SelectValue placeholder="All Categories" />
                                 </SelectTrigger>
-                                <SelectContent class="rounded-xl shadow-2xl border-muted-foreground/10">
+                                <SelectContent class="rounded-xl shadow-2xl border-muted-foreground/10 bg-card">
                                     <SelectItem v-for="opt in categoriesOptions" :key="opt.value" :value="opt.value" class="rounded-lg my-1">
                                         {{ opt.label }}
                                     </SelectItem>
@@ -384,7 +384,7 @@ watch(() => props.products.data, (newData) => {
                         <Card v-for="product in allProducts" :key="product.id" class="group p-5 border-none shadow-soft hover:shadow-hover transition-all duration-500 rounded-2xl bg-card overflow-hidden">
                             <div class="flex flex-col sm:flex-row gap-8 items-center sm:items-stretch">
                                 <div class="w-full sm:w-48 h-48 flex-shrink-0 bg-muted/30 rounded-xl overflow-hidden group-hover:scale-[1.02] transition-transform duration-500 relative">
-                                    <img :src="product.image_url" :alt="product.name" class="w-full h-full object-contain p-4 mix-blend-multiply dark:mix-blend-normal" />
+                                    <img :src="product.image_url" :alt="product.name" loading="eager" decoding="async" class="w-full h-full object-contain p-4 mix-blend-multiply dark:mix-blend-normal" />
                                     <div class="absolute top-2 right-2">
                                         <Badge variant="secondary" class="bg-white/90 dark:bg-black/90 backdrop-blur font-bold text-[10px] uppercase">
                                             {{ product.category }}

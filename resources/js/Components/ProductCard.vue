@@ -37,9 +37,12 @@ const getStatusVariant = (status) => {
             <!-- Product Image -->
             <img 
                 :src="product.image_url" 
-                :alt="product.name" 
+                :alt="product.name"
+                loading="eager"
+                decoding="async"
                 class="h-full w-full object-contain p-6 transition-transform duration-700 group-hover:scale-110 mix-blend-multiply dark:mix-blend-normal" 
             />
+
             
             <!-- Quick Badges -->
             <div class="absolute top-3 left-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
