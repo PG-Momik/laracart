@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -11,7 +10,7 @@ Route::get('/', function () {
             ? redirect()->route('dashboard')
             : redirect()->route('products.index');
     }
-    return redirect()->route('login');
+    return redirect()->route('l ogin');
 });
 
 Route::middleware('auth')->group(function () {
@@ -25,29 +24,28 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\Web\DashboardController::class, 'index'])->name('dashboard');
 
         // Rate limit admin commands to prevent abuse
-        Route::middleware('throttle:10,1')->group(function () {
-            Route::post('/dashboard/command', [\App\Http\Controllers\Web\DashboardController::class, 'runCommand'])->name('dashboard.command');
-        });
+        // Route::middleware('throttle:10,1')->group(function () {
+        Route::post('/dashboard/command', [\App\Http\Controllers\Web\DashboardController::class, 'runCommand'])->name('dashboard.command');
+        // });
 
         // Rate limit destructive operations
-        Route::middleware('throttle:30,1')->group(function () {
-            Route::delete('/products/{product}', [\App\Http\Controllers\Web\ProductController::class, 'destroy'])->name('products.destroy');
-            Route::post('/products/{product}/refill', [\App\Http\Controllers\Web\ProductController::class, 'refill'])->name('products.refill');
-        });
+        // Route::middleware('throttle:30,1')->group(function () {
+        Route::delete('/products/{product}', [\App\Http\Controllers\Web\ProductController::class, 'destroy'])->name('products.destroy');
+        Route::post('/products/{product}/refill', [\App\Http\Controllers\Web\ProductController::class, 'refill'])->name('products.refill');
+        // });
     });
 
     // Customer Only Sections
     Route::middleware('customer')->group(function () {
         Route::get('/products', [\App\Http\Controllers\Web\ProductController::class, 'index'])->name('products.index');
         Route::get('/products/{product}', [\App\Http\Controllers\Web\ProductController::class, 'show'])->name('products.show');
-
         Route::get('/cart', [\App\Http\Controllers\Web\CartController::class, 'index'])->name('cart.index');
 
         // Rate limit checkout to prevent spam orders
-        Route::middleware('throttle:10,1')->group(function () {
-            Route::get('/checkout', [\App\Http\Controllers\Web\CheckoutController::class, 'index'])->name('checkout.index');
-            Route::post('/checkout', [\App\Http\Controllers\Web\CheckoutController::class, 'store'])->name('checkout.store');
-        });
+        // Route::middleware('throttle:10,1')->group(function () {
+        Route::get('/checkout', [\App\Http\Controllers\Web\CheckoutController::class, 'index'])->name('checkout.index');
+        Route::post('/checkout', [\App\Http\Controllers\Web\CheckoutController::class, 'store'])->name('checkout.store');
+        // });
 
         Route::get('/orders', [\App\Http\Controllers\Web\OrderController::class, 'index'])->name('orders.index');
         Route::get('/orders/{id}', [\App\Http\Controllers\Web\OrderController::class, 'show'])->name('orders.show');

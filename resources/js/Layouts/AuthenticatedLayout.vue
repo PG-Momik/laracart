@@ -300,12 +300,11 @@ onMounted(() => {
         </main>
 
         <!-- Footer -->
-        <footer class="mt-20 py-12 border-t bg-muted/30">
-            <div class="max-w-7xl mx-auto px-4 text-center">
-                <p class="text-xs font-black text-muted-foreground tracking-[0.3em] uppercase">Lara Cart &copy; 2024</p>
+        <footer class="mt-20 py-12 border-t">
+            <div class="max-w-7xl mx-auto px-4">
+                <p class="text-sm font-mono text-muted-foreground">&copy; 2025 Momik Shrestha. Built with purpose.</p>
             </div>
         </footer>
-
         <!-- Order Success Dialog -->
         <Dialog :open="successModalOpen" @update:open="successModalOpen = $event">
             <DialogContent class="sm:max-w-md rounded-xl border-none shadow-2xl p-10 overflow-hidden">
