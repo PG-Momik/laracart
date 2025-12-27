@@ -40,7 +40,7 @@ const getStatusVariant = (status) => {
                 :alt="product.name"
                 loading="eager"
                 decoding="async"
-                class="h-full w-full object-contain p-6 transition-transform duration-700 group-hover:scale-110 mix-blend-multiply dark:mix-blend-normal" 
+                class="h-full w-full object-contain p-6 mix-blend-multiply dark:mix-blend-normal" 
             />
 
             
