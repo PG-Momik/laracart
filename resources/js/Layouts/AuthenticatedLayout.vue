@@ -22,7 +22,6 @@ import {
     DialogDescription,
     DialogFooter
 } from '@/Components/ui/dialog';
-import { 
     ShoppingBag, 
     User, 
     LogOut, 
@@ -32,7 +31,9 @@ import {
     CheckCircle2,
     Menu,
     X,
-    Activity
+    Activity,
+    Shield,
+    ShieldCheck
 } from 'lucide-vue-next';
 
 const showingNavigationDropdown = ref(false);
@@ -87,6 +88,17 @@ const initials = computed(() => {
     return page.props.auth.user.name.split(' ').map(n => n[0]).join('').toUpperCase();
 });
 
+const isAdmin = computed(() => !!page.props.auth.user.is_admin);
+
+const togglePersona = () => {
+    router.post(route('profile.toggle-persona'), {}, {
+        preserveScroll: true,
+        onSuccess: () => {
+            toast.success(`Switched to ${!isAdmin.value ? 'Admin' : 'Customer'} View`);
+        }
+    });
+};
+
 </script>
 
 <template>
@@ -125,7 +137,7 @@ const initials = computed(() => {
                                     My Orders
                                 </Button>
                             </Link>
-                            <a href="/horizon" target="_blank">
+                            <a v-if="isAdmin" href="/horizon" target="_blank">
                                 <Button variant="ghost" class="text-muted-foreground hover:bg-muted hover:text-foreground rounded-lg font-bold">
                                     <Activity class="size-4 mr-2" />
                                     Queues
@@ -136,6 +148,19 @@ const initials = computed(() => {
 
                     <!-- Right Section: Cart & User -->
                     <div class="flex items-center gap-2">
+                        <!-- Persona Switcher -->
+                        <div class="hidden lg:flex items-center mr-2">
+                            <Button 
+                                variant="outline" 
+                                size="sm" 
+                                @click="togglePersona"
+                                :class="[isAdmin ? 'border-primary/50 bg-primary/5 text-primary' : 'text-muted-foreground']"
+                                class="rounded-full font-black text-[10px] uppercase tracking-wider gap-2 h-8 px-4 border-dashed"
+                            >
+                                <component :is="isAdmin ? ShieldCheck : Shield" class="size-3" />
+                                {{ isAdmin ? 'Admin Mode' : 'Customer Mode' }}
+                            </Button>
+                        </div>
 
 
                         <Link :href="route('cart.index')" class="relative">

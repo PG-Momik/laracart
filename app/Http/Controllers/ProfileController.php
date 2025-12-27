@@ -60,4 +60,16 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    /**
+     * Toggle the user's role between Admin and Customer for demo purposes.
+     */
+    public function togglePersona(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+        $user->is_admin = !$user->is_admin;
+        $user->save();
+
+        return Redirect::back();
+    }
 }

@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import { useCart } from '@/Composables/useCart';
 import { computed, ref, watch } from 'vue';
 
@@ -35,6 +35,9 @@ import {
 const props = defineProps({
     product: Object,
 });
+
+const page = usePage();
+const isAdmin = computed(() => !!page.props.auth.user.is_admin);
 
 const productData = ref({ ...props.product.data });
 
@@ -222,7 +225,7 @@ const handleDelete = () => {
                             {{ adding ? 'Processing Request...' : (productData.stock_quantity === 0 ? 'Out of Stock' : 'Add to Marketplace Cart') }}
                         </Button>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-muted-foreground/10">
+                        <div v-if="isAdmin" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-muted-foreground/10">
                             <Dialog :open="refillOpen" @update:open="refillOpen = $event">
                                 <DialogTrigger as-child>
                                     <Button variant="outline" class="rounded-lg font-bold h-12 border-muted-foreground/20 hover:bg-muted group">
