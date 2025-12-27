@@ -238,8 +238,8 @@ watch(() => props.products.data, (newData) => {
                             variant="outline" 
                             size="icon" 
                             @click="layout = 'grid'"
-                            class="rounded-lg transition-all duration-300"
-                            :class="layout === 'grid' ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20' : 'bg-background text-muted-foreground hover:bg-muted border-muted-foreground/10'"
+                            class="rounded-lg transition-all duration-300 border-border"
+                            :class="layout === 'grid' ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20' : 'bg-muted/30 text-muted-foreground hover:bg-muted'"
                         >
                             <LayoutGrid class="size-4" />
                         </Button>
@@ -247,8 +247,8 @@ watch(() => props.products.data, (newData) => {
                             variant="outline" 
                             size="icon" 
                             @click="layout = 'list'"
-                            class="rounded-lg transition-all duration-300"
-                            :class="layout === 'list' ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20' : 'bg-background text-muted-foreground hover:bg-muted border-muted-foreground/10'"
+                            class="rounded-lg transition-all duration-300 border-border"
+                            :class="layout === 'list' ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20' : 'bg-muted/30 text-muted-foreground hover:bg-muted'"
                         >
                             <List class="size-4" />
                         </Button>

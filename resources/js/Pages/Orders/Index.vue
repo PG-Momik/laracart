@@ -123,7 +123,7 @@ const getStatusClasses = (color) => {
 
                             <div class="flex items-center gap-3 w-full sm:w-auto">
                                 <Link :href="route('orders.show', order.id)" class="w-full sm:w-auto">
-                                    <Button size="lg" variant="outline" class="w-full h-14 rounded-xl font-black text-xs uppercase tracking-widest gap-2 bg-background/50 hover:bg-primary hover:text-white transition-all duration-300 border-muted-foreground/10">
+                                    <Button size="lg" variant="outline" class="w-full h-14 rounded-xl font-black text-xs uppercase tracking-widest gap-2 bg-background/50 hover:bg-primary hover:text-primary-foreground transition-all duration-300 border-muted-foreground/10">
                                         Review Details
                                         <ExternalLink class="size-4" />
                                     </Button>

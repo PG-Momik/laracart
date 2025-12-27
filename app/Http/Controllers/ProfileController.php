@@ -70,6 +70,12 @@ class ProfileController extends Controller
         $user->is_admin = !$user->is_admin;
         $user->save();
 
-        return Redirect::back();
+        $role = $user->is_admin ? 'Admin' : 'Consumer';
+
+        if ($user->is_admin) {
+            return Redirect::route('dashboard');
+        }
+
+        return Redirect::route('products.index');
     }
 }

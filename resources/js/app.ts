@@ -1,4 +1,5 @@
 import '../css/app.css';
+import 'vue-sonner/style.css';
 import './bootstrap';
 
 // Initialize theme before any component renders
@@ -6,7 +7,7 @@ const initTheme = () => {
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-    
+
     if (shouldBeDark) {
         document.documentElement.classList.add('dark');
     } else {

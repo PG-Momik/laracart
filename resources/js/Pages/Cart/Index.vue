@@ -169,7 +169,7 @@ const handleRemove = (itemId) => {
                                 <div class="space-y-4">
                                     <div class="flex justify-between items-center text-sm">
                                         <span class="font-bold text-muted-foreground uppercase tracking-widest">Subtotal</span>
-                                        <span class="font-black text-foreground">${{ (cart.total).toFixed(2) }}</span>
+                                        <span class="font-black text-foreground">${{ Number(cart.total || 0).toFixed(2) }}</span>
                                     </div>
                                     <div class="flex justify-between items-center text-sm">
                                         <span class="font-bold text-muted-foreground uppercase tracking-widest">Shipping Estimate</span>
@@ -183,7 +183,7 @@ const handleRemove = (itemId) => {
                                 <Separator class="bg-muted-foreground/10" />
                                 <div class="flex justify-between items-center">
                                     <span class="text-lg font-black uppercase tracking-widest">Total Amount</span>
-                                    <span class="text-3xl font-black text-primary transition-all duration-500">${{ (cart.total).toFixed(2) }}</span>
+                                    <span class="text-3xl font-black text-primary transition-all duration-500">${{ Number(cart.total || 0).toFixed(2) }}</span>
                                 </div>
                             </CardContent>
                             <CardFooter class="flex flex-col gap-3 p-6 pt-0">

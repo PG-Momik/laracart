@@ -65,11 +65,10 @@ const formatPrice = (price) => {
     <Head title="Secure Checkout" />
 
     <!-- Premium Notice Banner with Candy Roll Animation -->
-    <div class="candy-roll-banner h-12 flex items-center justify-center relative overflow-hidden sticky top-0 z-50 shadow-lg bg-red">
-        <div class="absolute inset-0 opacity-20"></div>
+    <div class="h-12 flex items-center justify-center relative overflow-hidden sticky top-0 z-50 shadow-lg bg-destructive/10 border-b border-destructive/20 backdrop-blur-md">
         <div class="relative flex items-center gap-3 px-4">
-            <span class="bg-primary text-white px-2.5 py-1 rounded-md text-[10px] font-black uppercase tracking-wider animate-pulse shadow-lg">NOTICE</span> 
-            <strong>Cant integrate paypal or stripe due to geo restrictions (Nepal).</strong>
+            <span class="bg-destructive text-destructive-foreground px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider shadow-lg">NOTICE</span> 
+            <strong class="text-xs font-bold text-foreground opacity-90">Payment processors are restricted in this region (Nepal). Simulated mode active.</strong>
         </div>
     </div>
 
@@ -131,7 +130,7 @@ const formatPrice = (price) => {
                             <div class="size-20 bg-card rounded-xl border border-muted-foreground/10 flex items-center justify-center p-3 shadow-soft group-hover:scale-105 transition-transform">
                                 <img :src="item.product?.image_url" :alt="item.product?.name" class="size-full object-contain" />
                             </div>
-                            <span class="absolute -top-2 -right-2 size-6 bg-primary text-white text-[10px] font-black rounded-lg flex items-center justify-center border-2 border-muted/50 shadow-lg">
+                            <span class="absolute -top-2 -right-2 size-6 bg-primary text-primary-foreground text-[10px] font-black rounded-lg flex items-center justify-center border-2 border-background shadow-lg">
                                 {{ item.quantity }}
                             </span>
                         </div>
@@ -241,8 +240,8 @@ const formatPrice = (price) => {
                                         <input type="text" disabled value="4242 4242 4242 4242" class="flex-grow bg-transparent border-none p-0 text-base font-bold tracking-widest pointer-events-none" />
                                     </div>
                                     <div class="flex h-14 bg-background/30">
-                                        <input type="text" disabled value="12 / 28" class="w-1/2 px-5 bg-transparent border-r border-muted-foreground/10 text-base font-bold pointer-events-none text-center" />
-                                        <input type="text" disabled value="123" class="w-1/2 px-5 bg-transparent text-base font-bold pointer-events-none text-center" />
+                                        <input type="text" disabled value="12 / 28" class="w-1/2 px-5 bg-transparent border-r border-muted-foreground/10 text-base font-bold pointer-events-none text-center rounded-bl-2xl" />
+                                        <input type="text" disabled value="123" class="w-1/2 px-5 bg-transparent text-base font-bold pointer-events-none text-center rounded-br-2xl" />
                                     </div>
                                 </div>
                                 <p class="text-[10px] text-muted-foreground font-medium italic ml-1">* Using simulated card 4242</p>
@@ -265,7 +264,7 @@ const formatPrice = (price) => {
                         <div class="bg-primary/5 border border-primary/20 rounded-2xl p-6 flex items-start gap-4">
                             <Info class="size-5 text-primary flex-shrink-0 mt-0.5" />
                             <p class="font-bold text-muted-foreground leading-relaxed text-sm">
-                                You will be redirected to PayPal's secure portal to authorize this transaction. Laravel Cart never stores your login credentials.
+                                You will be redirected to PayPal's secure portal to authorize this transaction. Lara Cart never stores your login credentials.
                             </p>
                         </div>
                         
@@ -306,7 +305,7 @@ const formatPrice = (price) => {
                         <span class="text-[9px] font-black uppercase tracking-[0.1em]">Secure Checkout</span>
                     </div>
                     <p class="text-[10px] text-muted-foreground font-medium leading-relaxed max-w-sm mx-auto">
-                        Your transaction is processed using secure encryption. Laravel Cart utilizes advanced security checks for every purchase.
+                        Your transaction is processed using secure encryption. Lara Cart utilizes advanced security checks for every purchase.
                     </p>
                 </div>
             </div>
@@ -315,9 +314,7 @@ const formatPrice = (price) => {
 </template>
 
 <style scoped>
-.candy-roll-banner {
-    background: #d21d0cc0;
-}
+
 
 .animate-spin-slow {
     animation: spin 3s linear infinite;

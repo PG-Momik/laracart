@@ -19,7 +19,7 @@ class SendRestockMailCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:send-restock-mail {product_id} {quantity=10}';
+    protected $signature = 'app:send-restock-mail {product_id} {email} {quantity=10}';
 
     /**
      * The console command description.
@@ -34,6 +34,7 @@ class SendRestockMailCommand extends Command
     public function handle()
     {
         $productId = $this->argument('product_id');
+        $email = $this->argument('email');
         $quantity = (int) $this->argument('quantity');
 
         $product = Product::find($productId);
@@ -43,11 +44,11 @@ class SendRestockMailCommand extends Command
             return Command::FAILURE;
         }
 
-        $this->info("Sending restock mail for {$product->name} (+{$quantity} units) to momik.shrestha@gmail.com...");
+        $this->info("Queuing restock mail for {$product->name} (+{$quantity} units) to {$email}...");
 
-        Mail::to('momik.shrestha@gmail.com')->send(new ProductRestockMail($product, $quantity));
+        Mail::to($email)->queue(new ProductRestockMail($product, $quantity));
 
-        $this->info('Email sent successfully.');
+        $this->info('Email queued successfully.');
 
         return Command::SUCCESS;
     }

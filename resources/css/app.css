@@ -96,8 +96,8 @@
 }
 
 ::selection {
-  background-color: hsl(var(--primary) / 0.15);
-  color: hsl(var(--primary-foreground));
+  background-color: hsl(var(--foreground));
+  color: hsl(var(--background));
 }
 
 /* Custom Scrollbar - Premium styling */

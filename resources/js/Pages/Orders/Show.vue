@@ -161,20 +161,18 @@ const getStatusClasses = (color) => {
                     </div>
                 </CardContent>
 
-                <!-- Thank You Banner -->
                 <div class="bg-primary p-8 sm:p-12 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-8 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-primary/20 animate-pulse"></div>
                     <div class="relative z-10 space-y-2">
                         <div class="flex items-center gap-3 justify-center sm:justify-start">
-                            <CheckCircle2 class="size-6 text-white" />
-                            <h3 class="text-2xl font-black text-white tracking-tight">Order Successfully Authorized</h3>
+                            <CheckCircle2 class="size-6 text-primary-foreground" />
+                            <h3 class="text-2xl font-black text-primary-foreground tracking-tight">Order Successfully Authorized</h3>
                         </div>
-                        <p class="text-primary-foreground/80 font-medium text-sm">Our logistics experts are preparing your shipment for express delivery.</p>
+                        <p class="text-primary-foreground/70 font-medium text-sm">Our logistics experts are preparing your shipment for express delivery.</p>
                     </div>
                     <Link :href="route('products.index')" class="relative z-10 w-full sm:w-auto">
-                        <Button size="lg" variant="secondary" class="w-full sm:px-10 h-14 rounded-xl font-black text-sm uppercase tracking-widest shadow-xl shadow-black/10 group transition-all hover:scale-105 active:scale-95">
+                        <Button size="lg" variant="primary" class="w-full sm:px-10 h-14 rounded-xl font-black text-sm uppercase tracking-widest shadow-xl shadow-black/10 bg-secondary">
                             Re-enter Marketplace
-                            <ArrowRight class="ml-2 size-4 transition-transform group-hover:translate-x-1" />
+                            <ArrowRight class="ml-2 size-4" />
                         </Button>
                     </Link>
                 </div>

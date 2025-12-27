@@ -16,7 +16,7 @@ class CartItemResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'product' => (new ProductResource($this->whenLoaded('product')))->resolve(),
+            'product' => $this->product ? (new ProductResource($this->product))->resolve() : null,
             'quantity' => $this->quantity,
             'subtotal' => (float) $this->subtotal,
             'formatted_subtotal' => '$' . number_format((float) $this->subtotal, 2),

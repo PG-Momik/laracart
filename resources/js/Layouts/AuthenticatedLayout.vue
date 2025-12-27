@@ -92,14 +92,14 @@ const initials = computed(() => {
     return page.props.auth.user.name.split(' ').map(n => n[0]).join('').toUpperCase();
 });
 
-const isAdmin = computed(() => !!page.props.auth.user.is_admin);
+const isAdmin = computed(() => {
+    const is_admin = page.props.auth.user?.is_admin;
+    return is_admin === true || is_admin === 1 || is_admin === '1';
+});
 
 const togglePersona = () => {
     router.post(route('profile.toggle-persona'), {}, {
         preserveScroll: true,
-        onSuccess: () => {
-            toast.success(`Switched to ${!isAdmin.value ? 'Admin' : 'Customer'} View`);
-        }
     });
 };
 
@@ -114,7 +114,12 @@ onMounted(() => {
 
 <template>
     <div class="min-h-screen bg-background font-sans antialiased selection:bg-primary/10 selection:text-primary">
-        <Toaster position="top-right" rich-colors close-button />
+        <Toaster 
+            :theme="isDark ? 'dark' : 'light'" 
+            position="bottom-right" 
+            rich-colors 
+            close-button 
+        />
 
         <!-- Navigation -->
         <nav class="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur-xl transition-all duration-300">
@@ -122,45 +127,54 @@ onMounted(() => {
                 <div class="flex justify-between h-16 items-center">
                     <!-- Left Section: Logo & Nav -->
                     <div class="flex items-center gap-8">
-                        <Link :href="route('dashboard')" class="flex items-center gap-2 group">
-                            <div class="size-9 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/20 group-hover:rotate-12 transition-transform duration-300">
-                                <ShoppingBag class="size-5 text-primary-foreground" />
-                            </div>
-                            <span class="text-xl font-black tracking-tighter text-foreground hidden sm:block">LARAVEL CART</span>
+                        <Link :href="isAdmin ? route('dashboard') : route('products.index')" class="flex items-center gap-2 group">
+                            <span class="text-xl font-black tracking-tighter text-foreground hidden sm:block">Lara Cart</span>
                         </Link>
 
                         <div class="hidden md:flex items-center gap-1">
-                            <Link :href="route('dashboard')">
-                                <Button variant="ghost" :class="[route().current('dashboard') ? 'bg-muted text-foreground' : 'text-muted-foreground']" class="rounded-lg font-bold">
-                                    <LayoutDashboard class="size-4 mr-2" />
-                                    Dashboard
-                                </Button>
-                            </Link>
-                            <Link :href="route('products.index')">
-                                <Button variant="ghost" :class="[route().current('products.*') ? 'bg-muted text-foreground' : 'text-muted-foreground']" class="rounded-lg font-bold">
-                                    <Package class="size-4 mr-2" />
-                                    Marketplace
-                                </Button>
-                            </Link>
-                            <Link :href="route('orders.index')">
-                                <Button variant="ghost" :class="[route().current('orders.*') ? 'bg-muted text-foreground' : 'text-muted-foreground']" class="rounded-lg font-bold">
-                                    <History class="size-4 mr-2" />
-                                    My Orders
-                                </Button>
-                            </Link>
-                            <a v-if="isAdmin" href="/horizon" target="_blank">
-                                <Button variant="ghost" class="text-muted-foreground hover:bg-muted hover:text-foreground rounded-lg font-bold">
-                                    <Activity class="size-4 mr-2" />
-                                    Queues
-                                </Button>
-                            </a>
+                            <!-- Admin View -->
+                            <template v-if="isAdmin">
+                                <Link :href="route('dashboard')">
+                                    <Button variant="ghost" :class="[route().current('dashboard') ? 'bg-muted text-foreground' : 'text-muted-foreground']" class="rounded-lg font-bold">
+                                        <LayoutDashboard class="size-4 mr-2" />
+                                        Dashboard
+                                    </Button>
+                                </Link>
+                            </template>
+
+                            <!-- Customer View -->
+                            <template v-else>
+                                <Link :href="route('products.index')">
+                                    <Button variant="ghost" :class="[route().current('products.*') ? 'bg-muted text-foreground' : 'text-muted-foreground']" class="rounded-lg font-bold">
+                                        <Package class="size-4 mr-2" />
+                                        Marketplace
+                                    </Button>
+                                </Link>
+                                <Link :href="route('orders.index')">
+                                    <Button variant="ghost" :class="[route().current('orders.*') ? 'bg-muted text-foreground' : 'text-muted-foreground']" class="rounded-lg font-bold">
+                                        <History class="size-4 mr-2" />
+                                        My Orders
+                                    </Button>
+                                </Link>
+                            </template>
                         </div>
                     </div>
 
                     <!-- Right Section: Cart & User -->
                     <div class="flex items-center gap-2">
-                        <!-- Persona Switcher -->
+                        <!-- Persona Switcher & Theme Toggle Swap -->
                         <div class="hidden lg:flex items-center gap-2 mr-2">
+                            <Button 
+                                variant="outline" 
+                                size="sm" 
+                                @click="togglePersona"
+                                :class="[isAdmin ? 'border-primary/50 bg-primary/20 text-primary' : 'text-muted-foreground']"
+                                class="rounded-full font-black text-[10px] uppercase tracking-wider gap-2 h-8 px-4 border-dashed"
+                            >
+                                <component :is="isAdmin ? ShieldCheck : Shield" class="size-3" />
+                                {{ isAdmin ? 'Admin Mode' : 'Consumer Mode' }}
+                            </Button>
+
                             <Button
                                 variant="ghost"
                                 size="icon"
@@ -170,21 +184,10 @@ onMounted(() => {
                                 <Sun v-if="isDark" class="size-5" />
                                 <Moon v-else class="size-5" />
                             </Button>
-
-                            <Button 
-                                variant="outline" 
-                                size="sm" 
-                                @click="togglePersona"
-                                :class="[isAdmin ? 'border-primary/50 bg-primary/20 text-primary' : 'text-muted-foreground']"
-                                class="rounded-full font-black text-[10px] uppercase tracking-wider gap-2 h-8 px-4 border-dashed"
-                            >
-                                <component :is="isAdmin ? ShieldCheck : Shield" class="size-3" />
-                                {{ isAdmin ? 'Admin Mode' : 'Customer Mode' }}
-                            </Button>
                         </div>
 
 
-                        <Link :href="route('cart.index')" class="relative">
+                        <Link v-if="!isAdmin" :href="route('cart.index')" class="relative">
                             <Button variant="ghost" size="icon" class="rounded-full text-muted-foreground hover:text-foreground">
                                 <ShoppingBag class="size-5" />
                                 <span :key="cart.count" v-if="cart.count > 0" class="absolute -top-1 -right-1 size-5 bg-primary text-[10px] font-black text-primary-foreground rounded-full flex items-center justify-center border-2 border-background animate-in zoom-in-50 duration-300">
@@ -199,22 +202,28 @@ onMounted(() => {
                         <div class="flex items-center">
                             <DropdownMenu>
                                 <DropdownMenuTrigger as-child>
-                                    <Button variant="ghost" class="p-1 space-x-2 rounded-full hover:bg-muted transition-colors">
-                                        <div class="text-right mr-2 hidden lg:block">
-                                            <p class="text-xs font-black text-foreground leading-none">{{ $page.props.auth.user.name }}</p>
-                                            <p class="text-[10px] font-bold text-muted-foreground mt-0.5 leading-none">{{ $page.props.auth.user.email }}</p>
-                                        </div>
-                                        <Avatar class="size-8 border-2 border-primary/10 transition-transform hover:scale-105">
+                                    <Button variant="ghost" class="p-1 rounded-full hover:bg-muted transition-colors">
+                                        <Avatar class="size-8 border-2 border-border transition-transform hover:scale-105">
                                             <AvatarImage src="" />
-                                            <AvatarFallback class="bg-primary/5 text-primary text-[10px] font-black">{{ initials }}</AvatarFallback>
+                                            <AvatarFallback class="bg-muted text-foreground text-[10px] font-black">{{ initials }}</AvatarFallback>
                                         </Avatar>
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="right" class="w-56 rounded-xl shadow-premium mt-2 border-border p-1">
+                                    <div class="px-2 py-2 flex flex-col">
+                                        <p class="text-xs font-black text-foreground truncate">{{ $page.props.auth.user.name }}</p>
+                                        <p class="text-[10px] font-bold text-muted-foreground truncate">{{ $page.props.auth.user.email }}</p>
+                                    </div>
+                                    <DropdownMenuSeparator />
                                     <DropdownMenuLabel class="px-2 py-1.5 text-xs font-black uppercase tracking-widest text-muted-foreground">Account</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem class="rounded-lg my-0.5 flex items-center gap-2 font-bold cursor-pointer text-popover-foreground" @click="router.visit(route('profile.edit'))">
                                         <User class="size-4" /> Profile
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem v-if="isAdmin" as-child class="rounded-lg my-0.5 flex items-center gap-2 font-bold cursor-pointer text-popover-foreground">
+                                        <a href="/horizon" target="_blank" class="flex items-center gap-2">
+                                            <Activity class="size-4" /> Horizon
+                                        </a>
                                     </DropdownMenuItem>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem class="rounded-lg my-0.5 flex items-center gap-2 font-bold text-destructive focus:text-destructive focus:bg-destructive/5 cursor-pointer" @click="router.post(route('logout'))">
@@ -246,26 +255,33 @@ onMounted(() => {
             >
                 <div v-if="showingNavigationDropdown" class="md:hidden border-b bg-card absolute w-full shadow-2xl rounded-b-3xl">
                     <div class="px-4 py-6 space-y-2">
-                        <Link :href="route('dashboard')">
-                            <Button variant="ghost" class="w-full justify-start h-12 rounded-lg font-bold" :class="route().current('dashboard') ? 'bg-muted' : ''">
-                                <LayoutDashboard class="size-5 mr-3" /> Dashboard
-                            </Button>
-                        </Link>
-                        <Link :href="route('products.index')">
-                            <Button variant="ghost" class="w-full justify-start h-12 rounded-lg font-bold" :class="route().current('products.*') ? 'bg-muted' : ''">
-                                <Package class="size-5 mr-3" /> Marketplace
-                            </Button>
-                        </Link>
-                        <Link :href="route('orders.index')">
-                            <Button variant="ghost" class="w-full justify-start h-12 rounded-lg font-bold" :class="route().current('orders.*') ? 'bg-muted' : ''">
-                                <History class="size-5 mr-3" /> My Orders
-                            </Button>
-                        </Link>
-                        <Link :href="route('cart.index')">
-                            <Button variant="ghost" class="w-full justify-start h-12 rounded-lg font-bold" :class="route().current('cart.*') ? 'bg-muted' : ''">
-                                <ShoppingBag class="size-5 mr-3" /> Cart ({{ cart.count }})
-                            </Button>
-                        </Link>
+                        <!-- Admin Mobile -->
+                        <template v-if="isAdmin">
+                            <Link :href="route('dashboard')">
+                                <Button variant="ghost" class="w-full justify-start h-12 rounded-lg font-bold" :class="route().current('dashboard') ? 'bg-muted' : ''">
+                                    <LayoutDashboard class="size-5 mr-3" /> Dashboard
+                                </Button>
+                            </Link>
+                        </template>
+
+                        <!-- Consumer Mobile -->
+                        <template v-else>
+                            <Link :href="route('products.index')">
+                                <Button variant="ghost" class="w-full justify-start h-12 rounded-lg font-bold" :class="route().current('products.*') ? 'bg-muted' : ''">
+                                    <Package class="size-5 mr-3" /> Marketplace
+                                </Button>
+                            </Link>
+                            <Link :href="route('orders.index')">
+                                <Button variant="ghost" class="w-full justify-start h-12 rounded-lg font-bold" :class="route().current('orders.*') ? 'bg-muted' : ''">
+                                    <History class="size-5 mr-3" /> My Orders
+                                </Button>
+                            </Link>
+                            <Link :href="route('cart.index')">
+                                <Button variant="ghost" class="w-full justify-start h-12 rounded-lg font-bold" :class="route().current('cart.*') ? 'bg-muted' : ''">
+                                    <ShoppingBag class="size-5 mr-3" /> Cart ({{ cart.count }})
+                                </Button>
+                            </Link>
+                        </template>
                     </div>
                 </div>
             </transition>
@@ -286,7 +302,7 @@ onMounted(() => {
         <!-- Footer -->
         <footer class="mt-20 py-12 border-t bg-muted/30">
             <div class="max-w-7xl mx-auto px-4 text-center">
-                <p class="text-xs font-black text-muted-foreground tracking-[0.3em] uppercase">Laravel Cart &copy; 2024</p>
+                <p class="text-xs font-black text-muted-foreground tracking-[0.3em] uppercase">Lara Cart &copy; 2024</p>
             </div>
         </footer>
 
@@ -326,6 +342,14 @@ onMounted(() => {
 </template>
 
 <style>
+/* Force Sonner Toaster into position if global styles fail to load or get overridden */
+[data-sonner-toaster] {
+    position: fixed !important;
+    bottom: 24px !important;
+    right: 24px !important;
+    z-index: 10000 !important;
+}
+
 /* Custom Scrollbar for better aesthetics */
 ::-webkit-scrollbar {
     width: 6px;

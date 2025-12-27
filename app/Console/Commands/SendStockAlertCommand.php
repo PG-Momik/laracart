@@ -19,7 +19,7 @@ class SendStockAlertCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:send-stock-alert {product_id} {--status=LOW STOCK}';
+    protected $signature = 'app:send-stock-alert {product_id} {email} {--status=LOW STOCK}';
 
     /**
      * The console command description.
@@ -34,6 +34,7 @@ class SendStockAlertCommand extends Command
     public function handle()
     {
         $productId = $this->argument('product_id');
+        $email = $this->argument('email');
         $status = $this->option('status');
 
         $product = Product::find($productId);
@@ -43,11 +44,11 @@ class SendStockAlertCommand extends Command
             return Command::FAILURE;
         }
 
-        $this->info("Sending {$status} alert for {$product->name} to momik.shrestha@gmail.com...");
+        $this->info("Queuing {$status} alert for {$product->name} to {$email}...");
 
-        Mail::to('momik.shrestha@gmail.com')->send(new StockAlertMail($product, $status));
+        Mail::to($email)->queue(new StockAlertMail($product, $status));
 
-        $this->info('Email sent successfully.');
+        $this->info('Email queued successfully.');
 
         return Command::SUCCESS;
     }

@@ -21,7 +21,7 @@ class SendDailyReportCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:send-daily-report';
+    protected $signature = 'app:send-daily-report {email}';
 
     /**
      * The console command description.
@@ -61,13 +61,12 @@ class SendDailyReportCommand extends Command
                 ->first()?->name ?? 'None',
         ];
 
-        // Send the report to the verified admin email
-        $adminEmail = 'momik.shrestha@gmail.com';
+        // Send results to the provided email
+        $email = $this->argument('email');
 
-        // Send instantly for the command
-        Mail::to($adminEmail)->send(new DailySalesReport($stats));
+        Mail::to($email)->queue(new DailySalesReport($stats));
 
-        $this->info("Report generated and sent to: {$adminEmail}");
+        $this->info("Report generated and queued for: {$email}");
 
         return Command::SUCCESS;
     }
