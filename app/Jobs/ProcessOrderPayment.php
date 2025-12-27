@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use App\Enums\QueueName;
 
 class ProcessOrderPayment implements ShouldQueue
 {
@@ -22,7 +23,7 @@ class ProcessOrderPayment implements ShouldQueue
     public function __construct(
         public Order $order
     ) {
-        $this->onQueue('high');
+        $this->onQueue(QueueName::HIGH->value);
     }
 
     /**

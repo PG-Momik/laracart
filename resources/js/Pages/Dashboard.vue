@@ -160,7 +160,7 @@ const formatValue = (value) => {
     <AuthenticatedLayout>
         <template #header>
             <div class="flex items-center gap-4">
-                <div class="size-12 bg-primary/10 rounded-2xl flex items-center justify-center border border-primary/20">
+                <div class="size-12 bg-primary/10 rounded-xl flex items-center justify-center border border-primary/20">
                     <LayoutDashboard class="size-6 text-primary" />
                 </div>
                 <div>
@@ -175,7 +175,7 @@ const formatValue = (value) => {
                 
                 <!-- Left: Control Column (Artisan Commands) -->
                 <div class="lg:col-span-4 space-y-6">
-                    <Card class="border-none shadow-premium bg-card/50 backdrop-blur-xl rounded-3xl overflow-hidden border-t border-white/5">
+                    <Card class="border-none shadow-premium bg-card/50 backdrop-blur-xl rounded-2xl overflow-hidden border-t border-white/5">
                         <CardHeader class="p-8">
                             <CardTitle class="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
                                 <Terminal class="size-4" />
@@ -276,19 +276,19 @@ const formatValue = (value) => {
                 <div class="lg:col-span-8 space-y-8">
                     <!-- Stat Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <Card class="border-none shadow-soft bg-card/40 backdrop-blur-sm p-6 space-y-2 rounded-2xl">
+                        <Card class="border-none shadow-soft bg-card/40 backdrop-blur-sm p-6 space-y-2 rounded-xl">
                             <span class="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Total</span>
                             <div class="text-3xl font-black text-foreground tracking-tighter">{{ stats.total_products }}</div>
                         </Card>
-                        <Card class="border-none shadow-soft bg-card/40 backdrop-blur-sm p-6 space-y-2 rounded-2xl">
+                        <Card class="border-none shadow-soft bg-card/40 backdrop-blur-sm p-6 space-y-2 rounded-xl">
                             <span class="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Asset Value</span>
                             <div class="text-3xl font-black text-primary tracking-tighter">{{ formatValue(stats.total_inventory_value) }}</div>
                         </Card>
-                        <Card class="border-none shadow-soft bg-card/40 backdrop-blur-sm p-6 space-y-2 rounded-2xl border-l-4 border-l-yellow-600/40">
+                        <Card class="border-none shadow-soft bg-card/40 backdrop-blur-sm p-6 space-y-2 rounded-xl border-l-4 border-l-yellow-600/40">
                             <span class="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Low Stock</span>
                             <div class="text-3xl font-black text-yellow-600 tracking-tighter">{{ stats.low_stock }}</div>
                         </Card>
-                        <Card class="border-none shadow-soft bg-card/40 backdrop-blur-sm p-6 space-y-2 rounded-2xl border-l-4 border-l-destructive/40">
+                        <Card class="border-none shadow-soft bg-card/40 backdrop-blur-sm p-6 space-y-2 rounded-xl border-l-4 border-l-destructive/40">
                             <span class="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Out Stock</span>
                             <div class="text-3xl font-black text-destructive tracking-tighter">{{ stats.out_of_stock }}</div>
                         </Card>
@@ -296,7 +296,7 @@ const formatValue = (value) => {
 
                     <!-- Charts Grid -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <Card class="border-none shadow-premium bg-card/50 backdrop-blur-xl rounded-3xl overflow-hidden p-8">
+                        <Card class="border-none shadow-premium bg-card/50 backdrop-blur-xl rounded-2xl overflow-hidden p-8">
                             <div class="flex flex-col gap-1 mb-6">
                                 <h3 class="text-sm font-black uppercase tracking-wider text-foreground">Taxonomy</h3>
                                 <p class="text-[10px] font-bold text-muted-foreground uppercase">Revenue distribution by category</p>
@@ -306,7 +306,7 @@ const formatValue = (value) => {
                             </div>
                         </Card>
 
-                        <Card class="border-none shadow-premium bg-card/50 backdrop-blur-xl rounded-3xl overflow-hidden p-8">
+                        <Card class="border-none shadow-premium bg-card/50 backdrop-blur-xl rounded-2xl overflow-hidden p-8">
                              <div class="flex flex-col gap-1 mb-6">
                                 <h3 class="text-sm font-black uppercase tracking-wider text-foreground">Surveillance</h3>
                                 <p class="text-[10px] font-bold text-muted-foreground uppercase">Stock health & availability</p>

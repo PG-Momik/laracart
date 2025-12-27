@@ -54,9 +54,6 @@ const getStatusClasses = (color) => {
                     <h2 class="text-3xl font-black text-foreground leading-tight tracking-tight">My Orders</h2>
                     <p class="text-sm font-medium text-muted-foreground mt-1">Track and manage your orders</p>
                 </div>
-                <div class="size-14 bg-card rounded-xl shadow-soft border border-muted-foreground/10 flex items-center justify-center">
-                    <History class="size-6 text-primary" />
-                </div>
             </div>
         </template>
 
@@ -70,7 +67,7 @@ const getStatusClasses = (color) => {
                     <CardHeader class="p-6 sm:p-8 pb-0">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                             <div class="flex items-center gap-5">
-                                <div class="size-16 bg-muted/30 rounded-xl flex items-center justify-center border border-muted-foreground/5 group-hover:bg-primary/5 group-hover:border-primary/10 transition-colors duration-500">
+                                <div class="size-16 bg-muted/30 rounded-md flex items-center justify-center border border-muted-foreground/5 group-hover:bg-primary/5 group-hover:border-primary/10 transition-colors duration-500">
                                     <Package class="size-7 text-muted-foreground group-hover:text-primary transition-colors duration-500" />
                                 </div>
                                 <div class="space-y-1">
@@ -108,14 +105,14 @@ const getStatusClasses = (color) => {
                             <div v-if="order.items_preview" class="flex items-center gap-3">
                                 <div class="flex -space-x-4">
                                     <div v-for="(item, idx) in order.items_preview" :key="idx" class="relative group/avatar">
-                                        <Avatar class="size-14 border-4 border-card rounded-xl group-hover:translate-y-[-4px] transition-transform duration-300 shadow-soft">
+                                        <Avatar class="size-14 border-4 border-card rounded-md group-hover:translate-y-[-4px] transition-transform duration-300 shadow-soft">
                                             <AvatarImage :src="item.image_url" class="object-contain p-2 bg-muted/50" />
                                             <AvatarFallback>{{ item.name.substring(0,2) }}</AvatarFallback>
                                         </Avatar>
                                     </div>
                                 </div>
                                 <div v-if="order.item_count > order.items_preview.length" class="pl-2">
-                                    <Badge variant="secondary" class="h-14 px-4 rounded-xl font-black text-muted-foreground border-dashed border-2">
+                                    <Badge variant="secondary" class="h-14 px-4 rounded-md font-black text-muted-foreground border-dashed border-2">
                                         +{{ order.item_count - order.items_preview.length }} MORE
                                     </Badge>
                                 </div>
@@ -123,7 +120,7 @@ const getStatusClasses = (color) => {
 
                             <div class="flex items-center gap-3 w-full sm:w-auto">
                                 <Link :href="route('orders.show', order.id)" class="w-full sm:w-auto">
-                                    <Button size="lg" variant="outline" class="w-full h-14 rounded-xl font-black text-xs uppercase tracking-widest gap-2 bg-background/50 hover:bg-primary hover:text-primary-foreground transition-all duration-300 border-muted-foreground/10">
+                                    <Button size="lg" variant="outline" class="w-full h-14 rounded-md font-black text-xs uppercase tracking-widest gap-2 bg-background/50 hover:bg-primary hover:text-primary-foreground transition-all duration-300 border-muted-foreground/10">
                                         Review Details
                                         <ExternalLink class="size-4" />
                                     </Button>
@@ -146,14 +143,14 @@ const getStatusClasses = (color) => {
             </div>
 
             <!-- Empty State -->
-            <div v-else class="text-center py-24 bg-card/40 rounded-[3rem] border-2 border-dashed border-muted-foreground/20 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-                <div class="size-24 bg-muted/20 rounded-2xl flex items-center justify-center mb-8 mx-auto">
+            <div v-else class="text-center py-24 bg-card/40 rounded-2xl border-2 border-dashed border-muted-foreground/20 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+                <div class="size-24 bg-muted/20 rounded-xl flex items-center justify-center mb-8 mx-auto">
                     <ShoppingBag class="size-12 text-muted-foreground/40 stroke-[1.5]" />
                 </div>
                 <h3 class="text-3xl font-black text-foreground tracking-tighter mb-4">No orders found</h3>
                 <p class="text-muted-foreground max-w-sm mx-auto mb-10 font-medium">Your My Orders is currently empty. Start shopping by exploring our selection.</p>
                 <Link :href="route('products.index')">
-                    <Button size="lg" class="h-16 px-12 rounded-xl font-black text-lg bg-primary shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all group">
+                    <Button size="lg" class="h-16 px-12 rounded-md font-black text-lg bg-primary shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all group">
                         Enter Marketplace
                         <ChevronRight class="ml-2 size-5 transition-transform group-hover:translate-x-1" />
                     </Button>

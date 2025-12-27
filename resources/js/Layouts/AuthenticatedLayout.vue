@@ -23,7 +23,7 @@ import {
     DialogFooter
 } from '@/Components/ui/dialog';
 import { 
-    ShoppingBag, 
+    ShoppingCart, 
     User, 
     LogOut, 
     LayoutDashboard, 
@@ -189,7 +189,7 @@ onMounted(() => {
 
                         <Link v-if="!isAdmin" :href="route('cart.index')" class="relative">
                             <Button variant="ghost" size="icon" class="rounded-full text-muted-foreground hover:text-foreground">
-                                <ShoppingBag class="size-5" />
+                                <ShoppingCart class="size-5" />
                                 <span :key="cart.count" v-if="cart.count > 0" class="absolute -top-1 -right-1 size-5 bg-primary text-[10px] font-black text-primary-foreground rounded-full flex items-center justify-center border-2 border-background animate-in zoom-in-50 duration-300">
                                     {{ cart.count }}
                                 </span>
@@ -209,7 +209,7 @@ onMounted(() => {
                                         </Avatar>
                                     </Button>
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent align="right" class="w-56 rounded-xl shadow-premium mt-2 border-border p-1">
+                                <DropdownMenuContent align="right" class="w-56 rounded-md shadow-premium mt-2 border-border p-1">
                                     <div class="px-2 py-2 flex flex-col">
                                         <p class="text-xs font-black text-foreground truncate">{{ $page.props.auth.user.name }}</p>
                                         <p class="text-[10px] font-bold text-muted-foreground truncate">{{ $page.props.auth.user.email }}</p>
@@ -278,7 +278,7 @@ onMounted(() => {
                             </Link>
                             <Link :href="route('cart.index')">
                                 <Button variant="ghost" class="w-full justify-start h-12 rounded-lg font-bold" :class="route().current('cart.*') ? 'bg-muted' : ''">
-                                    <ShoppingBag class="size-5 mr-3" /> Cart ({{ cart.count }})
+                                    <ShoppingCart class="size-5 mr-3" /> Cart ({{ cart.count }})
                                 </Button>
                             </Link>
                         </template>
@@ -308,12 +308,12 @@ onMounted(() => {
 
         <!-- Order Success Dialog -->
         <Dialog :open="successModalOpen" @update:open="successModalOpen = $event">
-            <DialogContent class="sm:max-w-md rounded-2xl border-none shadow-2xl p-10 overflow-hidden">
+            <DialogContent class="sm:max-w-md rounded-xl border-none shadow-2xl p-10 overflow-hidden">
                 <!-- Background Pattern -->
                 <div class="absolute -top-12 -right-12 size-48 bg-primary/10 rounded-full blur-3xl" />
                 
                 <div class="flex flex-col items-center text-center">
-                    <div class="size-20 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 animate-bounce">
+                    <div class="size-20 bg-primary/10 rounded-xl flex items-center justify-center mb-6 animate-bounce">
                         <CheckCircle2 class="size-10 text-primary" />
                     </div>
                     <DialogHeader>

@@ -9,6 +9,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Http\Resources\ProductResource;
+use App\Enums\ProductSortBy;
+use App\Enums\SortOrder;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -59,9 +61,9 @@ class ProductController extends Controller
         }
 
         // Sorting
-        $sortBy = $request->input('sort_by', 'created_at');
-        $sortOrder = $request->input('sort_order', 'desc');
-        $query->orderBy($sortBy, $sortOrder);
+        $sortBy = $request->input('sort_by', ProductSortBy::CREATED_AT->value);
+        $sortOrder = $request->input('sort_order', SortOrder::DESC->value);
+        $query->orderBy($sortBy, $sortOrder)->orderBy('id', $sortOrder);
 
         // Pagination
         $perPage = $request->input('per_page', 12);

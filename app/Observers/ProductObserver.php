@@ -7,6 +7,7 @@ namespace App\Observers;
 use App\Models\Product;
 use App\Mail\StockAlertMail;
 use Illuminate\Support\Facades\Mail;
+use App\Enums\StockAlertType;
 
 class ProductObserver
 {
@@ -23,9 +24,11 @@ class ProductObserver
             // Trigger alert if stock drops to 5 or less, and it wasn't already at this state or lower
             // This prevents duplicate spam emails if stock goes from 2 to 1.
             if ($newStock <= 5 && ($oldStock > 5 || $newStock == 0 && $oldStock > 0)) {
-                $status = $newStock <= 0 ? 'OUT OF STOCK' : 'LOW STOCK';
+                $status = $newStock <= 0
+                    ? StockAlertType::OUT_OF_STOCK->value
+                    : StockAlertType::LOW_STOCK->value;
 
-                Mail::to('momik.shrestha@gmail.com')
+                Mail::to('test.user@laracart.com')
                     ->queue(new StockAlertMail($product, $status));
             }
         }

@@ -233,8 +233,8 @@ const handleDelete = () => {
                                         Refill Inventory
                                     </Button>
                                 </DialogTrigger>
-                                <DialogContent class="rounded-2xl p-8 max-w-sm">
-                                    <div class="size-16 bg-primary/10 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                                <DialogContent class="rounded-xl p-8 max-w-sm">
+                                    <div class="size-16 bg-primary/10 rounded-md flex items-center justify-center mb-4 mx-auto">
                                         <RefreshCcw class="size-8 text-primary" />
                                     </div>
                                     <DialogHeader class="text-center">
@@ -257,8 +257,8 @@ const handleDelete = () => {
                                         Delete Product
                                     </Button>
                                 </DialogTrigger>
-                                <DialogContent class="rounded-2xl p-8 max-w-sm">
-                                    <div class="size-16 bg-destructive/10 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                                <DialogContent class="rounded-xl p-8 max-w-sm">
+                                    <div class="size-16 bg-destructive/10 rounded-md flex items-center justify-center mb-4 mx-auto">
                                         <Trash2 class="size-8 text-destructive" />
                                     </div>
                                     <DialogHeader class="text-center">

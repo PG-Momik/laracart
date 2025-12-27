@@ -85,7 +85,7 @@ const formatPrice = (price) => {
         >
             <div v-if="processing" class="fixed inset-0 z-[100] bg-background/95 backdrop-blur-2xl flex flex-col items-center justify-center p-8 text-center">
                 <div class="mb-12 relative">
-                    <div class="size-24 rounded-2xl bg-primary/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="size-24 rounded-xl bg-primary/5 flex items-center justify-center relative overflow-hidden">
                         <Loader2 class="size-12 text-primary animate-spin-slow stroke-[1.5]" />
                         <div class="absolute inset-0 bg-primary/10 animate-pulse"></div>
                     </div>
@@ -127,7 +127,7 @@ const formatPrice = (price) => {
                 <div class="space-y-6">
                     <div v-for="item in cart.items" :key="item.id" class="flex items-center gap-4 group">
                         <div class="relative flex-shrink-0">
-                            <div class="size-20 bg-card rounded-xl border border-muted-foreground/10 flex items-center justify-center p-3 shadow-soft group-hover:scale-105 transition-transform">
+                            <div class="size-20 bg-card rounded-md border border-muted-foreground/10 flex items-center justify-center p-3 shadow-soft group-hover:scale-105 transition-transform">
                                 <img :src="item.product?.image_url" :alt="item.product?.name" class="size-full object-contain" />
                             </div>
                             <span class="absolute -top-2 -right-2 size-6 bg-primary text-primary-foreground text-[10px] font-black rounded-lg flex items-center justify-center border-2 border-background shadow-lg">
@@ -184,11 +184,11 @@ const formatPrice = (price) => {
                 </div>
 
                 <!-- Premium Method Selector -->
-                <div class="flex gap-4 p-2 bg-muted/40 rounded-2xl border border-muted-foreground/10">
+                <div class="flex gap-4 p-2 bg-muted/40 rounded-xl border border-muted-foreground/10">
                     <button 
                         @click="paymentMethod = 'stripe'"
                         :class="[
-                            'flex-1 flex gap-3 items-center justify-center py-4 rounded-xl text-sm font-black transition-all relative overflow-hidden group',
+                            'flex-1 flex gap-3 items-center justify-center py-4 rounded-md text-sm font-black transition-all relative overflow-hidden group',
                             paymentMethod === 'stripe' ? 'bg-background shadow-premium text-foreground border border-muted-foreground/10' : 'text-muted-foreground hover:text-foreground'
                         ]"
                     >
@@ -199,7 +199,7 @@ const formatPrice = (price) => {
                     <button 
                         @click="paymentMethod = 'paypal'"
                         :class="[
-                            'flex-1 flex gap-3 items-center justify-center py-4 rounded-xl text-sm font-black transition-all relative overflow-hidden group',
+                            'flex-1 flex gap-3 items-center justify-center py-4 rounded-md text-sm font-black transition-all relative overflow-hidden group',
                             paymentMethod === 'paypal' ? 'bg-background shadow-premium text-foreground border border-muted-foreground/10' : 'text-muted-foreground hover:text-foreground'
                         ]"
                     >
@@ -223,7 +223,7 @@ const formatPrice = (price) => {
                         <form @submit.prevent="handleSubmit" class="space-y-6">
                             <div class="space-y-2.5">
                                 <Label class="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Contact Information</Label>
-                                <Input v-model="email" type="email" placeholder="email@example.com" class="h-14 rounded-xl border-muted-foreground/10 bg-muted/20 focus-visible:ring-primary px-5 font-bold" />
+                                <Input v-model="email" type="email" placeholder="email@example.com" class="h-14 rounded-md border-muted-foreground/10 bg-muted/20 focus-visible:ring-primary px-5 font-bold" />
                             </div>
 
                             <div class="space-y-2.5">
@@ -234,7 +234,7 @@ const formatPrice = (price) => {
                                         <div class="w-6 h-4 bg-primary/10 rounded shadow-sm"></div>
                                     </div>
                                 </div>
-                                <div class="space-y-0 divide-y divide-muted-foreground/10 border border-muted-foreground/10 rounded-xl overflow-hidden shadow-soft bg-muted/5">
+                                <div class="space-y-0 divide-y divide-muted-foreground/10 border border-muted-foreground/10 rounded-md overflow-hidden shadow-soft bg-muted/5">
                                     <div class="h-14 flex items-center px-5 gap-3 bg-background/50">
                                         <CreditCard class="size-5 text-muted-foreground" />
                                         <input type="text" disabled value="4242 4242 4242 4242" class="flex-grow bg-transparent border-none p-0 text-base font-bold tracking-widest pointer-events-none" />
@@ -249,10 +249,10 @@ const formatPrice = (price) => {
 
                             <div class="space-y-2.5">
                                 <Label class="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Cardholder Name</Label>
-                                <Input v-model="cardName" type="text" placeholder="CARDHOLDER NAME" class="h-14 rounded-xl border-muted-foreground/10 bg-muted/20 focus-visible:ring-primary px-5 font-bold uppercase" />
+                                <Input v-model="cardName" type="text" placeholder="CARDHOLDER NAME" class="h-14 rounded-md border-muted-foreground/10 bg-muted/20 focus-visible:ring-primary px-5 font-bold uppercase" />
                             </div>
 
-                            <Button type="submit" class="w-full h-16 rounded-xl font-black text-lg shadow-2xl shadow-primary/30 transition-all hover:scale-[1.02] active:scale-95 group">
+                            <Button type="submit" class="w-full h-16 rounded-md font-black text-lg shadow-2xl shadow-primary/30 transition-all hover:scale-[1.02] active:scale-95 group">
                                 Authorize & Pay {{ formatPrice(cart.total) }}
                                 <ArrowRight class="ml-2 size-5 transition-transform group-hover:translate-x-1" />
                             </Button>
@@ -261,7 +261,7 @@ const formatPrice = (price) => {
 
                     <!-- PayPal Section -->
                     <div v-else key="paypal" class="space-y-8 animate-in fade-in slide-in-from-right-8 duration-500">
-                        <div class="bg-primary/5 border border-primary/20 rounded-2xl p-6 flex items-start gap-4">
+                        <div class="bg-primary/5 border border-primary/20 rounded-xl p-6 flex items-start gap-4">
                             <Info class="size-5 text-primary flex-shrink-0 mt-0.5" />
                             <p class="font-bold text-muted-foreground leading-relaxed text-sm">
                                 You will be redirected to PayPal's secure portal to authorize this transaction. Lara Cart never stores your login credentials.
@@ -271,7 +271,7 @@ const formatPrice = (price) => {
                         <div class="space-y-4">
                             <Button 
                                 @click="handlePaypalClick"
-                                class="w-full h-14 bg-[#ffc439] hover:bg-[#f2ba36] text-[#111] rounded-xl font-black shadow-lg shadow-[#ffc439]/20 transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2"
+                                class="w-full h-14 bg-[#ffc439] hover:bg-[#f2ba36] text-[#111] rounded-md font-black shadow-lg shadow-[#ffc439]/20 transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2"
                             >
                                 <span class="text-lg">Checkout with</span>
                                 <span class="flex items-center text-xl">
@@ -281,7 +281,7 @@ const formatPrice = (price) => {
                             <Button 
                                 @click="handlePaypalClick"
                                 variant="outline"
-                                class="w-full h-14 rounded-xl border-muted-foreground/20 font-black text-muted-foreground uppercase tracking-widest text-xs hover:bg-muted transition-all"
+                                class="w-full h-14 rounded-md border-muted-foreground/20 font-black text-muted-foreground uppercase tracking-widest text-xs hover:bg-muted transition-all"
                             >
                                 Pay with Debit or Credit Card
                             </Button>

@@ -23,10 +23,17 @@ Route::middleware('auth')->group(function () {
     // Admin Only Sections
     Route::middleware('admin')->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\Web\DashboardController::class, 'index'])->name('dashboard');
-        Route::post('/dashboard/command', [\App\Http\Controllers\Web\DashboardController::class, 'runCommand'])->name('dashboard.command');
 
-        Route::delete('/products/{product}', [\App\Http\Controllers\Web\ProductController::class, 'destroy'])->name('products.destroy');
-        Route::post('/products/{product}/refill', [\App\Http\Controllers\Web\ProductController::class, 'refill'])->name('products.refill');
+        // Rate limit admin commands to prevent abuse
+        Route::middleware('throttle:10,1')->group(function () {
+            Route::post('/dashboard/command', [\App\Http\Controllers\Web\DashboardController::class, 'runCommand'])->name('dashboard.command');
+        });
+
+        // Rate limit destructive operations
+        Route::middleware('throttle:30,1')->group(function () {
+            Route::delete('/products/{product}', [\App\Http\Controllers\Web\ProductController::class, 'destroy'])->name('products.destroy');
+            Route::post('/products/{product}/refill', [\App\Http\Controllers\Web\ProductController::class, 'refill'])->name('products.refill');
+        });
     });
 
     // Customer Only Sections
@@ -35,8 +42,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/products/{product}', [\App\Http\Controllers\Web\ProductController::class, 'show'])->name('products.show');
 
         Route::get('/cart', [\App\Http\Controllers\Web\CartController::class, 'index'])->name('cart.index');
-        Route::get('/checkout', [\App\Http\Controllers\Web\CheckoutController::class, 'index'])->name('checkout.index');
-        Route::post('/checkout', [\App\Http\Controllers\Web\CheckoutController::class, 'store'])->name('checkout.store');
+
+        // Rate limit checkout to prevent spam orders
+        Route::middleware('throttle:10,1')->group(function () {
+            Route::get('/checkout', [\App\Http\Controllers\Web\CheckoutController::class, 'index'])->name('checkout.index');
+            Route::post('/checkout', [\App\Http\Controllers\Web\CheckoutController::class, 'store'])->name('checkout.store');
+        });
 
         Route::get('/orders', [\App\Http\Controllers\Web\OrderController::class, 'index'])->name('orders.index');
         Route::get('/orders/{id}', [\App\Http\Controllers\Web\OrderController::class, 'show'])->name('orders.show');

@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
 use App\Enums\StockStatus;
+use App\Enums\SystemCommand;
 
 class DashboardController extends Controller
 {
@@ -48,7 +49,11 @@ class DashboardController extends Controller
                     'data' => $categoryData->pluck('count')->toArray(),
                 ],
                 'stock_status' => [
-                    'labels' => ['In Stock', 'Low Stock', 'Out of Stock'],
+                    'labels' => [
+                        StockStatus::IN_STOCK->label(),
+                        StockStatus::LOW_STOCK->label(),
+                        StockStatus::OUT_OF_STOCK->label(),
+                    ],
                     'data' => array_values($stockStatusData),
                 ],
             ],
@@ -59,17 +64,19 @@ class DashboardController extends Controller
     public function runCommand(Request $request)
     {
         $request->validate([
-            'command' => 'required|string',
+            'command' => 'required|string|in:' . implode(',', SystemCommand::values()),
             'params' => 'nullable|array',
-            'email' => 'required_if:command,app:send-restock-mail,app:send-stock-alert,app:send-daily-report|nullable|email',
+            'email' => 'required|email', // All our existing commands require email mapping
         ]);
 
         $command = $request->command;
         $params = $request->params ?? [];
         $email = $request->email;
 
+        $commandEnum = SystemCommand::tryFrom($command);
+
         // Inject email into params for specific commands
-        if (in_array($command, ['app:send-restock-mail', 'app:send-stock-alert', 'app:send-daily-report'])) {
+        if ($commandEnum && $commandEnum->requiresEmail()) {
             $params['email'] = $email;
         }
 

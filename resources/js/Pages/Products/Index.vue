@@ -288,7 +288,7 @@ watch(() => props.products.data, (newData) => {
                         >
                             <Card 
                                 v-if="showRecommendations && (recommendations.length > 0 || loadingRecommendations)"
-                                class="absolute z-[999] mt-2 w-full shadow-premium rounded-xl overflow-hidden border-border bg-popover text-popover-foreground"
+                                class="absolute z-[999] mt-2 w-full shadow-premium rounded-md overflow-hidden border-border bg-popover text-popover-foreground"
                             >
                                 <div class="max-h-96 overflow-y-auto p-2 space-y-1">
                                     <div
@@ -330,7 +330,7 @@ watch(() => props.products.data, (newData) => {
                                     <Filter class="size-4 mr-2 text-muted-foreground" />
                                     <SelectValue placeholder="All Categories" />
                                 </SelectTrigger>
-                                <SelectContent class="rounded-xl shadow-premium border-border bg-popover">
+                                <SelectContent class="rounded-md shadow-premium border-border bg-popover">
                                     <SelectItem v-for="opt in categoriesOptions" :key="opt.value" :value="opt.value" class="rounded-lg my-1">
                                         {{ opt.label }}
                                     </SelectItem>
@@ -354,7 +354,7 @@ watch(() => props.products.data, (newData) => {
                         />
                     </div>
                     
-                    <div v-else class="text-center py-24 bg-card rounded-2xl border border-dashed border-muted-foreground/20">
+                    <div v-else class="text-center py-24 bg-card rounded-xl border border-dashed border-muted-foreground/20">
                         <Package class="size-16 text-muted-foreground/30 mx-auto mb-4" />
                         <h3 class="text-xl font-bold text-foreground">No products found</h3>
                         <p class="text-muted-foreground mt-2 max-w-xs mx-auto">Try adjusting your filters or search terms to find what you're looking for.</p>
@@ -365,7 +365,7 @@ watch(() => props.products.data, (newData) => {
 
                     <!-- Pagination -->
                     <div v-if="products.meta && products.meta.links.length > 3" class="mt-16 flex justify-center">
-                        <nav class="flex items-center gap-1.5 p-1.5 bg-card border border-muted-foreground/10 rounded-xl shadow-sm">
+                        <nav class="flex items-center gap-1.5 p-1.5 bg-card border border-muted-foreground/10 rounded-md shadow-sm">
                             <template v-for="(link, key) in products.meta.links" :key="key">
                                 <div v-if="link.url === null" class="px-4 py-2 text-sm font-semibold text-muted-foreground pointer-events-none opacity-40" v-html="link.label" />
                                 <Link
@@ -385,7 +385,7 @@ watch(() => props.products.data, (newData) => {
                 <!-- List Layout + Infinite Scroll -->
                 <div v-else key="list">
                     <div v-if="allProducts.length > 0" class="flex flex-col gap-6">
-                        <Card v-for="product in allProducts" :key="product.id" class="group p-5 border-none shadow-soft hover:shadow-hover transition-all duration-500 rounded-xl bg-card overflow-hidden">
+                        <Card v-for="product in allProducts" :key="product.id" class="group p-5 border-none shadow-soft hover:shadow-hover transition-all duration-500 rounded-md bg-card overflow-hidden">
                             <div class="flex flex-col sm:flex-row gap-8 items-center sm:items-stretch">
                                 <div class="w-full sm:w-48 h-48 flex-shrink-0 bg-muted/30 rounded-lg overflow-hidden group-hover:scale-[1.02] transition-transform duration-500 relative">
                                     <img :src="product.image_url" :alt="product.name" loading="eager" decoding="async" class="w-full h-full object-contain p-4" />
@@ -442,7 +442,7 @@ watch(() => props.products.data, (newData) => {
                         </Card>
                     </div>
 
-                    <div v-else class="text-center py-24 bg-card rounded-2xl border border-dashed border-muted-foreground/20">
+                    <div v-else class="text-center py-24 bg-card rounded-xl border border-dashed border-muted-foreground/20">
                         <Package class="size-16 text-muted-foreground/30 mx-auto mb-4" />
                         <h3 class="text-xl font-bold text-foreground">No products found</h3>
                         <p class="text-muted-foreground mt-2">Try adjusting your filters or search terms.</p>

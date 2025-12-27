@@ -92,7 +92,7 @@ class CheckoutController extends Controller
                 return $order;
             });
 
-            // Dispatch payment processing job to 'high' queue
+            // Dispatch payment processing job to high priority queue
             \App\Jobs\ProcessOrderPayment::dispatch($order);
 
             return redirect()->route('orders.show', $order->id)->with('success', 'Order placed successfully! Payment is being processed.');

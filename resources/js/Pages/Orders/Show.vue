@@ -60,7 +60,7 @@ const getStatusClasses = (color) => {
 
         <div class="max-w-5xl mx-auto py-12 px-4 sm:px-6 lg:px-8 space-y-8">
             <!-- Main Content Card -->
-            <Card class="border-none shadow-premium bg-card/60 backdrop-blur-xl overflow-hidden rounded-[3rem]">
+            <Card class="border-none shadow-premium bg-card/60 backdrop-blur-xl overflow-hidden rounded-2xl">
                 <CardContent class="p-8 sm:p-12">
                     <!-- Meta Info Header -->
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-8 pb-10 border-b border-muted-foreground/10">
@@ -96,9 +96,9 @@ const getStatusClasses = (color) => {
                         </div>
 
                         <div class="space-y-8">
-                            <div v-for="item in orderData.items" :key="item.id" class="flex gap-8 items-center bg-muted/10 p-4 rounded-2xl border border-muted-foreground/5 hover:bg-muted/20 transition-all group">
+                            <div v-for="item in orderData.items" :key="item.id" class="flex gap-8 items-center bg-muted/10 p-4 rounded-xl border border-muted-foreground/5 hover:bg-muted/20 transition-all group">
                                 <div class="relative flex-shrink-0">
-                                    <div class="size-24 sm:size-28 rounded-2xl border border-muted-foreground/10 bg-white flex items-center justify-center p-4 shadow-soft overflow-hidden group-hover:scale-105 transition-transform duration-500">
+                                    <div class="size-24 sm:size-28 rounded-xl border border-muted-foreground/10 bg-white flex items-center justify-center p-4 shadow-soft overflow-hidden group-hover:scale-105 transition-transform duration-500">
                                         <img 
                                             v-if="item.product?.image_url" 
                                             :src="item.product.image_url" 
@@ -132,7 +132,7 @@ const getStatusClasses = (color) => {
 
                     <!-- Financial Summary -->
                     <div class="mt-16 pt-12 border-t border-muted-foreground/10 flex justify-end">
-                        <Card class="w-full sm:max-w-md border-none bg-muted/30 p-8 rounded-2xl">
+                        <Card class="w-full sm:max-w-md border-none bg-muted/30 p-8 rounded-xl">
                             <div class="space-y-4">
                                 <div class="flex justify-between items-center text-xs font-black text-muted-foreground uppercase tracking-widest">
                                     <span>Value</span>
@@ -170,7 +170,7 @@ const getStatusClasses = (color) => {
                         <p class="text-primary-foreground/70 font-medium text-sm">Our logistics experts are preparing your shipment for express delivery.</p>
                     </div>
                     <Link :href="route('products.index')" class="relative z-10 w-full sm:w-auto">
-                        <Button size="lg" variant="primary" class="w-full sm:px-10 h-14 rounded-xl font-black text-sm uppercase tracking-widest shadow-xl shadow-black/10 bg-secondary">
+                        <Button size="lg" variant="primary" class="w-full sm:px-10 h-14 rounded-md font-black text-sm uppercase tracking-widest shadow-xl shadow-black/10 bg-secondary">
                             Re-enter Marketplace
                             <ArrowRight class="ml-2 size-4" />
                         </Button>
@@ -180,8 +180,8 @@ const getStatusClasses = (color) => {
 
             <!-- Support & Policy -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                 <div class="bg-card/40 p-6 rounded-2xl border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
-                    <div class="size-12 bg-primary/5 rounded-xl flex items-center justify-center flex-shrink-0 group">
+                 <div class="bg-card/40 p-6 rounded-xl border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
+                    <div class="size-12 bg-primary/5 rounded-md flex items-center justify-center flex-shrink-0 group">
                         <HelpCircle class="size-5 text-primary group-hover:scale-110 transition-transform" />
                     </div>
                     <div>
@@ -189,8 +189,8 @@ const getStatusClasses = (color) => {
                         <p class="text-[10px] text-muted-foreground font-black leading-relaxed uppercase tracking-tight">Access 24/7 dedicated assistance for your purchase queries.</p>
                     </div>
                  </div>
-                 <div class="bg-card/40 p-6 rounded-2xl border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
-                    <div class="size-12 bg-primary/5 rounded-xl flex items-center justify-center flex-shrink-0 group">
+                 <div class="bg-card/40 p-6 rounded-xl border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
+                    <div class="size-12 bg-primary/5 rounded-md flex items-center justify-center flex-shrink-0 group">
                         <ShieldCheck class="size-5 text-primary group-hover:scale-110 transition-transform" />
                     </div>
                     <div>
@@ -198,8 +198,8 @@ const getStatusClasses = (color) => {
                         <p class="text-[10px] text-muted-foreground font-black leading-relaxed uppercase tracking-tight">End-to-end encryption ensures your financial metadata stays private.</p>
                     </div>
                  </div>
-                 <div class="bg-card/40 p-6 rounded-2xl border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
-                    <div class="size-12 bg-primary/5 rounded-xl flex items-center justify-center flex-shrink-0 group">
+                 <div class="bg-card/40 p-6 rounded-xl border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
+                    <div class="size-12 bg-primary/5 rounded-md flex items-center justify-center flex-shrink-0 group">
                         <Mail class="size-5 text-primary group-hover:scale-110 transition-transform" />
                     </div>
                     <div>
