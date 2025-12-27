@@ -27,6 +27,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/products', [\App\Http\Controllers\Web\ProductController::class, 'index'])->name('products.index');
     Route::get('/cart', [\App\Http\Controllers\Web\CartController::class, 'index'])->name('cart.index');
     Route::get('/checkout', [\App\Http\Controllers\Web\CheckoutController::class, 'index'])->name('checkout.index');
+
+    Route::get('/orders', [\App\Http\Controllers\Web\OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{id}', [\App\Http\Controllers\Web\OrderController::class, 'show'])->name('orders.show');
 });
 
 require __DIR__ . '/auth.php';

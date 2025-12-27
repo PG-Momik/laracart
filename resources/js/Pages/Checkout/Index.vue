@@ -9,7 +9,7 @@ const props = defineProps({
 const form = useForm({});
 
 const submit = () => {
-    form.post(route('checkout.store'));
+    form.post(route('api.checkout.store'));
 };
 </script>
 
@@ -25,7 +25,7 @@ const submit = () => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <h3 class="text-lg font-bold mb-4">Checkout Page (Commit #8)</h3>
+                        <h3 class="text-lg font-bold mb-4">Checkout</h3>
                         <p>Total to Pay: {{ cart.total }}</p>
                         
                         <form @submit.prevent="submit" class="mt-4">

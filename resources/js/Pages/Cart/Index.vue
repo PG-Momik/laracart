@@ -20,8 +20,8 @@ defineProps({
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <h3 class="text-lg font-bold mb-4">Cart Logic Implemented (Commit #7)</h3>
-                        <p>UI Implementation scheduled for 15:15.</p>
+                        <h3 class="text-lg font-bold mb-4">Shopping Cart</h3>
+                        <p>Cart implementation pending UI.</p>
                         
                         <div class="mt-4">
                             <strong>Items in Cart:</strong> {{ cartItems?.length || 0 }} <br>
