@@ -286,7 +286,7 @@ watch(() => props.products.data, (newData) => {
                         >
                             <Card 
                                 v-if="showRecommendations && (recommendations.length > 0 || loadingRecommendations)"
-                                class="absolute z-[999] mt-2 w-full shadow-2xl rounded-2xl overflow-hidden border-muted-foreground/10 bg-card"
+                                class="absolute z-[999] mt-2 w-full shadow-2xl rounded-2xl overflow-hidden border-muted-foreground/10 bg-white dark:bg-zinc-950 opacity-100"
                             >
                                 <div class="max-h-96 overflow-y-auto p-2 space-y-1">
                                     <div
@@ -328,7 +328,7 @@ watch(() => props.products.data, (newData) => {
                                     <Filter class="size-4 mr-2 text-muted-foreground" />
                                     <SelectValue placeholder="All Categories" />
                                 </SelectTrigger>
-                                <SelectContent class="rounded-xl shadow-2xl border-muted-foreground/10 bg-card">
+                                <SelectContent class="rounded-xl shadow-2xl border-muted-foreground/10 bg-white dark:bg-zinc-950 opacity-100">
                                     <SelectItem v-for="opt in categoriesOptions" :key="opt.value" :value="opt.value" class="rounded-lg my-1">
                                         {{ opt.label }}
                                     </SelectItem>
