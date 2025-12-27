@@ -32,7 +32,7 @@ import {
     CheckCircle2,
     Menu,
     X,
-    Bell
+    Activity
 } from 'lucide-vue-next';
 
 const showingNavigationDropdown = ref(false);
@@ -125,15 +125,18 @@ const initials = computed(() => {
                                     My Orders
                                 </Button>
                             </Link>
+                            <a href="/horizon" target="_blank">
+                                <Button variant="ghost" class="text-muted-foreground hover:bg-muted hover:text-foreground rounded-lg font-bold">
+                                    <Activity class="size-4 mr-2" />
+                                    Queues
+                                </Button>
+                            </a>
                         </div>
                     </div>
 
                     <!-- Right Section: Cart & User -->
                     <div class="flex items-center gap-2">
-                        <!-- Notifications -->
-                        <Button variant="ghost" size="icon" class="rounded-full text-muted-foreground hover:text-foreground hidden sm:flex">
-                            <Bell class="size-5" />
-                        </Button>
+
 
                         <Link :href="route('cart.index')" class="relative">
                             <Button variant="ghost" size="icon" class="rounded-full text-muted-foreground hover:text-foreground">

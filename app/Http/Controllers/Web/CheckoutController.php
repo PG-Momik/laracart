@@ -77,7 +77,6 @@ class CheckoutController extends Controller
                 ]);
 
                 // Create Order Items
-                // TODO: Optimize this.
                 foreach ($cartItems as $item) {
                     OrderItem::create([
                         'order_id' => $order->id,

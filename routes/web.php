@@ -24,7 +24,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // E-Commerce Routes
-    Route::resource('products', \App\Http\Controllers\Web\ProductController::class)->only(['index', 'show']);
+    Route::resource('products', \App\Http\Controllers\Web\ProductController::class)->only(['index', 'show', 'destroy']);
+    Route::post('/products/{product}/refill', [\App\Http\Controllers\Web\ProductController::class, 'refill'])->name('products.refill');
     Route::get('/cart', [\App\Http\Controllers\Web\CartController::class, 'index'])->name('cart.index');
     Route::get('/checkout', [\App\Http\Controllers\Web\CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [\App\Http\Controllers\Web\CheckoutController::class, 'store'])->name('checkout.store');

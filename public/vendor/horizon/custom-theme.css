@@ -1,0 +1,91 @@
+/* Custom Horizon Theme to match App UI */
+:root {
+    --primary: #8b5cf6;
+    /* Violet-500 */
+    --primary-dark: #7c3aed;
+}
+
+body {
+    background-color: #09090b !important;
+    /* Dark background */
+}
+
+/* Sidebar overrides */
+.sidebar {
+    background-color: #18181b !important;
+    border-right: 1px solid #27272a !important;
+}
+
+.sidebar a {
+    color: #a1a1aa !important;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    color: #ffffff !important;
+    background-color: #27272a !important;
+}
+
+/* Header/Top nav */
+header {
+    background-color: #18181b !important;
+    border-bottom: 1px solid #27272a !important;
+}
+
+/* Buttons and primary elements */
+.btn-primary,
+.bg-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary-dark) !important;
+}
+
+/* Card and Table overrides */
+.card {
+    background-color: #18181b !important;
+    border: 1px solid #27272a !important;
+    border-radius: 0.75rem !important;
+}
+
+.table {
+    color: #e4e4e7 !important;
+}
+
+.table th {
+    border-bottom: 1px solid #27272a !important;
+    color: #a1a1aa !important;
+}
+
+.table td {
+    border-bottom: 1px solid #27272a !important;
+}
+
+/* Status indicators */
+.text-success {
+    color: #10b981 !important;
+}
+
+.text-danger {
+    color: #ef4444 !important;
+}
+
+.text-warning {
+    color: #f59e0b !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #27272a;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3f3f46;
+}

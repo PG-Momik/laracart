@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Mail;
 
+use App\Models\Product;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class DailySalesReport extends Mailable
+class ProductRestockMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,8 +19,10 @@ class DailySalesReport extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        public array $stats
+        public Product $product,
+        public int $addedQuantity
     ) {
+        $this->onQueue('default');
     }
 
     /**
@@ -28,7 +31,7 @@ class DailySalesReport extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Daily Sales Report - ' . now()->format('Y-m-d'),
+            subject: "Restock Alert: {$this->product->name} is Back",
         );
     }
 
@@ -38,7 +41,7 @@ class DailySalesReport extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.sales.daily-report',
+            view: 'emails.products.restocked',
         );
     }
 }

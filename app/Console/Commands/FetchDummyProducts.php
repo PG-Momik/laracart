@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
+/**
+ * Product seeding ko lagi
+ */
 class FetchDummyProducts extends Command
 {
     /**

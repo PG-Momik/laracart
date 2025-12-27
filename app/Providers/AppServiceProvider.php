@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Vite::prefetch(concurrency: 3);
+        \App\Models\Product::observe(\App\Observers\ProductObserver::class);
+        \Illuminate\Support\Facades\Vite::prefetch(concurrency: 3);
     }
 }

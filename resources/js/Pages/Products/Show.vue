@@ -223,15 +223,53 @@ const handleDelete = () => {
                         </Button>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-muted-foreground/10">
-                            <!-- Helper Dialogs Removed/Simplified if needed, but keeping for now as they are part of UI -->
-                             <Button variant="outline" class="rounded-lg font-bold h-12 border-muted-foreground/20 hover:bg-muted group" disabled>
-                                <RefreshCcw class="size-4 mr-2" />
-                                Refill (Demo)
-                            </Button>
-                             <Button variant="ghost" class="rounded-lg font-bold h-12 text-destructive hover:bg-destructive/5 hover:text-destructive group" disabled>
-                                <Trash2 class="size-4 mr-2" />
-                                Delete (Demo)
-                            </Button>
+                            <Dialog :open="refillOpen" @update:open="refillOpen = $event">
+                                <DialogTrigger as-child>
+                                    <Button variant="outline" class="rounded-lg font-bold h-12 border-muted-foreground/20 hover:bg-muted group">
+                                        <RefreshCcw class="size-4 mr-2 group-hover:rotate-180 transition-transform duration-500" />
+                                        Refill Inventory
+                                    </Button>
+                                </DialogTrigger>
+                                <DialogContent class="rounded-2xl p-8 max-w-sm">
+                                    <div class="size-16 bg-primary/10 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                                        <RefreshCcw class="size-8 text-primary" />
+                                    </div>
+                                    <DialogHeader class="text-center">
+                                        <DialogTitle class="text-2xl font-black">Refill Inventory?</DialogTitle>
+                                        <DialogDescription class="font-medium">
+                                            This will trigger a background job to restock this product.
+                                        </DialogDescription>
+                                    </DialogHeader>
+                                    <DialogFooter class="mt-8 flex flex-col gap-2 sm:flex-col">
+                                        <Button class="w-full h-12 rounded-lg font-bold" @click="handleRefill">Confirm Refill</Button>
+                                        <Button variant="ghost" class="w-full h-12 rounded-lg font-bold" @click="refillOpen = false">Cancel</Button>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
+
+                            <Dialog :open="deleteOpen" @update:open="deleteOpen = $event">
+                                <DialogTrigger as-child>
+                                    <Button variant="ghost" class="rounded-lg font-bold h-12 text-destructive hover:bg-destructive/5 hover:text-destructive group">
+                                        <Trash2 class="size-4 mr-2 group-hover:scale-110 transition-transform" />
+                                        Delete Product
+                                    </Button>
+                                </DialogTrigger>
+                                <DialogContent class="rounded-2xl p-8 max-w-sm">
+                                    <div class="size-16 bg-destructive/10 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                                        <Trash2 class="size-8 text-destructive" />
+                                    </div>
+                                    <DialogHeader class="text-center">
+                                        <DialogTitle class="text-2xl font-black">Permanently Delete?</DialogTitle>
+                                        <DialogDescription class="font-medium text-destructive/80 font-bold">
+                                            Warning: This action cannot be undone. All product data will be immediately removed from the marketplace.
+                                        </DialogDescription>
+                                    </DialogHeader>
+                                    <DialogFooter class="mt-8 flex flex-col gap-2 sm:flex-col">
+                                        <Button variant="destructive" class="w-full h-12 rounded-lg font-bold" @click="handleDelete">Yes, Delete Forever</Button>
+                                        <Button variant="ghost" class="w-full h-12 rounded-lg font-bold" @click="deleteOpen = false">Cancel</Button>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
                         </div>
                     </div>
                 </div>

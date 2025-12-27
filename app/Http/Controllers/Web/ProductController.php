@@ -92,4 +92,32 @@ class ProductController extends Controller
             'product' => new ProductResource($product),
         ]);
     }
+
+    public function refill(int $id): \Illuminate\Http\RedirectResponse
+    {
+        $product = Product::findOrFail($id);
+        $added = $product->total_stock - $product->stock_quantity;
+
+        if ($added > 0) {
+            $product->update(['stock_quantity' => $product->total_stock]);
+
+            // Email user about restock (queued automatically)
+            \Illuminate\Support\Facades\Mail::to(auth()->user()->email)
+                ->queue(new \App\Mail\ProductRestockMail($product, (int) $added));
+        }
+
+        return redirect()->back()->with('success', "Product {$product->name} restocked to full capacity (+{$added} units)");
+    }
+
+    /**
+     * Remove the product from storage (Demo logic).
+     */
+    public function destroy(int $id): \Illuminate\Http\RedirectResponse
+    {
+        $product = Product::findOrFail($id);
+        $name = $product->name;
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success', "Product {$name} deleted successfully.");
+    }
 }
