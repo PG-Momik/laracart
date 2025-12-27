@@ -33,8 +33,8 @@ class CartController extends Controller
         });
 
         return response()->json([
-            'data' => CartItemResource::collection($cartItems),
-            'meta' => ['total' => $total]
+            'items' => CartItemResource::collection($cartItems),
+            'total' => $total
         ]);
     }
 
@@ -72,7 +72,8 @@ class CartController extends Controller
         });
 
         return response()->json([
-            'data' => new CartItemResource($cartItem->load('product'))
+            'item' => new CartItemResource($cartItem->load('product')),
+            'message' => 'Product added to cart'
         ]);
     }
 

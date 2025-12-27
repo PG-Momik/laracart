@@ -96,12 +96,12 @@ const getStatusClasses = (color) => {
                         </div>
 
                         <div class="space-y-8">
-                            <div v-for="item in orderData.items" :key="item.id" class="flex gap-8 items-center bg-muted/10 p-4 rounded-3xl border border-muted-foreground/5 hover:bg-muted/20 transition-all group">
+                            <div v-for="item in orderData.items" :key="item.id" class="flex gap-8 items-center bg-muted/10 p-4 rounded-2xl border border-muted-foreground/5 hover:bg-muted/20 transition-all group">
                                 <div class="relative flex-shrink-0">
-                                    <div class="size-24 sm:size-28 rounded-2xl border border-muted-foreground/10 bg-card flex items-center justify-center p-4 shadow-soft overflow-hidden group-hover:scale-105 transition-transform duration-500">
+                                    <div class="size-24 sm:size-28 rounded-xl border border-muted-foreground/10 bg-card flex items-center justify-center p-4 shadow-soft overflow-hidden group-hover:scale-105 transition-transform duration-500">
                                         <img :src="item.product.image_url" :alt="item.product.name" class="size-full object-contain mix-blend-multiply dark:mix-blend-normal" />
                                     </div>
-                                    <Badge class="absolute -top-3 -right-3 size-8 rounded-xl bg-primary shadow-lg border-4 border-card font-black text-xs flex items-center justify-center">
+                                    <Badge class="absolute -top-3 -right-3 size-8 rounded-lg bg-primary shadow-lg border-4 border-card font-black text-xs flex items-center justify-center">
                                         {{ item.quantity }}
                                     </Badge>
                                 </div>
@@ -163,7 +163,7 @@ const getStatusClasses = (color) => {
                         <p class="text-primary-foreground/80 font-medium text-sm">Our logistics experts are preparing your shipment for express delivery.</p>
                     </div>
                     <Link :href="route('products.index')" class="relative z-10 w-full sm:w-auto">
-                        <Button size="lg" variant="secondary" class="w-full sm:px-10 h-14 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-black/10 group transition-all hover:scale-105 active:scale-95">
+                        <Button size="lg" variant="secondary" class="w-full sm:px-10 h-14 rounded-xl font-black text-sm uppercase tracking-widest shadow-xl shadow-black/10 group transition-all hover:scale-105 active:scale-95">
                             Re-enter Marketplace
                             <ArrowRight class="ml-2 size-4 transition-transform group-hover:translate-x-1" />
                         </Button>
@@ -174,7 +174,7 @@ const getStatusClasses = (color) => {
             <!-- Support & Policy -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                  <div class="bg-card/40 p-6 rounded-[2rem] border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
-                    <div class="size-12 bg-primary/5 rounded-2xl flex items-center justify-center flex-shrink-0 group">
+                    <div class="size-12 bg-primary/5 rounded-xl flex items-center justify-center flex-shrink-0 group">
                         <HelpCircle class="size-5 text-primary group-hover:scale-110 transition-transform" />
                     </div>
                     <div>
@@ -183,7 +183,7 @@ const getStatusClasses = (color) => {
                     </div>
                  </div>
                  <div class="bg-card/40 p-6 rounded-[2rem] border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
-                    <div class="size-12 bg-primary/5 rounded-2xl flex items-center justify-center flex-shrink-0 group">
+                    <div class="size-12 bg-primary/5 rounded-xl flex items-center justify-center flex-shrink-0 group">
                         <ShieldCheck class="size-5 text-primary group-hover:scale-110 transition-transform" />
                     </div>
                     <div>
@@ -192,7 +192,7 @@ const getStatusClasses = (color) => {
                     </div>
                  </div>
                  <div class="bg-card/40 p-6 rounded-[2rem] border border-muted-foreground/10 flex items-start gap-4 shadow-soft hover:shadow-premium transition-all duration-500">
-                    <div class="size-12 bg-primary/5 rounded-2xl flex items-center justify-center flex-shrink-0 group">
+                    <div class="size-12 bg-primary/5 rounded-xl flex items-center justify-center flex-shrink-0 group">
                         <Mail class="size-5 text-primary group-hover:scale-110 transition-transform" />
                     </div>
                     <div>

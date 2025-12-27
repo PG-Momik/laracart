@@ -14,7 +14,7 @@ export default {
         extend: {
             colors: {
                 primary: {
-                    DEFAULT: '#7c3aed', // Violet 600
+                    DEFAULT: '#0f172a', // Slate 900
                     foreground: '#ffffff',
                 },
             },

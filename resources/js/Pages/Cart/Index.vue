@@ -65,7 +65,7 @@ const handleRemove = (itemId) => {
                                     <li v-for="item in cart.items" :key="item.id" class="p-6 transition-all duration-300 hover:bg-muted/30 group">
                                         <div class="flex gap-6">
                                             <!-- Product Image -->
-                                            <div class="relative size-24 sm:size-32 bg-muted/20 rounded-2xl overflow-hidden flex-shrink-0 flex items-center justify-center p-4">
+                                            <div class="relative size-24 sm:size-32 bg-muted/20 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center p-4">
                                                 <img 
                                                     :src="item.product.image_url" 
                                                     :alt="item.product.name" 
@@ -73,7 +73,7 @@ const handleRemove = (itemId) => {
                                                 />
                                                 <button 
                                                     @click="handleRemove(item.id)"
-                                                    class="absolute top-2 left-2 size-8 bg-destructive/10 text-destructive rounded-xl opacity-0 scale-75 blur-sm group-hover:opacity-100 group-hover:scale-100 group-hover:blur-0 transition-all duration-300 hover:bg-destructive hover:text-white flex items-center justify-center shadow-lg"
+                                                    class="absolute top-2 left-2 size-8 bg-destructive/10 text-destructive rounded-lg opacity-0 scale-75 blur-sm group-hover:opacity-100 group-hover:scale-100 group-hover:blur-0 transition-all duration-300 hover:bg-destructive hover:text-white flex items-center justify-center shadow-lg"
                                                 >
                                                     <Trash2 class="size-4" />
                                                 </button>
@@ -96,7 +96,7 @@ const handleRemove = (itemId) => {
 
                                                 <div class="flex items-center justify-between mt-4">
                                                     <!-- Quantity Selector -->
-                                                    <div class="flex items-center bg-muted/50 rounded-xl p-1 border border-muted-foreground/10">
+                                                    <div class="flex items-center bg-muted/50 rounded-lg p-1 border border-muted-foreground/10">
                                                         <Button 
                                                             variant="ghost" 
                                                             size="icon" 
@@ -135,21 +135,21 @@ const handleRemove = (itemId) => {
 
                         <!-- Trust Signals -->
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <div class="flex items-center gap-3 p-4 bg-primary/5 rounded-2xl border border-primary/10">
+                            <div class="flex items-center gap-3 p-4 bg-primary/5 rounded-xl border border-primary/10">
                                 <Truck class="size-5 text-primary" />
                                 <div>
                                     <p class="text-[10px] font-black uppercase tracking-widest">Free Shipping</p>
                                     <p class="text-[10px] text-muted-foreground font-bold">On orders over $500</p>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-3 p-4 bg-primary/5 rounded-2xl border border-primary/10">
+                            <div class="flex items-center gap-3 p-4 bg-primary/5 rounded-xl border border-primary/10">
                                 <ShieldCheck class="size-5 text-primary" />
                                 <div>
                                     <p class="text-[10px] font-black uppercase tracking-widest">Secure Payment</p>
                                     <p class="text-[10px] text-muted-foreground font-bold">SSL Encrypted 256-bit</p>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-3 p-4 bg-primary/5 rounded-2xl border border-primary/10">
+                            <div class="flex items-center gap-3 p-4 bg-primary/5 rounded-xl border border-primary/10">
                                 <CreditCard class="size-5 text-primary" />
                                 <div>
                                     <p class="text-[10px] font-black uppercase tracking-widest">Money Back</p>
@@ -194,7 +194,7 @@ const handleRemove = (itemId) => {
                                 >
                                     <Button 
                                         size="lg" 
-                                        class="w-full h-14 rounded-2xl font-black text-lg shadow-xl shadow-primary/20 transition-all hover:scale-[1.02] active:scale-95 group"
+                                        class="w-full h-14 rounded-xl font-black text-lg shadow-xl shadow-primary/20 transition-all hover:scale-[1.02] active:scale-95 group"
                                     >
                                         <Loader2 v-if="processing" class="mr-2 size-5 animate-spin" />
                                         <span v-else class="flex items-center">
@@ -204,7 +204,7 @@ const handleRemove = (itemId) => {
                                     </Button>
                                 </Link>
                                 <Link :href="route('products.index')" class="w-full">
-                                    <Button variant="ghost" class="w-full rounded-xl font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest text-[10px]">
+                                    <Button variant="ghost" class="w-full rounded-lg font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest text-[10px]">
                                         Continue Shopping
                                     </Button>
                                 </Link>
@@ -229,7 +229,7 @@ const handleRemove = (itemId) => {
                 <p class="text-muted-foreground max-w-sm mb-12 font-medium">It feels a bit lonely here. Let's find some premium products to fill it up!</p>
                 
                 <Link :href="route('products.index')">
-                    <Button size="lg" class="h-14 px-12 rounded-2xl font-black text-lg shadow-2xl shadow-primary/20 group">
+                    <Button size="lg" class="h-14 px-12 rounded-xl font-black text-lg shadow-2xl shadow-primary/20 group">
                         Explore Marketplace
                         <ArrowRight class="ml-2 size-5 transition-transform group-hover:translate-x-1" />
                     </Button>

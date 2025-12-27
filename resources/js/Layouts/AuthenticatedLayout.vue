@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, onUnmounted } from 'vue';
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
 import { Head, Link, usePage, router } from '@inertiajs/vue3';
 import { useCart } from '@/Composables/useCart';
 import { Toaster } from '@/Components/ui/sonner';
@@ -87,7 +87,6 @@ const initials = computed(() => {
     return page.props.auth.user.name.split(' ').map(n => n[0]).join('').toUpperCase();
 });
 
-import { onMounted } from 'vue';
 </script>
 
 <template>
@@ -101,7 +100,7 @@ import { onMounted } from 'vue';
                     <!-- Left Section: Logo & Nav -->
                     <div class="flex items-center gap-8">
                         <Link :href="route('dashboard')" class="flex items-center gap-2 group">
-                            <div class="size-9 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 group-hover:rotate-12 transition-transform duration-300">
+                            <div class="size-9 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/20 group-hover:rotate-12 transition-transform duration-300">
                                 <ShoppingBag class="size-5 text-primary-foreground" />
                             </div>
                             <span class="text-xl font-black tracking-tighter text-foreground hidden sm:block">LARAVEL CART</span>
@@ -162,7 +161,7 @@ import { onMounted } from 'vue';
                                         </Avatar>
                                     </Button>
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent align="right" class="w-56 rounded-xl shadow-2xl mt-2 border-muted-foreground/10 p-1">
+                                <DropdownMenuContent align="right" class="w-56 rounded-lg shadow-2xl mt-2 border-muted-foreground/10 p-1">
                                     <DropdownMenuLabel class="px-2 py-1.5 text-xs font-black uppercase tracking-widest text-muted-foreground">Account</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem class="rounded-lg my-0.5 flex items-center gap-2 font-bold cursor-pointer" @click="router.visit(route('profile.edit'))">
@@ -178,7 +177,7 @@ import { onMounted } from 'vue';
 
                         <!-- Mobile Menu Button -->
                         <div class="md:hidden">
-                            <Button variant="ghost" size="icon" @click="showingNavigationDropdown = !showingNavigationDropdown" class="rounded-xl">
+                            <Button variant="ghost" size="icon" @click="showingNavigationDropdown = !showingNavigationDropdown" class="rounded-lg">
                                 <Menu v-if="!showingNavigationDropdown" class="size-6 transition-transform hover:rotate-90 duration-300" />
                                 <X v-else class="size-6 transition-transform rotate-90" />
                             </Button>
@@ -199,22 +198,22 @@ import { onMounted } from 'vue';
                 <div v-if="showingNavigationDropdown" class="md:hidden border-b bg-card absolute w-full shadow-2xl rounded-b-3xl">
                     <div class="px-4 py-6 space-y-2">
                         <Link :href="route('dashboard')">
-                            <Button variant="ghost" class="w-full justify-start h-12 rounded-xl font-bold" :class="route().current('dashboard') ? 'bg-muted' : ''">
+                            <Button variant="ghost" class="w-full justify-start h-12 rounded-lg font-bold" :class="route().current('dashboard') ? 'bg-muted' : ''">
                                 <LayoutDashboard class="size-5 mr-3" /> Dashboard
                             </Button>
                         </Link>
                         <Link :href="route('products.index')">
-                            <Button variant="ghost" class="w-full justify-start h-12 rounded-xl font-bold" :class="route().current('products.*') ? 'bg-muted' : ''">
+                            <Button variant="ghost" class="w-full justify-start h-12 rounded-lg font-bold" :class="route().current('products.*') ? 'bg-muted' : ''">
                                 <Package class="size-5 mr-3" /> Marketplace
                             </Button>
                         </Link>
                         <Link :href="route('orders.index')">
-                            <Button variant="ghost" class="w-full justify-start h-12 rounded-xl font-bold" :class="route().current('orders.*') ? 'bg-muted' : ''">
+                            <Button variant="ghost" class="w-full justify-start h-12 rounded-lg font-bold" :class="route().current('orders.*') ? 'bg-muted' : ''">
                                 <History class="size-5 mr-3" /> My Orders
                             </Button>
                         </Link>
                         <Link :href="route('cart.index')">
-                            <Button variant="ghost" class="w-full justify-start h-12 rounded-xl font-bold" :class="route().current('cart.*') ? 'bg-muted' : ''">
+                            <Button variant="ghost" class="w-full justify-start h-12 rounded-lg font-bold" :class="route().current('cart.*') ? 'bg-muted' : ''">
                                 <ShoppingBag class="size-5 mr-3" /> Cart ({{ cart.count }})
                             </Button>
                         </Link>
@@ -244,12 +243,12 @@ import { onMounted } from 'vue';
 
         <!-- Order Success Dialog -->
         <Dialog :open="successModalOpen" @update:open="successModalOpen = $event">
-            <DialogContent class="sm:max-w-md rounded-3xl border-none shadow-2xl p-10 overflow-hidden">
+            <DialogContent class="sm:max-w-md rounded-2xl border-none shadow-2xl p-10 overflow-hidden">
                 <!-- Background Pattern -->
                 <div class="absolute -top-12 -right-12 size-48 bg-primary/10 rounded-full blur-3xl" />
                 
                 <div class="flex flex-col items-center text-center">
-                    <div class="size-20 bg-green-100 dark:bg-green-900/30 rounded-3xl flex items-center justify-center mb-6 animate-bounce">
+                    <div class="size-20 bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center mb-6 animate-bounce">
                         <CheckCircle2 class="size-10 text-green-600 dark:text-green-500" />
                     </div>
                     <DialogHeader>
@@ -267,7 +266,7 @@ import { onMounted } from 'vue';
                             </span>
                         </div>
                         
-                        <Button class="w-full h-12 rounded-xl font-bold text-base shadow-lg shadow-primary/20" @click="successModalOpen = false; router.visit(route('products.index'))">
+                        <Button class="w-full h-12 rounded-lg font-bold text-base shadow-lg shadow-primary/20" @click="successModalOpen = false; router.visit(route('products.index'))">
                             Keep Shopping
                         </Button>
                     </div>

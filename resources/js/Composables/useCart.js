@@ -16,8 +16,8 @@ export function useCart() {
     const fetchCart = async () => {
         try {
             const response = await axios.get('/api/cart');
-            state.items = response.data.data;
-            state.total = response.data.meta.total;
+            state.items = response.data.items;
+            state.total = response.data.total;
             state.count = state.items.reduce((acc, item) => acc + item.quantity, 0);
         } catch (error) {
             console.error('Failed to fetch cart:', error);
@@ -37,7 +37,7 @@ export function useCart() {
             await fetchCart();
             // Refresh product data to update stock counts
             router.reload({ only: ['products', 'product'] });
-            return response.data.data.product;
+            return response.data.item.product;
         } catch (error) {
             console.error('Failed to add to cart:', error);
             throw error;

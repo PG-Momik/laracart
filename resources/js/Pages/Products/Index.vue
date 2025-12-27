@@ -262,7 +262,7 @@ watch(() => props.products.data, (newData) => {
                                 v-model="search"
                                 @focus="showRecommendations = search.length > 0"
                                 placeholder="Search premium products..." 
-                                class="pl-10 h-12 bg-card border-muted-foreground/10 focus-visible:ring-primary shadow-sm rounded-xl text-base"
+                                class="pl-10 h-12 bg-card border-muted-foreground/10 focus-visible:ring-primary shadow-sm rounded-lg text-base"
                             />
                             <Button 
                                 v-if="search" 
@@ -286,14 +286,14 @@ watch(() => props.products.data, (newData) => {
                         >
                             <Card 
                                 v-if="showRecommendations && (recommendations.length > 0 || loadingRecommendations)"
-                                class="absolute z-[999] mt-2 w-full shadow-2xl rounded-2xl overflow-hidden border-muted-foreground/10 bg-white dark:bg-zinc-950 opacity-100"
+                                class="absolute z-[999] mt-2 w-full shadow-2xl rounded-xl overflow-hidden border-muted-foreground/10 bg-white dark:bg-zinc-950 opacity-100"
                             >
                                 <div class="max-h-96 overflow-y-auto p-2 space-y-1">
                                     <div
                                         v-for="item in recommendations"
                                         :key="item.id"
                                         @click="selectRecommendation(item)"
-                                        class="flex items-center gap-4 p-3 hover:bg-muted/50 cursor-pointer rounded-xl transition-colors group/item"
+                                        class="flex items-center gap-4 p-3 hover:bg-muted/50 cursor-pointer rounded-lg transition-colors group/item"
                                     >
                                         <div class="size-12 rounded-lg overflow-hidden bg-muted flex-shrink-0 border border-muted-foreground/10">
                                             <img :src="item.image_url" loading="eager" decoding="async" class="w-full h-full object-contain p-1 mix-blend-multiply" />
@@ -324,11 +324,11 @@ watch(() => props.products.data, (newData) => {
                     <div class="md:col-span-4 flex gap-2">
                         <div class="relative w-full">
                              <Select v-model="category">
-                                <SelectTrigger class="h-12 border-muted-foreground/10 bg-card rounded-xl px-4 focus:ring-primary shadow-sm hover:border-primary/50 transition-colors">
+                                <SelectTrigger class="h-12 border-muted-foreground/10 bg-card rounded-lg px-4 focus:ring-primary shadow-sm hover:border-primary/50 transition-colors">
                                     <Filter class="size-4 mr-2 text-muted-foreground" />
                                     <SelectValue placeholder="All Categories" />
                                 </SelectTrigger>
-                                <SelectContent class="rounded-xl shadow-2xl border-muted-foreground/10 bg-white dark:bg-zinc-950 opacity-100">
+                                <SelectContent class="rounded-lg shadow-2xl border-muted-foreground/10 bg-white dark:bg-zinc-950 opacity-100">
                                     <SelectItem v-for="opt in categoriesOptions" :key="opt.value" :value="opt.value" class="rounded-lg my-1">
                                         {{ opt.label }}
                                     </SelectItem>
@@ -352,24 +352,24 @@ watch(() => props.products.data, (newData) => {
                         />
                     </div>
                     
-                    <div v-else class="text-center py-24 bg-card rounded-3xl border border-dashed border-muted-foreground/20">
+                    <div v-else class="text-center py-24 bg-card rounded-2xl border border-dashed border-muted-foreground/20">
                         <Package class="size-16 text-muted-foreground/30 mx-auto mb-4" />
                         <h3 class="text-xl font-bold text-foreground">No products found</h3>
                         <p class="text-muted-foreground mt-2 max-w-xs mx-auto">Try adjusting your filters or search terms to find what you're looking for.</p>
-                        <Button variant="outline" class="mt-6 rounded-xl" @click="search = ''; category = 'all'">
+                        <Button variant="outline" class="mt-6 rounded-lg" @click="search = ''; category = 'all'">
                             Reset Filters
                         </Button>
                     </div>
 
                     <!-- Pagination -->
                     <div v-if="products.meta && products.meta.links.length > 3" class="mt-16 flex justify-center">
-                        <nav class="flex items-center gap-1.5 p-1.5 bg-card border border-muted-foreground/10 rounded-2xl shadow-sm">
+                        <nav class="flex items-center gap-1.5 p-1.5 bg-card border border-muted-foreground/10 rounded-xl shadow-sm">
                             <template v-for="(link, key) in products.meta.links" :key="key">
                                 <div v-if="link.url === null" class="px-4 py-2 text-sm font-semibold text-muted-foreground pointer-events-none opacity-40" v-html="link.label" />
                                 <Link
                                     v-else
                                     :class="[
-                                        'px-4 py-2 text-sm font-black rounded-xl transition-all duration-300',
+                                        'px-4 py-2 text-sm font-black rounded-lg transition-all duration-300',
                                         link.active ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20' : 'text-foreground hover:bg-muted'
                                     ]" 
                                     :href="link.url"
@@ -383,9 +383,9 @@ watch(() => props.products.data, (newData) => {
                 <!-- List Layout + Infinite Scroll -->
                 <div v-else key="list">
                     <div v-if="allProducts.length > 0" class="flex flex-col gap-6">
-                        <Card v-for="product in allProducts" :key="product.id" class="group p-5 border-none shadow-soft hover:shadow-hover transition-all duration-500 rounded-2xl bg-card overflow-hidden">
+                        <Card v-for="product in allProducts" :key="product.id" class="group p-5 border-none shadow-soft hover:shadow-hover transition-all duration-500 rounded-xl bg-card overflow-hidden">
                             <div class="flex flex-col sm:flex-row gap-8 items-center sm:items-stretch">
-                                <div class="w-full sm:w-48 h-48 flex-shrink-0 bg-muted/30 rounded-xl overflow-hidden group-hover:scale-[1.02] transition-transform duration-500 relative">
+                                <div class="w-full sm:w-48 h-48 flex-shrink-0 bg-muted/30 rounded-lg overflow-hidden group-hover:scale-[1.02] transition-transform duration-500 relative">
                                     <img :src="product.image_url" :alt="product.name" loading="eager" decoding="async" class="w-full h-full object-contain p-4 mix-blend-multiply dark:mix-blend-normal" />
                                     <div class="absolute top-2 right-2">
                                         <Badge variant="secondary" class="bg-white/90 dark:bg-black/90 backdrop-blur font-bold text-[10px] uppercase">
@@ -406,7 +406,7 @@ watch(() => props.products.data, (newData) => {
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="text-2xl font-black text-primary bg-primary/5 px-4 py-2 rounded-xl">
+                                        <div class="text-2xl font-black text-primary bg-primary/5 px-4 py-2 rounded-lg">
                                             {{ product.formatted_price }}
                                         </div>
                                     </div>
@@ -431,7 +431,7 @@ watch(() => props.products.data, (newData) => {
                                         
                                         <div class="flex items-center gap-3">
                                             <Link :href="route('products.show', product.id)">
-                                                <Button variant="ghost" class="rounded-xl font-bold hover:bg-primary/5 hover:text-primary group/btn">
+                                                <Button variant="ghost" class="rounded-lg font-bold hover:bg-primary/5 hover:text-primary group/btn">
                                                     Full Details
                                                     <ArrowRight class="size-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
                                                 </Button>
@@ -443,7 +443,7 @@ watch(() => props.products.data, (newData) => {
                         </Card>
                     </div>
 
-                    <div v-else class="text-center py-24 bg-card rounded-3xl border border-dashed border-muted-foreground/20">
+                    <div v-else class="text-center py-24 bg-card rounded-2xl border border-dashed border-muted-foreground/20">
                         <Package class="size-16 text-muted-foreground/30 mx-auto mb-4" />
                         <h3 class="text-xl font-bold text-foreground">No products found</h3>
                         <p class="text-muted-foreground mt-2">Try adjusting your filters or search terms.</p>

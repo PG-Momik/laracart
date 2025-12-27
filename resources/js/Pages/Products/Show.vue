@@ -216,11 +216,11 @@ const handleDelete = () => {
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-muted-foreground/10">
                             <!-- Helper Dialogs Removed/Simplified if needed, but keeping for now as they are part of UI -->
-                             <Button variant="outline" class="rounded-xl font-bold h-12 border-muted-foreground/20 hover:bg-muted group" disabled>
+                             <Button variant="outline" class="rounded-lg font-bold h-12 border-muted-foreground/20 hover:bg-muted group" disabled>
                                 <RefreshCcw class="size-4 mr-2" />
                                 Refill (Demo)
                             </Button>
-                             <Button variant="ghost" class="rounded-xl font-bold h-12 text-destructive hover:bg-destructive/5 hover:text-destructive group" disabled>
+                             <Button variant="ghost" class="rounded-lg font-bold h-12 text-destructive hover:bg-destructive/5 hover:text-destructive group" disabled>
                                 <Trash2 class="size-4 mr-2" />
                                 Delete (Demo)
                             </Button>
