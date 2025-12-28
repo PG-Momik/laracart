@@ -32,6 +32,16 @@ services:
       - QUEUE_CONNECTION=redis
       - CACHE_STORE=redis
       - SESSION_DRIVER=redis
+      - PHP_MEMORY_LIMIT=512M  # Add this
+    command: >
+      sh -c "
+      php artisan config:clear &&
+      php artisan cache:clear &&
+      php artisan view:clear &&
+      chmod -R 775 storage bootstrap/cache &&
+      chown -R www-data:www-data storage bootstrap/cache &&
+      php-fpm
+      "
 
   # Nginx Web Server
   nginx:

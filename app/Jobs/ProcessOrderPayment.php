@@ -11,7 +11,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use App\Mail\OrderPlacedMail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ProcessOrderPayment implements ShouldQueue
 {
@@ -40,5 +42,13 @@ class ProcessOrderPayment implements ShouldQueue
         $this->order->markAsCompleted();
 
         Log::info("Order #{$this->order->id} payment processed successfully.");
+
+        // Queue order confirmation email
+        try {
+            Mail::to($this->order->user)->queue(new OrderPlacedMail($this->order));
+            Log::info("Order confirmation email queued for {$this->order->user->email}");
+        } catch (\Exception $e) {
+            Log::error("Failed to queue order confirmation email: " . $e->getMessage());
+        }
     }
 }
