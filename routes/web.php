@@ -10,7 +10,7 @@ Route::get('/', function () {
             ? redirect()->route('dashboard')
             : redirect()->route('products.index');
     }
-    return redirect()->route('l ogin');
+    return redirect()->route('login');
 });
 
 Route::middleware('auth')->group(function () {
