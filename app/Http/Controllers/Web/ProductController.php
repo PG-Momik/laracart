@@ -16,6 +16,16 @@ use Inertia\Response;
 
 class ProductController extends Controller
 {
+
+    /**
+     * ProductService
+     * ProductRepository
+     *
+     *
+     * __construct(ProductService $productService)
+     *
+     * $this->productService->doSomething()
+     */
     /**
      * Display the product listing page.
      */
@@ -43,8 +53,8 @@ class ProductController extends Controller
         if ($request->filled('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'ilike', "%{$search}%")
-                    ->orWhere('description', 'ilike', "%{$search}%");
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
             });
         }
 
