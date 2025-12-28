@@ -45,7 +45,7 @@ jobs:
           
             # Install PHP dependencies
             echo "Installing Composer dependencies..."
-            composer install --no-dev --optimize-autoloader --no-interaction
+            composer install --optimize-autoloader --no-interaction
           
             # Install Node dependencies and build
             echo "Building frontend assets..."
