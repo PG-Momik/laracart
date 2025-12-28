@@ -28,7 +28,7 @@ class ProductObserver
                     ? StockAlertType::OUT_OF_STOCK->value
                     : StockAlertType::LOW_STOCK->value;
 
-                Mail::to('test.user@laracart.com')
+                Mail::to('momik.shrestha@gmail.com')
                     ->queue(new StockAlertMail($product, $status));
             }
         }
