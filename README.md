@@ -1,59 +1,83 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# LaraCart
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+LaraCart is an e-commerce platform built to demonstrate advanced Laravel development practices.
 
-## About Laravel
+## Base Requirements
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This application implements the core requirements specified:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+*   **Shopping Cart System**: A fully functional cart allowing users to add, update, and remove items. The cart is database-backed (persisted), ensuring users do not lose their items across sessions or devices.
+*   **Product Browsing**: Users can browse products fetched from the DummyJSON API.
+*   **Authentication**: Secure user registration and login functionality using Laravel Breeze.
+*   **Low Stock Notifications**: The system monitors inventory levels. automated background jobs dispatch email alerts to administrators when stock falls below defined thresholds.
+*   **Daily Sales Report**: A scheduled job compiles sales data (revenue, units sold, top categories) and emails a summary report to administrators daily.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Additional Technical Implementation
 
-## Learning Laravel
+Beyond the base requirements, the following advanced features and technical decisions were implemented:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+1.  **Profile Toggling (Admin/Consumer Mode)**
+    The application features a "Persona Switcher" that allows a single user account to toggle between "Admin" and "Consumer" views. This facilitates easy testing of both role-specific interfaces without needing multiple accounts.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2.  **Queue Jobs & Asynchronous Processing**
+    Heavy operations are offloaded to background queues to ensure specific user interactions remain fast.
+    -   `StockAlertMail`: Low stock alerts are queued.
+    -   `ProcessOrderPayment`: Order processing is simulated asynchronously.
+    -   `DailySalesReport`: Sales aggregation runs in the background.
+    -   Queue Worker: `php artisan queue:work` must be running to process these jobs.
 
-## Laravel Sponsors
+3.  **Custom Artisan Commands**
+    Custom commands encapsulate complex business logic:
+    -   `products:fetch`: Seeds the database with data from the third-party API.
+    -   `app:send-daily-report`: Manually triggers the daily sales report generation.
+    -   `app:send-stock-alert`: Manually triggers stock alerts for testing purposes.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4.  **Model Observers**
+    A `ProductObserver` is attached to the `Product` model. It listens for changes to the `stock_quantity` attribute and automatically triggers the stock alert job when the threshold is breached, ensuring separation of concerns between controller logic and side effects.
 
-### Premium Partners
+5.  **Infinite Scroll (Marketplace)**
+    The product listing page (`resources/js/Pages/Products/Index.vue`) implements infinite scrolling using the `IntersectionObserver` API. This replaces standard pagination for a smoother user experience, dynamically loading more products as the user scrolls to the bottom of the list view.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+6.  **Payment Processing Mock**
+    The checkout flow includes a realistic simulation of payment processing. It supports simulated "Card" and "PayPal" flows, handling loading states and asynchronous validation before confirming the order.
 
-## Contributing
+7.  **Dashboard Artisan Interface**
+    The Admin Dashboard includes a UI for running Artisan commands immediately (e.g., "Run Daily Report", "Sync Products", "Clear Cache"). This allows administrators to trigger system maintenance tasks without CLI access.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+8.  **Deployment**
+    The application is deployed and accessible at:
+    http://laracart.momikshrestha.com.np
 
-## Code of Conduct
+## Installation and Setup
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1.  **Clone the Repository**
+    ```bash
+    git clone https://github.com/PG-Momik/laracart.git
+    cd laracart
+    ```
 
-## Security Vulnerabilities
+2.  **Install Dependencies**
+    ```bash
+    composer install
+    npm install
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3.  **Environment**
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
 
-## License
+4.  **Database & Seeding**
+    ```bash
+    touch database/database.sqlite
+    php artisan migrate
+    php artisan products:fetch --limit=50
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+5.  **Run Application**
+    ```bash
+    php artisan serve
+    npm run dev
+    php artisan queue:work
+    ```
