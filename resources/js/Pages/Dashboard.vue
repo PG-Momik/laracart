@@ -77,12 +77,11 @@ onMounted(() => {
 });
 
 // Command Control Logic
-const selectedCommand = ref('products:fetch');
+const selectedCommand = ref('app:send-daily-report');
 const commandForm = useForm({
-  command: 'products:fetch',
+  command: 'app:send-daily-report',
   email: '',
   params: {
-    '--limit': '50',
     'product_id': '',
     'quantity': '10',
     '--status': 'LOW STOCK'
@@ -90,7 +89,6 @@ const commandForm = useForm({
 });
 
 const availableCommands = [
-  {value: 'products:fetch', label: 'Fetch Dummy Products', icon: RefreshCcw, desc: 'Sync from DummyJSON API'},
   {value: 'app:send-restock-mail', label: 'Send Restock Mail', icon: Mail, desc: 'Alert consumer of restock'},
   {value: 'app:send-stock-alert', label: 'Send Stock Alert', icon: AlertCircle, desc: 'Alert admin of low stock'},
   {value: 'app:send-daily-report', label: 'Send Daily Report', icon: History, desc: 'Daily inventory summary'}
@@ -98,9 +96,7 @@ const availableCommands = [
 
 const runCommand = () => {
   let params = {};
-  if (selectedCommand.value === 'products:fetch') {
-    params = {'--limit': commandForm.params['--limit']};
-  } else if (selectedCommand.value === 'app:send-restock-mail') {
+  if (selectedCommand.value === 'app:send-restock-mail') {
     params = {
       'product_id': commandForm.params.product_id,
       'quantity': commandForm.params.quantity
@@ -209,19 +205,7 @@ const formatValue = (value) => {
                     {{ commandForm.errors.email }}</p>
                 </div>
 
-                <!-- Dynamic Parameters -->
-                <div v-if="selectedCommand === 'products:fetch'"
-                     class="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                  <div class="space-y-2">
-                    <Label class="text-[10px] font-black uppercase tracking-wider opacity-50">Fetch Limit</Label>
-                    <Input v-model="commandForm.params['--limit']" class="h-12 rounded-md bg-muted/30 border-none font-bold no-spinner"
-                           type="number"/>
-                    <p v-if="commandForm.errors['params.--limit']"
-                       class="text-[10px] font-bold text-destructive uppercase">{{
-                        commandForm.errors['params.--limit']
-                      }}</p>
-                  </div>
-                </div>
+
 
                 <div v-if="selectedCommand === 'app:send-restock-mail' || selectedCommand === 'app:send-stock-alert'"
                      class="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
