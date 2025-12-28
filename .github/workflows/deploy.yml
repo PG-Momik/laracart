@@ -49,7 +49,7 @@ jobs:
           
             # Install Node dependencies and build
             echo "Building frontend assets..."
-            npm ci
+            npm ci --legacy-peer-deps
             npm run build
           
             # CRITICAL: Clear all caches BEFORE migrations
