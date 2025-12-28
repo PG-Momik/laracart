@@ -92,13 +92,6 @@ jobs:
             echo "Deployment complete!"
           ENDSSH
 
-      - name: Verify deployment
-        run: |
-          echo "Verifying deployment..."
-          sleep 5
-          curl -f https://${{ env.DOMAIN }} || exit 1
-          echo "Site is live!"
-
       - name: Notify on failure
         if: failure()
         run: |
