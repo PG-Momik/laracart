@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,7 @@ Route::middleware(['web', 'auth'])->group(function () {
 
     // Checkout - Lower limit for sensitive operations
     // Route::middleware('throttle:10,1')->group(function () {
-    Route::post('/checkout', [\App\Http\Controllers\CheckoutController::class, 'store'])
+    Route::post('/checkout', [CheckoutController::class, 'store'])
         ->name('api.checkout.store');
     // });
 
