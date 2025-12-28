@@ -35,20 +35,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'is_admin' => 'boolean',
-        ];
-    }
-
-    /**
      * Get the cart items for the user.
      */
     public function cartItems(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -62,5 +48,19 @@ class User extends Authenticatable
     public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password'          => 'hashed',
+            'is_admin'          => 'boolean',
+        ];
     }
 }

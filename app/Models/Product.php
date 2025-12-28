@@ -32,22 +32,6 @@ class Product extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'price' => 'decimal:2',
-            'stock_quantity' => 'integer',
-            'total_stock' => 'integer',
-            'low_stock_threshold' => 'integer',
-            'tags' => 'array',
-        ];
-    }
-
-    /**
      * Get the cart items for the product.
      */
     public function cartItems(): HasMany
@@ -130,5 +114,21 @@ class Product extends Model
     {
         return $query->whereColumn('stock_quantity', '<=', 'low_stock_threshold')
             ->where('stock_quantity', '>', 0);
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'price'               => 'decimal:2',
+            'stock_quantity'      => 'integer',
+            'total_stock'         => 'integer',
+            'low_stock_threshold' => 'integer',
+            'tags'                => 'array',
+        ];
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Models\Product;
 use App\Mail\ProductRestockMail;
+use App\Models\Product;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
@@ -34,8 +34,8 @@ class SendRestockMailCommand extends Command
     public function handle()
     {
         $productId = $this->argument('product_id');
-        $email = $this->argument('email');
-        $quantity = (int) $this->argument('quantity');
+        $email     = $this->argument('email');
+        $quantity  = (int)$this->argument('quantity');
 
         $product = Product::find($productId);
 

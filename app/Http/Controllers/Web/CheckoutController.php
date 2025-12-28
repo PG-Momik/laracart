@@ -43,7 +43,7 @@ class CheckoutController extends Controller
             'cart' => [
                 'items' => CartItemResource::collection($cartItems)->resolve(),
                 'total' => $total,
-                'user' => $user,
+                'user'  => $user,
             ]
         ]);
     }
@@ -71,17 +71,17 @@ class CheckoutController extends Controller
             $order = DB::transaction(function () use ($user, $cartItems, $total) {
                 // Create Order
                 $order = Order::create([
-                    'user_id' => $user->id,
+                    'user_id'      => $user->id,
                     'total_amount' => $total,
-                    'status' => OrderStatus::PENDING,
+                    'status'       => OrderStatus::PENDING,
                 ]);
 
                 // Create Order Items
                 foreach ($cartItems as $item) {
                     OrderItem::create([
-                        'order_id' => $order->id,
-                        'product_id' => $item->product_id,
-                        'quantity' => $item->quantity,
+                        'order_id'          => $order->id,
+                        'product_id'        => $item->product_id,
+                        'quantity'          => $item->quantity,
                         'price_at_purchase' => $item->product->price,
                     ]);
                 }
@@ -95,7 +95,10 @@ class CheckoutController extends Controller
             // Dispatch payment processing job to high priority queue
             \App\Jobs\ProcessOrderPayment::dispatch($order);
 
-            return redirect()->route('orders.show', $order->id)->with('success', 'Order placed successfully! Payment is being processed.');
+            return redirect()->route('orders.show', $order->id)->with(
+                'success',
+                'Order placed successfully! Payment is being processed.'
+            );
         } catch (\Exception $e) {
             Log::error('Order creation failed: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Failed to place order.');

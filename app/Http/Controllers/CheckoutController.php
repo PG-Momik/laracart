@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderStatus;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\CartItem;
 use App\Models\Order;
@@ -11,7 +12,6 @@ use App\Models\OrderItem;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Enums\OrderStatus;
 
 class CheckoutController extends Controller
 {
@@ -36,16 +36,16 @@ class CheckoutController extends Controller
 
         return DB::transaction(function () use ($user, $cartItems, $total) {
             $order = Order::create([
-                'user_id' => $user->id,
+                'user_id'      => $user->id,
                 'total_amount' => $total,
-                'status' => OrderStatus::PENDING,
+                'status'       => OrderStatus::PENDING,
             ]);
 
             foreach ($cartItems as $item) {
                 OrderItem::create([
-                    'order_id' => $order->id,
-                    'product_id' => $item->product_id,
-                    'quantity' => $item->quantity,
+                    'order_id'          => $order->id,
+                    'product_id'        => $item->product_id,
+                    'quantity'          => $item->quantity,
                     'price_at_purchase' => $item->product->price,
                 ]);
             }

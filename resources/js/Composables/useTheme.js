@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import {ref} from 'vue';
 
 const isDark = ref(false);
 
@@ -15,9 +15,9 @@ export function useTheme() {
         const savedTheme = localStorage.getItem('theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-        
+
         isDark.value = shouldBeDark;
-        
+
         if (shouldBeDark) {
             document.documentElement.classList.add('dark');
         } else {
@@ -50,7 +50,7 @@ export function useTheme() {
             }
         };
         mediaQuery.addEventListener('change', handleChange);
-        
+
         // Watch for theme changes from other tabs/windows
         window.addEventListener('storage', (e) => {
             if (e.key === 'theme') {
@@ -63,14 +63,14 @@ export function useTheme() {
                 }
             }
         });
-        
+
         // Periodically check if theme class is still applied (defensive)
         setInterval(() => {
             const savedTheme = localStorage.getItem('theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
             const hasDarkClass = document.documentElement.classList.contains('dark');
-            
+
             if (shouldBeDark !== hasDarkClass) {
                 if (shouldBeDark) {
                     document.documentElement.classList.add('dark');

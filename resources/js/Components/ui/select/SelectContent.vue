@@ -1,43 +1,38 @@
 <script setup>
-import { reactiveOmit } from "@vueuse/core";
-import {
-  SelectContent,
-  SelectPortal,
-  SelectViewport,
-  useForwardPropsEmits,
-} from "reka-ui";
-import { cn } from "@/lib/utils";
-import { SelectScrollDownButton, SelectScrollUpButton } from ".";
+import {reactiveOmit} from "@vueuse/core";
+import {SelectContent, SelectPortal, SelectViewport, useForwardPropsEmits,} from "reka-ui";
+import {cn} from "@/lib/utils";
+import {SelectScrollDownButton, SelectScrollUpButton} from ".";
 
 defineOptions({
   inheritAttrs: false,
 });
 
 const props = defineProps({
-  forceMount: { type: Boolean, required: false },
-  position: { type: String, required: false, default: "popper" },
-  bodyLock: { type: Boolean, required: false },
-  side: { type: null, required: false },
-  sideOffset: { type: Number, required: false },
-  sideFlip: { type: Boolean, required: false },
-  align: { type: null, required: false },
-  alignOffset: { type: Number, required: false },
-  alignFlip: { type: Boolean, required: false },
-  avoidCollisions: { type: Boolean, required: false },
-  collisionBoundary: { type: null, required: false },
-  collisionPadding: { type: [Number, Object], required: false },
-  arrowPadding: { type: Number, required: false },
-  sticky: { type: String, required: false },
-  hideWhenDetached: { type: Boolean, required: false },
-  positionStrategy: { type: String, required: false },
-  updatePositionStrategy: { type: String, required: false },
-  disableUpdateOnLayoutShift: { type: Boolean, required: false },
-  prioritizePosition: { type: Boolean, required: false },
-  reference: { type: null, required: false },
-  asChild: { type: Boolean, required: false },
-  as: { type: null, required: false },
-  disableOutsidePointerEvents: { type: Boolean, required: false },
-  class: { type: null, required: false },
+  forceMount: {type: Boolean, required: false},
+  position: {type: String, required: false, default: "popper"},
+  bodyLock: {type: Boolean, required: false},
+  side: {type: null, required: false},
+  sideOffset: {type: Number, required: false},
+  sideFlip: {type: Boolean, required: false},
+  align: {type: null, required: false},
+  alignOffset: {type: Number, required: false},
+  alignFlip: {type: Boolean, required: false},
+  avoidCollisions: {type: Boolean, required: false},
+  collisionBoundary: {type: null, required: false},
+  collisionPadding: {type: [Number, Object], required: false},
+  arrowPadding: {type: Number, required: false},
+  sticky: {type: String, required: false},
+  hideWhenDetached: {type: Boolean, required: false},
+  positionStrategy: {type: String, required: false},
+  updatePositionStrategy: {type: String, required: false},
+  disableUpdateOnLayoutShift: {type: Boolean, required: false},
+  prioritizePosition: {type: Boolean, required: false},
+  reference: {type: null, required: false},
+  asChild: {type: Boolean, required: false},
+  as: {type: null, required: false},
+  disableOutsidePointerEvents: {type: Boolean, required: false},
+  class: {type: null, required: false},
 });
 const emits = defineEmits([
   "closeAutoFocus",
@@ -53,8 +48,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 <template>
   <SelectPortal>
     <SelectContent
-      v-bind="{ ...forwarded, ...$attrs }"
-      :class="
+        :class="
         cn(
           'relative z-[999] max-h-96 min-w-32 overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
           position === 'popper' &&
@@ -62,10 +56,11 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
           props.class,
         )
       "
+        v-bind="{ ...forwarded, ...$attrs }"
     >
-      <SelectScrollUpButton />
+      <SelectScrollUpButton/>
       <SelectViewport
-        :class="
+          :class="
           cn(
             'p-1',
             position === 'popper' &&
@@ -73,9 +68,9 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
           )
         "
       >
-        <slot />
+        <slot/>
       </SelectViewport>
-      <SelectScrollDownButton />
+      <SelectScrollDownButton/>
     </SelectContent>
   </SelectPortal>
 </template>

@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\Product;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Exception;
 
 /**
  * Product seeding ko lagi
@@ -35,11 +35,11 @@ class FetchDummyProducts extends Command
      */
     public function handle()
     {
-        $limit = (int) $this->option('limit');
+        $limit = (int)$this->option('limit');
         $this->info("Retriving products from third party API..."); // Typo included as requested
 
-        $apiUrl = "https://dummyjson.com/products";
-        $batchSize = 30;
+        $apiUrl       = "https://dummyjson.com/products";
+        $batchSize    = 30;
         $totalFetched = 0;
 
         try {
@@ -53,14 +53,14 @@ class FetchDummyProducts extends Command
                     ->retry(3, 100)
                     ->get($apiUrl, [
                         'limit' => $countToFetch,
-                        'skip' => $totalFetched,
+                        'skip'  => $totalFetched,
                     ]);
 
                 if ($response->failed()) {
                     throw new Exception("API request failed with status: " . $response->status());
                 }
 
-                $data = $response->json();
+                $data     = $response->json();
                 $products = Arr::get($data, 'products', []);
 
                 if (empty($products)) {
@@ -74,14 +74,14 @@ class FetchDummyProducts extends Command
                     Product::updateOrCreate(
                         ['name' => Arr::get($dummyProduct, 'title')],
                         [
-                            'description' => Arr::get($dummyProduct, 'description'),
-                            'category' => Arr::get($dummyProduct, 'category'),
-                            'tags' => Arr::get($dummyProduct, 'tags', []),
-                            'price' => Arr::get($dummyProduct, 'price'),
-                            'stock_quantity' => rand(5, $totalStock),
-                            'total_stock' => $totalStock,
+                            'description'         => Arr::get($dummyProduct, 'description'),
+                            'category'            => Arr::get($dummyProduct, 'category'),
+                            'tags'                => Arr::get($dummyProduct, 'tags', []),
+                            'price'               => Arr::get($dummyProduct, 'price'),
+                            'stock_quantity'      => rand(5, $totalStock),
+                            'total_stock'         => $totalStock,
                             'low_stock_threshold' => 10,
-                            'image_url' => Arr::get($dummyProduct, 'thumbnail'),
+                            'image_url'           => Arr::get($dummyProduct, 'thumbnail'),
                         ]
                     );
 
@@ -97,7 +97,6 @@ class FetchDummyProducts extends Command
             $this->newLine();
             $this->info("Successfully synced {$totalFetched} products.");
             Log::info("FetchDummyProducts: Successfully synced {$totalFetched} products.");
-
         } catch (Exception $e) {
             $this->newLine();
             $this->error("An error occurred: " . $e->getMessage());

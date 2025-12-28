@@ -24,18 +24,6 @@ class CartItem extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'quantity' => 'integer',
-        ];
-    }
-
-    /**
      * Get the user that owns the cart item.
      */
     public function user(): BelongsTo
@@ -56,7 +44,7 @@ class CartItem extends Model
      */
     public function getSubtotalAttribute(): float
     {
-        return (float) ($this->quantity * $this->product->price);
+        return (float)($this->quantity * $this->product->price);
     }
 
     /**
@@ -67,5 +55,17 @@ class CartItem extends Model
         // Since we reduce stock_quantity immediately when adding to cart,
         // having the item in the cart means the stock is already successfully reserved.
         return $this->product !== null;
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'quantity' => 'integer',
+        ];
     }
 }

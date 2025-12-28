@@ -10,27 +10,6 @@ enum StockStatus: string
     case LOW_STOCK = 'low_stock';
     case OUT_OF_STOCK = 'out_of_stock';
 
-    public function label(): string
-    {
-        return match ($this) {
-            self::IN_STOCK => 'In Stock',
-            self::LOW_STOCK => 'Low Stock',
-            self::OUT_OF_STOCK => 'Out of Stock',
-        };
-    }
-
-    /**
-     * Get the color class for UI display
-     */
-    public function color(): string
-    {
-        return match ($this) {
-            self::IN_STOCK => 'green',
-            self::LOW_STOCK => 'yellow',
-            self::OUT_OF_STOCK => 'red',
-        };
-    }
-
     public static function fromQuantity(int $quantity, int $threshold = 10): self
     {
         if ($quantity <= 0) {
@@ -42,5 +21,26 @@ enum StockStatus: string
         }
 
         return self::IN_STOCK;
+    }
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::IN_STOCK     => 'In Stock',
+            self::LOW_STOCK    => 'Low Stock',
+            self::OUT_OF_STOCK => 'Out of Stock',
+        };
+    }
+
+    /**
+     * Get the color class for UI display
+     */
+    public function color(): string
+    {
+        return match ($this) {
+            self::IN_STOCK     => 'green',
+            self::LOW_STOCK    => 'yellow',
+            self::OUT_OF_STOCK => 'red',
+        };
     }
 }

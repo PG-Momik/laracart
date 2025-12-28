@@ -10,13 +10,13 @@ enum SystemCommand: string
     case SEND_STOCK_ALERT = 'app:send-stock-alert';
     case SEND_DAILY_REPORT = 'app:send-daily-report';
 
-    public function requiresEmail(): bool
-    {
-        return true; // For now all defined commands require email
-    }
-
     public static function values(): array
     {
         return array_column(self::cases(), 'value');
+    }
+
+    public function requiresEmail(): bool
+    {
+        return true; // For now all defined commands require email
     }
 }

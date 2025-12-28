@@ -20,7 +20,7 @@ class ProfileController extends Controller
     {
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
+            'status'          => session('status'),
         ]);
     }
 
@@ -66,7 +66,7 @@ class ProfileController extends Controller
      */
     public function togglePersona(Request $request): RedirectResponse
     {
-        $user = $request->user();
+        $user           = $request->user();
         $user->is_admin = !$user->is_admin;
         $user->save();
 

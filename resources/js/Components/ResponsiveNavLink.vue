@@ -1,10 +1,10 @@
-<script setup lang="ts">
-import { computed } from 'vue';
-import { Link } from '@inertiajs/vue3';
+<script lang="ts" setup>
+import {computed} from 'vue';
+import {Link} from '@inertiajs/vue3';
 
 const props = defineProps<{
-    href: string;
-    active?: boolean;
+  href: string;
+  active?: boolean;
 }>();
 
 const classes = computed(() =>
@@ -15,7 +15,7 @@ const classes = computed(() =>
 </script>
 
 <template>
-    <Link :href="href" :class="classes">
-        <slot />
-    </Link>
+  <Link :class="classes" :href="href">
+    <slot/>
+  </Link>
 </template>

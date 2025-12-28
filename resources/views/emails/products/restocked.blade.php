@@ -43,26 +43,26 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="header">
-            <h2>Product Restocked</h2>
-        </div>
-
-        <p>The product <strong>{{ $product->name }}</strong> is now back in inventory.</p>
-
-        <p>
-            Added Quantity: {{ $addedQuantity }} units<br>
-            Current Availability: {{ $product->stock_quantity }} units
-        </p>
-
-        <p>The product is available for purchase in the marketplace.</p>
-
-        <a href="{{ config('app.url') }}/products/{{ $product->id }}" class="btn">View Product</a>
-
-        <div class="footer">
-            Thank you from the Marketplace team.
-        </div>
+<div class="container">
+    <div class="header">
+        <h2>Product Restocked</h2>
     </div>
+
+    <p>The product <strong>{{ $product->name }}</strong> is now back in inventory.</p>
+
+    <p>
+        Added Quantity: {{ $addedQuantity }} units<br>
+        Current Availability: {{ $product->stock_quantity }} units
+    </p>
+
+    <p>The product is available for purchase in the marketplace.</p>
+
+    <a href="{{ config('app.url') }}/products/{{ $product->id }}" class="btn">View Product</a>
+
+    <div class="footer">
+        Thank you from the Marketplace team.
+    </div>
+</div>
 </body>
 
 </html>

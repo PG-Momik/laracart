@@ -1,20 +1,20 @@
 <script setup>
-import { cn } from "@/lib/utils";
+import {cn} from "@/lib/utils";
 
 const props = defineProps({
-  class: { type: null, required: false },
+  class: {type: null, required: false},
 });
 </script>
 
 <template>
   <tr
-    :class="
+      :class="
       cn(
         'border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted',
         props.class,
       )
     "
   >
-    <slot />
+    <slot/>
   </tr>
 </template>

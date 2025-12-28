@@ -50,26 +50,26 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="header">
-            <h2 style="color: #ef4444;">Inventory Alert</h2>
-        </div>
-
-        <div class="alert-box">
-            <p>The following product requires attention:</p>
-            <p>
-                <span class="label">Product:</span> {{ $product->name }}<br>
-                <span class="label">Status:</span> <span class="value">{{ strtoupper($status) }}</span><br>
-                <span class="label">Current Stock:</span> {{ $product->stock_quantity }} units
-            </p>
-        </div>
-
-        <p>Please check the inventory management dashboard to restock this item.</p>
-
-        <div class="footer">
-            Automated system alert from Marketplace Operations.
-        </div>
+<div class="container">
+    <div class="header">
+        <h2 style="color: #ef4444;">Inventory Alert</h2>
     </div>
+
+    <div class="alert-box">
+        <p>The following product requires attention:</p>
+        <p>
+            <span class="label">Product:</span> {{ $product->name }}<br>
+            <span class="label">Status:</span> <span class="value">{{ strtoupper($status) }}</span><br>
+            <span class="label">Current Stock:</span> {{ $product->stock_quantity }} units
+        </p>
+    </div>
+
+    <p>Please check the inventory management dashboard to restock this item.</p>
+
+    <div class="footer">
+        Automated system alert from Marketplace Operations.
+    </div>
+</div>
 </body>
 
 </html>

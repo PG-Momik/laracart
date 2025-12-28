@@ -1,6 +1,6 @@
-import { reactive, computed, ref } from 'vue';
+import {computed, reactive, ref} from 'vue';
 import axios from 'axios';
-import { router } from '@inertiajs/vue3';
+import {router} from '@inertiajs/vue3';
 
 // Global state shared across components
 const state = reactive({
@@ -36,7 +36,7 @@ export function useCart() {
             });
             await fetchCart();
             // Refresh product data to update stock counts
-            router.reload({ only: ['products', 'product'] });
+            router.reload({only: ['products', 'product']});
             return response.data.item.product;
         } catch (error) {
             console.error('Failed to add to cart:', error);
@@ -54,7 +54,7 @@ export function useCart() {
                 quantity: quantity
             });
             await fetchCart();
-            router.reload({ only: ['products', 'product'] });
+            router.reload({only: ['products', 'product']});
         } catch (error) {
             console.error('Failed to update cart:', error);
             throw error;
@@ -68,7 +68,7 @@ export function useCart() {
         try {
             await axios.delete(`/api/cart/${itemId}`);
             await fetchCart();
-            router.reload({ only: ['products', 'product'] });
+            router.reload({only: ['products', 'product']});
         } catch (error) {
             console.error('Failed to remove item:', error);
         } finally {

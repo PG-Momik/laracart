@@ -3,126 +3,126 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    /* Light Mode - Pure Neutral: High-Contrast, Professional, Minimalist */
-    --background: 0 0% 100%;
-    /* Pure white */
-    --foreground: 0 0% 3%;
-    /* Neutral deep black */
+    :root {
+        /* Light Mode - Pure Neutral: High-Contrast, Professional, Minimalist */
+        --background: 0 0% 100%;
+        /* Pure white */
+        --foreground: 0 0% 3%;
+        /* Neutral deep black */
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3%;
+        --card: 0 0% 100%;
+        --card-foreground: 0 0% 3%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 0 0% 3%;
 
-    /* Primary: Absolute Neutral Black */
-    --primary: 0 0% 0%;
-    /* True black */
-    --primary-foreground: 0 0% 98%;
+        /* Primary: Absolute Neutral Black */
+        --primary: 0 0% 0%;
+        /* True black */
+        --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 0% 96%;
-    /* Soft neutral gray */
-    --secondary-foreground: 0 0% 3%;
+        --secondary: 0 0% 96%;
+        /* Soft neutral gray */
+        --secondary-foreground: 0 0% 3%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+        --muted: 0 0% 96%;
+        --muted-foreground: 0 0% 45%;
 
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 3%;
+        --accent: 0 0% 96%;
+        --accent-foreground: 0 0% 3%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 89%;
-    /* Clean neutral borders */
-    --input: 0 0% 89%;
-    --ring: 0 0% 3%;
+        --border: 0 0% 89%;
+        /* Clean neutral borders */
+        --input: 0 0% 89%;
+        --ring: 0 0% 3%;
 
-    --radius: 0.5rem;
-    /* Precise corners */
-  }
+        --radius: 0.5rem;
+        /* Precise corners */
+    }
 
-  .dark {
-    /* Dark Mode - True Premium Black: Neutral, Stealth, Sophisticated */
-    --background: 0 0% 2%;
-    /* Absolute deep black shadow */
-    --foreground: 0 0% 98%;
-    /* Clean neutral off-white */
+    .dark {
+        /* Dark Mode - True Premium Black: Neutral, Stealth, Sophisticated */
+        --background: 0 0% 2%;
+        /* Absolute deep black shadow */
+        --foreground: 0 0% 98%;
+        /* Clean neutral off-white */
 
-    --card: 0 0% 5%;
-    /* Slightly raised neutral black */
-    --card-foreground: 0 0% 98%;
+        --card: 0 0% 5%;
+        /* Slightly raised neutral black */
+        --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 7%;
-    /* Layered neutral black */
-    --popover-foreground: 0 0% 98%;
+        --popover: 0 0% 7%;
+        /* Layered neutral black */
+        --popover-foreground: 0 0% 98%;
 
-    --primary: 0 0% 98%;
-    /* White on black for primary actions */
-    --primary-foreground: 0 0% 2%;
+        --primary: 0 0% 98%;
+        /* White on black for primary actions */
+        --primary-foreground: 0 0% 2%;
 
-    --secondary: 0 0% 9%;
-    /* Deep neutral graphite */
-    --secondary-foreground: 0 0% 98%;
+        --secondary: 0 0% 9%;
+        /* Deep neutral graphite */
+        --secondary-foreground: 0 0% 98%;
 
-    --muted: 0 0% 9%;
-    --muted-foreground: 0 0% 63%;
+        --muted: 0 0% 9%;
+        --muted-foreground: 0 0% 63%;
 
-    --accent: 0 0% 9%;
-    --accent-foreground: 0 0% 98%;
+        --accent: 0 0% 9%;
+        --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 0 0% 98%;
+        --destructive: 0 63% 31%;
+        --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 13%;
-    /* Subtle neutral separation */
-    --input: 0 0% 13%;
-    --ring: 0 0% 98%;
-  }
+        --border: 0 0% 13%;
+        /* Subtle neutral separation */
+        --input: 0 0% 13%;
+        --ring: 0 0% 98%;
+    }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+    * {
+        @apply border-border;
+    }
 
-  body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 }
 
 ::selection {
-  background-color: hsl(var(--foreground));
-  color: hsl(var(--background));
+    background-color: hsl(var(--foreground));
+    color: hsl(var(--background));
 }
 
 /* Custom Scrollbar - Premium styling */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+    width: 6px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.25);
-  border-radius: 3px;
-  transition: background 0.2s ease;
+    background: hsl(var(--muted-foreground) / 0.25);
+    border-radius: 3px;
+    transition: background 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.4);
+    background: hsl(var(--muted-foreground) / 0.4);
 }
 
 /* Premium utility classes */
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
 }

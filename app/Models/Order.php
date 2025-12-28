@@ -27,19 +27,6 @@ class Order extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'total_amount' => 'decimal:2',
-            'status' => OrderStatus::class,
-        ];
-    }
-
-    /**
      * Get the user that owns the order.
      */
     public function user(): BelongsTo
@@ -103,5 +90,18 @@ class Order extends Model
     public function scopeWithinDateRange($query, string $startDate, string $endDate)
     {
         return $query->whereBetween('created_at', [$startDate, $endDate]);
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'total_amount' => 'decimal:2',
+            'status'       => OrderStatus::class,
+        ];
     }
 }

@@ -25,19 +25,6 @@ class OrderItem extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'quantity' => 'integer',
-            'price_at_purchase' => 'decimal:2',
-        ];
-    }
-
-    /**
      * Get the order that owns the order item.
      */
     public function order(): BelongsTo
@@ -58,6 +45,19 @@ class OrderItem extends Model
      */
     public function getSubtotalAttribute(): float
     {
-        return (float) ($this->quantity * $this->price_at_purchase);
+        return (float)($this->quantity * $this->price_at_purchase);
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'quantity'          => 'integer',
+            'price_at_purchase' => 'decimal:2',
+        ];
     }
 }

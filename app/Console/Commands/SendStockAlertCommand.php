@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Models\Product;
 use App\Mail\StockAlertMail;
+use App\Models\Product;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
@@ -34,8 +34,8 @@ class SendStockAlertCommand extends Command
     public function handle()
     {
         $productId = $this->argument('product_id');
-        $email = $this->argument('email');
-        $status = $this->option('status');
+        $email     = $this->argument('email');
+        $status    = $this->option('status');
 
         $product = Product::find($productId);
 

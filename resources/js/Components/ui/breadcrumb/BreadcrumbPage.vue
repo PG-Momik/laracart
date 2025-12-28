@@ -1,18 +1,18 @@
 <script setup>
-import { cn } from "@/lib/utils";
+import {cn} from "@/lib/utils";
 
 const props = defineProps({
-  class: { type: null, required: false },
+  class: {type: null, required: false},
 });
 </script>
 
 <template>
   <span
-    role="link"
-    aria-disabled="true"
-    aria-current="page"
-    :class="cn('font-normal text-foreground', props.class)"
+      :class="cn('font-normal text-foreground', props.class)"
+      aria-current="page"
+      aria-disabled="true"
+      role="link"
   >
-    <slot />
+    <slot/>
   </span>
 </template>

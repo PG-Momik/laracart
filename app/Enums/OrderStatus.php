@@ -12,15 +12,23 @@ enum OrderStatus: string
     case CANCELLED = 'cancelled';
 
     /**
+     * Get all available status values as array
+     */
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
+
+    /**
      * Get a human-readable label for the status
      */
     public function label(): string
     {
         return match ($this) {
-            self::PENDING => 'Pending',
+            self::PENDING    => 'Pending',
             self::PROCESSING => 'Processing',
-            self::COMPLETED => 'Completed',
-            self::CANCELLED => 'Cancelled',
+            self::COMPLETED  => 'Completed',
+            self::CANCELLED  => 'Cancelled',
         };
     }
 
@@ -30,10 +38,10 @@ enum OrderStatus: string
     public function color(): string
     {
         return match ($this) {
-            self::PENDING => 'yellow',
+            self::PENDING    => 'yellow',
             self::PROCESSING => 'blue',
-            self::COMPLETED => 'green',
-            self::CANCELLED => 'red',
+            self::COMPLETED  => 'green',
+            self::CANCELLED  => 'red',
         };
     }
 
@@ -43,13 +51,5 @@ enum OrderStatus: string
     public function canBeCancelled(): bool
     {
         return in_array($this, [self::PENDING, self::PROCESSING], true);
-    }
-
-    /**
-     * Get all available status values as array
-     */
-    public static function values(): array
-    {
-        return array_column(self::cases(), 'value');
     }
 }

@@ -10,7 +10,6 @@ use App\Http\Resources\CartItemResource;
 use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -43,9 +42,9 @@ class CartController extends Controller
      */
     public function store(StoreCartItemRequest $request): JsonResponse
     {
-        $userId = Auth::id();
+        $userId    = Auth::id();
         $productId = Arr::get($request->validated(), 'product_id');
-        $quantity = Arr::get($request->validated(), 'quantity');
+        $quantity  = Arr::get($request->validated(), 'quantity');
 
         $product = Product::findOrFail($productId);
 
@@ -67,9 +66,9 @@ class CartController extends Controller
                 $cartItem->refresh();
             } else {
                 $cartItem = CartItem::create([
-                    'user_id' => $userId,
+                    'user_id'    => $userId,
                     'product_id' => $productId,
-                    'quantity' => $quantity,
+                    'quantity'   => $quantity,
                 ]);
             }
 
@@ -77,7 +76,7 @@ class CartController extends Controller
         });
 
         return response()->json([
-            'item' => new CartItemResource($cartItem->load('product')),
+            'item'    => new CartItemResource($cartItem->load('product')),
             'message' => 'Product added to cart'
         ]);
     }
@@ -88,7 +87,7 @@ class CartController extends Controller
     public function update(UpdateCartItemRequest $request, int $id): JsonResponse
     {
         $quantity = Arr::get($request->validated(), 'quantity');
-        $userId = Auth::id();
+        $userId   = Auth::id();
 
         $cartItem = CartItem::where('id', $id)
             ->where('user_id', $userId)

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web;
 
+use App\Enums\ProductSortBy;
+use App\Enums\SortOrder;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use App\Http\Resources\ProductResource;
-use App\Enums\ProductSortBy;
-use App\Enums\SortOrder;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -21,7 +21,21 @@ class ProductController extends Controller
      */
     public function index(Request $request): Response|\Illuminate\Http\JsonResponse|AnonymousResourceCollection
     {
-        $filters = $request->only(['search', 'category', 'tags', 'min_price', 'max_price', 'in_stock', 'sort_by', 'sort_order', 'layout', 'page', 'per_page']);
+        $filters = $request->only(
+            [
+                'search',
+                'category',
+                'tags',
+                'min_price',
+                'max_price',
+                'in_stock',
+                'sort_by',
+                'sort_order',
+                'layout',
+                'page',
+                'per_page'
+            ]
+        );
 
         $query = Product::query();
 
@@ -61,12 +75,12 @@ class ProductController extends Controller
         }
 
         // Sorting
-        $sortBy = $request->input('sort_by', ProductSortBy::CREATED_AT->value);
+        $sortBy    = $request->input('sort_by', ProductSortBy::CREATED_AT->value);
         $sortOrder = $request->input('sort_order', SortOrder::DESC->value);
         $query->orderBy($sortBy, $sortOrder)->orderBy('id', $sortOrder);
 
         // Pagination
-        $perPage = $request->input('per_page', 12);
+        $perPage  = $request->input('per_page', 12);
         $products = $query->paginate($perPage)->withQueryString();
 
         if ($request->has('json') || $request->wantsJson() || ($request->ajax() && !$request->header('X-Inertia'))) {
@@ -77,9 +91,9 @@ class ProductController extends Controller
         $categories = Product::distinct()->pluck('category')->filter()->values();
 
         return Inertia::render('Products/Index', [
-            'products' => ProductResource::collection($products),
+            'products'   => ProductResource::collection($products),
             'categories' => $categories,
-            'filters' => $filters,
+            'filters'    => $filters,
         ]);
     }
 
@@ -98,17 +112,20 @@ class ProductController extends Controller
     public function refill(int $id): \Illuminate\Http\RedirectResponse
     {
         $product = Product::findOrFail($id);
-        $added = $product->total_stock - $product->stock_quantity;
+        $added   = $product->total_stock - $product->stock_quantity;
 
         if ($added > 0) {
             $product->update(['stock_quantity' => $product->total_stock]);
 
             // Email user about restock (queued automatically)
             \Illuminate\Support\Facades\Mail::to(auth()->user()->email)
-                ->queue(new \App\Mail\ProductRestockMail($product, (int) $added));
+                ->queue(new \App\Mail\ProductRestockMail($product, (int)$added));
         }
 
-        return redirect()->back()->with('success', "Product {$product->name} restocked to full capacity (+{$added} units)");
+        return redirect()->back()->with(
+            'success',
+            "Product {$product->name} restocked to full capacity (+{$added} units)"
+        );
     }
 
     /**
@@ -117,7 +134,7 @@ class ProductController extends Controller
     public function destroy(int $id): \Illuminate\Http\RedirectResponse
     {
         $product = Product::findOrFail($id);
-        $name = $product->name;
+        $name    = $product->name;
         $product->delete();
 
         return redirect()->route('products.index')->with('success', "Product {$name} deleted successfully.");
