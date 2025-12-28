@@ -154,7 +154,7 @@ const loadMore = () => {
 
 onMounted(() => {
   observer = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting && layout.value === 'list' && nextUrl.value && !loadingMore.value) {
+    if (entries[0].isIntersecting && nextUrl.value && !loadingMore.value) {
       loadMore();
     }
   }, {rootMargin: '400px'});
@@ -365,28 +365,9 @@ watch(() => props.products.data, (newData) => {
             </Button>
           </div>
 
-          <!-- Pagination -->
-          <div v-if="products.meta && products.meta.links.length > 3" class="mt-16 flex justify-center">
-            <nav class="flex items-center gap-1.5 p-1.5 bg-card border border-muted-foreground/10 rounded-md shadow-sm">
-              <template v-for="(link, key) in products.meta.links" :key="key">
-                <div v-if="link.url === null"
-                     class="px-4 py-2 text-sm font-semibold text-muted-foreground pointer-events-none opacity-40"
-                     v-html="link.label"/>
-                <Link
-                    v-else
-                    :class="[
-                                        'px-4 py-2 text-sm font-black rounded-lg transition-all duration-300',
-                                        link.active ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20' : 'text-foreground hover:bg-muted'
-                                    ]"
-                    :href="link.url"
-                    v-html="link.label"
-                />
-              </template>
-            </nav>
           </div>
-        </div>
 
-        <!-- List Layout + Infinite Scroll -->
+        <!-- List Layout -->
         <div v-else key="list">
           <div v-if="allProducts.length > 0" class="flex flex-col gap-6">
             <Card v-for="product in allProducts" :key="product.id"
@@ -458,20 +439,20 @@ watch(() => props.products.data, (newData) => {
             <h3 class="text-xl font-bold text-foreground">No products found</h3>
             <p class="text-muted-foreground mt-2">Try adjusting your filters or search terms.</p>
           </div>
-
-          <!-- Infinite Scroll -->
-          <div v-if="nextUrl" ref="loadMoreTrigger" class="py-16 flex justify-center">
-            <div v-if="loadingMore" class="flex flex-col items-center gap-4">
-              <div class="flex items-center gap-1.5">
-                <div class="size-2 rounded-full bg-primary animate-bounce delay-0"></div>
-                <div class="size-2 rounded-full bg-primary animate-bounce delay-150"></div>
-                <div class="size-2 rounded-full bg-primary animate-bounce delay-300"></div>
-              </div>
-              <span class="text-xs font-black text-muted-foreground uppercase tracking-[0.2em]">Loading Inventory</span>
-            </div>
-          </div>
         </div>
       </transition>
+
+      <!-- Infinite Scroll Trigger (Universal) -->
+      <div v-if="nextUrl" ref="loadMoreTrigger" class="py-16 flex justify-center">
+        <div v-if="loadingMore" class="flex flex-col items-center gap-4">
+          <div class="flex items-center gap-1.5">
+            <div class="size-2 rounded-full bg-primary animate-bounce delay-0"></div>
+            <div class="size-2 rounded-full bg-primary animate-bounce delay-150"></div>
+            <div class="size-2 rounded-full bg-primary animate-bounce delay-300"></div>
+          </div>
+          <span class="text-xs font-black text-muted-foreground uppercase tracking-[0.2em]">Loading Inventory</span>
+        </div>
+      </div>
     </div>
   </AuthenticatedLayout>
 </template>
