@@ -36,19 +36,26 @@ class CheckoutController extends Controller
 
         return DB::transaction(function () use ($user, $cartItems, $total) {
             $order = Order::create([
-                'user_id'      => $user->id,
+                'user_id' => $user->id,
                 'total_amount' => $total,
-                'status'       => OrderStatus::PENDING,
+                'status' => OrderStatus::PENDING,
             ]);
 
+            $orderItems = [];
+            $now = now();
+
             foreach ($cartItems as $item) {
-                OrderItem::create([
-                    'order_id'          => $order->id,
-                    'product_id'        => $item->product_id,
-                    'quantity'          => $item->quantity,
+                $orderItems[] = [
+                    'order_id' => $order->id,
+                    'product_id' => $item->product_id,
+                    'quantity' => $item->quantity,
                     'price_at_purchase' => $item->product->price,
-                ]);
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
             }
+
+            OrderItem::insert($orderItems);
 
             // Clear cart (Stock was already handled in CartController)
             CartItem::where('user_id', $user->id)->delete();
