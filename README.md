@@ -52,14 +52,14 @@ Beyond the base requirements, the following advanced features and technical deci
 
 ### Dashboard
 <p float="left">
+  <img src="screenshots/dashboard-light.png" width="45%" />
   <img src="screenshots/dashboard-dark.png" width="45%" />
-  <img src="screenshots/dashboard-light.png" width="45%" /> 
 </p>
 
 ### Products Grid View
 <p float="left">
-  <img src="screenshots/products-grid-dark.png" width="45%" />
   <img src="screenshots/products-grid-light.png" width="45%" /> 
+  <img src="screenshots/products-grid-dark.png" width="45%" />
 </p>
 
 ### Prodcuts List View

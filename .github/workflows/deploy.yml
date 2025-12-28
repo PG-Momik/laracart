@@ -13,7 +13,8 @@ jobs:
   deploy:
     name: Deploy to EC2
     runs-on: ubuntu-latest
-    
+    environment: laracart-prod  # Add this line!
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -32,60 +33,74 @@ jobs:
         run: |
           ssh ubuntu@${{ secrets.EC2_HOST }} << 'ENDSSH'
             set -e
-            
-            echo "🚀 Starting deployment..."
-            
+          
+            echo "Starting deployment..."
+          
             # Navigate to app directory
             cd ${{ env.DEPLOY_PATH }}
-            
+          
             # Pull latest code
-            echo "📥 Pulling latest code..."
+            echo "Pulling latest code..."
             git pull origin main || git pull origin master
-            
+          
             # Install PHP dependencies
-            echo "📦 Installing Composer dependencies..."
+            echo "Installing Composer dependencies..."
             composer install --no-dev --optimize-autoloader --no-interaction
-            
+          
             # Install Node dependencies and build
-            echo "🎨 Building frontend assets..."
+            echo "Building frontend assets..."
             npm ci
             npm run build
-            
+          
+            # CRITICAL: Clear all caches BEFORE migrations
+            echo "Clearing caches..."
+            php artisan config:clear
+            php artisan route:clear
+            php artisan view:clear
+            php artisan cache:clear
+          
             # Run migrations
-            echo "🔄 Running migrations..."
+            echo "Running migrations..."
             php artisan migrate --force
-            
-            # Clear and optimize
-            echo "⚡ Optimizing application..."
+          
+            # Set permissions BEFORE caching (critical!)
+            echo "Setting permissions..."
+            sudo chown -R www-data:www-data ${{ env.DEPLOY_PATH }}/storage
+            sudo chown -R www-data:www-data ${{ env.DEPLOY_PATH }}/bootstrap/cache
+            sudo chmod -R 775 ${{ env.DEPLOY_PATH }}/storage
+            sudo chmod -R 775 ${{ env.DEPLOY_PATH }}/bootstrap/cache
+          
+            # Now cache (after permissions are fixed)
+            echo "Optimizing application..."
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
-            php artisan optimize
-            
-            # Set permissions
-            echo "🔐 Setting permissions..."
-            sudo chown -R www-data:www-data ${{ env.DEPLOY_PATH }}
+            php artisan event:cache
+          
+            # Keep app directory owned by ubuntu, but storage by www-data
+            sudo chown -R ubuntu:www-data ${{ env.DEPLOY_PATH }}
             sudo chmod -R 755 ${{ env.DEPLOY_PATH }}
             sudo chmod -R 775 ${{ env.DEPLOY_PATH }}/storage
             sudo chmod -R 775 ${{ env.DEPLOY_PATH }}/bootstrap/cache
-            
+          
             # Restart services
-            echo "🔄 Restarting services..."
+            echo "Restarting services..."
             sudo systemctl reload php8.2-fpm
             sudo systemctl reload nginx
             sudo supervisorctl restart laracart-worker:*
-            
-            echo "✅ Deployment complete!"
+          
+            echo "Deployment complete!"
           ENDSSH
 
       - name: Verify deployment
         run: |
-          echo "🔍 Verifying deployment..."
+          echo "Verifying deployment..."
+          sleep 5
           curl -f https://${{ env.DOMAIN }} || exit 1
-          echo "✅ Site is live!"
+          echo "Site is live!"
 
       - name: Notify on failure
         if: failure()
         run: |
-          echo "❌ Deployment failed!"
+          echo "Deployment failed!"
           echo "Check the logs above for details."
