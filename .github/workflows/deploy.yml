@@ -1,4 +1,4 @@
-name: Deploy Cart
+name: Deploy Cart (React/Inertia)
 on:
   push:
     branches: [ main ]
@@ -9,17 +9,34 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # 1. We need PHP to install dependencies before uploading
+      # ----------------------------------------------------------------
+      # STEP 1: BACKEND BUILD (Composer)
+      # ----------------------------------------------------------------
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
 
-      # 2. Install Vendor files (Laravel Core)
-      - name: Install Dependencies
+      - name: Install PHP Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      # 3. Sync files to EC2
+      # ----------------------------------------------------------------
+      # STEP 2: FRONTEND BUILD (React/Inertia) - The Magic Part
+      # ----------------------------------------------------------------
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Node Dependencies
+        run: npm ci
+
+      - name: Build Assets (Vite)
+        run: npm run build
+
+      # ----------------------------------------------------------------
+      # STEP 3: SYNC TO SERVER
+      # ----------------------------------------------------------------
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         with:
@@ -30,11 +47,13 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: "/var/www/cart"
 
-          # ⚠️ CRITICAL PROTECTIONS ⚠️
-          # This ensures we don't delete your Live Data or Environment
+          # We exclude node_modules (server doesn't need them, it only needs public/build)
+          # We KEEP public/build (because we just built it!)
           EXCLUDE: "/.git/, /.github/, /node_modules/, /storage/, .env, /database/database.sqlite"
 
-      # 4. Run Laravel Commands on EC2
+      # ----------------------------------------------------------------
+      # STEP 4: SERVER COMMANDS
+      # ----------------------------------------------------------------
       - name: Post-Deploy Commands
         uses: appleboy/ssh-action@master
         with:
@@ -44,14 +63,18 @@ jobs:
           script: |
             cd /var/www/cart
             
-            # Fix Permissions (Essential for SQLite)
+            # Permissions
             sudo chown -R ubuntu:www-data .
             sudo chmod -R 775 storage bootstrap/cache database
             
+            # Database
+            php artisan migrate --force
+            
             # Optimization
+            # We clear first to avoid old cache issues
+            php artisan config:clear
+            php artisan cache:clear
+            
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
-            
-            # Migrate Database (Safe to run every time)
-            php artisan migrate --force
