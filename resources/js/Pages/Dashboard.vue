@@ -6,11 +6,11 @@ import {Chart, registerables} from 'chart.js';
 import {AlertCircle, History, LayoutDashboard, Mail, Play, RefreshCcw, Terminal, Zap} from 'lucide-vue-next';
 
 // Shadcn UI
-import {Button} from '../../Components/ui/button';
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '../../Components/ui/card';
-import {Input} from '../../Components/ui/input';
-import {Label} from '../../Components/ui/label';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '../../Components/ui/select';
+import {Button} from "@/Components/ui/button/index.js";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/Components/ui/card/index.js";
+import {Input} from "@/Components/ui/input/index.js";
+import {Label} from "@/Components/ui/label/index.js";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/Components/ui/select/index.js";
 
 Chart.register(...registerables);
 
