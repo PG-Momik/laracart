@@ -4,10 +4,10 @@ import {Head, Link} from '@inertiajs/vue3';
 import {ArrowRight, Calendar, CheckCircle2, ChevronLeft, HelpCircle, Mail, Package, ShieldCheck} from 'lucide-vue-next';
 
 // Shadcn UI
-import {Button} from '@/Components/ui/button';
-import {Card, CardContent} from '@/Components/ui/card';
-import {Badge} from '@/Components/ui/badge';
-import {Separator} from '@/Components/ui/separator';
+import {Button} from '../../Components/ui/button';
+import {Card, CardContent} from '../../Components/ui/card';
+import {Badge} from '../../Components/ui/badge';
+import {Separator} from '../../Components/ui/separator';
 
 const props = defineProps({
   order: Object,

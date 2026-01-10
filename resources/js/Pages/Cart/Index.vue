@@ -16,9 +16,9 @@ import {
 } from 'lucide-vue-next';
 
 // Shadcn UI
-import {Button} from '@/Components/ui/button';
-import {Card, CardContent, CardFooter, CardHeader, CardTitle} from '@/Components/ui/card';
-import {Separator} from '@/Components/ui/separator';
+import {Button} from '../../Components/ui/button';
+import {Card, CardContent, CardFooter, CardHeader, CardTitle} from '../../Components/ui/card';
+import {Separator} from '../../Components/ui/separator';
 
 const {cart, updateQuantity, removeFromCart, processing} = useCart();
 

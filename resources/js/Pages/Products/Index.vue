@@ -7,11 +7,11 @@ import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
 import axios from 'axios';
 
 // Shadcn UI
-import {Input} from '@/Components/ui/input';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/Components/ui/select';
-import {Button} from '@/Components/ui/button';
-import {Card} from '@/Components/ui/card';
-import {Badge} from '@/Components/ui/badge';
+import {Input} from '../../Components/ui/input';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '../../Components/ui/select';
+import {Button} from '../../Components/ui/button';
+import {Card} from '../../Components/ui/card';
+import {Badge} from '../../Components/ui/badge';
 import {ArrowRight, Filter, LayoutGrid, List, Loader2, Package, Search, Star, X} from 'lucide-vue-next';
 // Simple native debounce implementation
 const debounce = (fn, delay) => {

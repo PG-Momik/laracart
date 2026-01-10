@@ -1,6 +1,6 @@
 <script setup>
 import {useCart} from '@/Composables/useCart';
-import {Button} from '@/Components/ui/button';
+import {Button} from './ui/button';
 import {Loader2, ShoppingCart} from 'lucide-vue-next';
 
 const props = defineProps({

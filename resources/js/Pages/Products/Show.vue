@@ -5,11 +5,11 @@ import {useCart} from '@/Composables/useCart';
 import {computed, ref, watch} from 'vue';
 
 // Shadcn UI
-import {Button} from '@/Components/ui/button';
-import {Badge} from '@/Components/ui/badge';
-import {Progress} from '@/Components/ui/progress';
-import {Card} from '@/Components/ui/card';
-import {Separator} from '@/Components/ui/separator';
+import {Button} from '../../Components/ui/button';
+import {Badge} from '../../Components/ui/badge';
+import {Progress} from '../../Components/ui/progress';
+import {Card} from '../../Components/ui/card';
+import {Separator} from '../../Components/ui/separator';
 import {
   Dialog,
   DialogContent,
@@ -18,7 +18,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from '@/Components/ui/dialog';
+} from '../../Components/ui/dialog';
 import {ChevronLeft, Clock, Loader2, RefreshCcw, ShieldCheck, ShoppingCart, Star, Trash2, Truck} from 'lucide-vue-next';
 
 const props = defineProps({

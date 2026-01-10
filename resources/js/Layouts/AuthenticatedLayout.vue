@@ -2,7 +2,7 @@
 import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
 import {Link, router, usePage} from '@inertiajs/vue3';
 import {useCart} from '@/Composables/useCart';
-import {Toaster} from '@/Components/ui/sonner';
+import {Toaster} from '../Components/ui/sonner';
 import {toast} from 'vue-sonner';
 import {
   DropdownMenu,
@@ -11,10 +11,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/Components/ui/dropdown-menu';
-import {Button} from '@/Components/ui/button';
-import {Avatar, AvatarFallback, AvatarImage} from '@/Components/ui/avatar';
-import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from '@/Components/ui/dialog';
+} from '../Components/ui/dropdown-menu';
+import {Button} from '../Components/ui/button';
+import {Avatar, AvatarFallback, AvatarImage} from '../Components/ui/avatar';
+import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from '../Components/ui/dialog';
 import {
   Activity,
   CheckCircle2,

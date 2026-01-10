@@ -14,12 +14,12 @@ import {
 } from 'lucide-vue-next';
 
 // Shadcn UI
-import {Button} from '@/Components/ui/button';
-import {Card} from '@/Components/ui/card';
-import {Input} from '@/Components/ui/input';
-import {Label} from '@/Components/ui/label';
-import {Separator} from '@/Components/ui/separator';
-import {Badge} from '@/Components/ui/badge';
+import {Button} from '../../Components/ui/button';
+import {Card} from '../../Components/ui/card';
+import {Input} from '../../Components/ui/input';
+import {Label} from '../../Components/ui/label';
+import {Separator} from '../../Components/ui/separator';
+import {Badge} from '../../Components/ui/badge';
 
 const props = defineProps({
   cart: Object,

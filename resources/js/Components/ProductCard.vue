@@ -1,9 +1,9 @@
 <script setup>
 import {Link} from '@inertiajs/vue3';
 import {useCart} from '@/Composables/useCart';
-import {Card, CardContent, CardFooter} from '@/Components/ui/card';
-import {Button} from '@/Components/ui/button';
-import {Badge} from '@/Components/ui/badge';
+import {Card, CardContent, CardFooter} from './ui/card';
+import {Button} from './ui/button';
+import {Badge} from './ui/badge';
 import {Loader2, ShoppingCart, Star} from 'lucide-vue-next';
 
 const props = defineProps({

@@ -1,99 +1,57 @@
-name: Deploy to Production
-
+name: Deploy Cart
 on:
   push:
-    branches: [ main, master ]
-  workflow_dispatch:
-
-env:
-  DEPLOY_PATH: /var/www/laracart
-  DOMAIN: laracart.momikshrestha.com.np
+    branches: [ main ]
 
 jobs:
   deploy:
-    name: Deploy to EC2
     runs-on: ubuntu-latest
-    environment: laracart-prod  # Add this line!
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.8.0
+      # 1. We need PHP to install dependencies before uploading
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+          php-version: '8.2'
 
-      - name: Add EC2 to known hosts
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+      # 2. Install Vendor files (Laravel Core)
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Deploy to EC2
-        run: |
-          ssh ubuntu@${{ secrets.EC2_HOST }} << 'ENDSSH'
-            set -e
-          
-            echo "Starting deployment..."
-          
-            # Navigate to app directory
-            cd ${{ env.DEPLOY_PATH }}
-          
-            # Pull latest code
-            echo "Pulling latest code..."
-            git pull origin main || git pull origin master
-          
-            # Install PHP dependencies
-            echo "Installing Composer dependencies..."
-            composer install --optimize-autoloader --no-interaction
-          
-            # Install Node dependencies and build
-            echo "Building frontend assets..."
-            npm ci --legacy-peer-deps
-            npm run build
-          
-            # CRITICAL: Clear all caches BEFORE migrations
-            echo "Clearing caches..."
-            php artisan config:clear
-            php artisan route:clear
-            php artisan view:clear
-            php artisan cache:clear
-          
-            # Run migrations
-            echo "Running migrations..."
-            php artisan migrate --force
-          
-            # Set permissions BEFORE caching (critical!)
-            echo "Setting permissions..."
-            sudo chown -R www-data:www-data ${{ env.DEPLOY_PATH }}/storage
-            sudo chown -R www-data:www-data ${{ env.DEPLOY_PATH }}/bootstrap/cache
-            sudo chmod -R 775 ${{ env.DEPLOY_PATH }}/storage
-            sudo chmod -R 775 ${{ env.DEPLOY_PATH }}/bootstrap/cache
-          
-            # Now cache (after permissions are fixed)
-            echo "Optimizing application..."
+      # 3. Sync files to EC2
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "."
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: "/var/www/cart"
+
+          # ⚠️ CRITICAL PROTECTIONS ⚠️
+          # This ensures we don't delete your Live Data or Environment
+          EXCLUDE: "/.git/, /.github/, /node_modules/, /storage/, .env, /database/database.sqlite"
+
+      # 4. Run Laravel Commands on EC2
+      - name: Post-Deploy Commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /var/www/cart
+            
+            # Fix Permissions (Essential for SQLite)
+            sudo chown -R ubuntu:www-data .
+            sudo chmod -R 775 storage bootstrap/cache database
+            
+            # Optimization
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
-            php artisan event:cache
-          
-            # Keep app directory owned by ubuntu, but storage by www-data
-            sudo chown -R ubuntu:www-data ${{ env.DEPLOY_PATH }}
-            sudo chmod -R 755 ${{ env.DEPLOY_PATH }}
-            sudo chmod -R 775 ${{ env.DEPLOY_PATH }}/storage
-            sudo chmod -R 775 ${{ env.DEPLOY_PATH }}/bootstrap/cache
-          
-            # Restart services
-            echo "Restarting services..."
-            sudo systemctl reload php8.2-fpm
-            sudo systemctl reload nginx
-            sudo supervisorctl restart laracart-worker:*
-          
-            echo "Deployment complete!"
-          ENDSSH
-
-      - name: Notify on failure
-        if: failure()
-        run: |
-          echo "Deployment failed!"
-          echo "Check the logs above for details."
+            
+            # Migrate Database (Safe to run every time)
+            php artisan migrate --force
