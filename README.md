@@ -1,6 +1,7 @@
 # LaraCart
 
-LaraCart is an e-commerce platform built as a part of my assessment at Trustfactory.
+> [!NOTE]
+> LaraCart is an e-commerce platform built as a part of my assessment at Trustfactory. Demo at : https://cart.momik.dev
 
 ## Base Requirements
 
